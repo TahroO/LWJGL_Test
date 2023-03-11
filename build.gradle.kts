@@ -39,5 +39,5 @@ dependencies {
 }
 
 application {
-    mainClass.set("brot.lwjgl.App")
+    mainClass.set("brot.lwjgl.HelloLWJGL")
 }
