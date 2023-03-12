@@ -26,6 +26,8 @@ dependencies {
     implementation("org.lwjgl", "lwjgl-par")
     implementation("org.lwjgl", "lwjgl-stb")
     implementation("org.lwjgl", "lwjgl-vulkan")
+    implementation("org.tinylog:tinylog-api:2.6.1")
+    implementation("org.tinylog:tinylog-impl:2.6.1")
     runtimeOnly("org.lwjgl", "lwjgl", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-assimp", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-bgfx", classifier = lwjglNatives)
@@ -39,5 +41,5 @@ dependencies {
 }
 
 application {
-    mainClass.set("brot.lwjgl.HelloLWJGL")
+    mainClass.set("brot.lwjgl.game.Main")
 }
