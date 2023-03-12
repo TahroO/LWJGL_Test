@@ -1,4 +1,4 @@
-package game;
+package brot.lwjgl.game;
 
 import brot.lwjgl.engine.*;
 import brot.lwjgl.engine.graph.Render;
