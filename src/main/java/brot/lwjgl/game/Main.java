@@ -1,8 +1,10 @@
 package brot.lwjgl.game;
 
 import brot.lwjgl.engine.*;
+import brot.lwjgl.engine.graph.Mesh;
 import brot.lwjgl.engine.graph.Render;
 import brot.lwjgl.engine.scene.Scene;
+import org.lwjgl.glfw.GLFW;
 
 import java.awt.event.KeyEvent;
 
@@ -27,14 +29,20 @@ public class Main implements AppLogic {
 
     @Override
     public void init(Window window, Scene scene, Render render) {
-        this.render = render;
+        float[] positions = new float[]{
+                0.0f, 0.5f, 0.0f,
+                -0.5f, -0.5f, 0.0f,
+                0.5f, -0.5f, 0.0f
+        };
+        Mesh mesh = new Mesh(positions, 3);
+        scene.addMesh("triangle", mesh);
     }
 
     @Override
     public void input(Window window, Scene scene, long diffTimeMillis) {
-        if ( window.isKeyPressed(KeyEvent.VK_UP) ) {
+        if (window.isKeyPressed(GLFW.GLFW_KEY_UP)) {
             direction = 1;
-        } else if ( window.isKeyPressed(KeyEvent.VK_DOWN) ) {
+        } else if (window.isKeyPressed(GLFW.GLFW_KEY_DOWN)) {
             direction = -1;
         } else {
             direction = 0;
@@ -46,9 +54,10 @@ public class Main implements AppLogic {
         color += direction * 0.01f;
         if (color > 1) {
             color = 1.0f;
-        } else if ( color < 0 ) {
+        } else if (color < 0) {
             color = 0.0f;
         }
+        window.setClearColor(color, color, color);
     }
 
 }

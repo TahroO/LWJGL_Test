@@ -36,7 +36,6 @@ public class Engine {
     }
 
     private void resize() {
-        // Nothing to be done yet
     }
 
     private void run() {

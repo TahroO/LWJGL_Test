@@ -58,9 +58,7 @@ public class Window {
                 Logger.error("Error code [{}], msg [{]]", errorCode, MemoryUtil.memUTF8(msgPtr))
         );
 
-        glfwSetKeyCallback(windowHandle, (window, key, scancode, action, mods) -> {
-            keyCallBack(key, action);
-        });
+        glfwSetKeyCallback(windowHandle, (window, key, scancode, action, mods) -> keyCallBack(key, action));
 
         glfwMakeContextCurrent(windowHandle);
 
@@ -107,7 +105,7 @@ public class Window {
 
     public void keyCallBack(int key, int action) {
         if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
-            glfwSetWindowShouldClose(windowHandle, true); // We will detect this in the rendering loop
+            glfwSetWindowShouldClose(windowHandle, true);
         }
     }
 
@@ -123,6 +121,10 @@ public class Window {
         } catch (Exception excp) {
             Logger.error("Error calling resize callback", excp);
         }
+    }
+
+    public void setClearColor(float r, float g, float b) {
+        glClearColor(r, g, b, 0f);
     }
 
     public void update() {
