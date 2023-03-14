@@ -1,9 +1,10 @@
 package brot.lwjgl.engine.graph;
 
-import org.lwjgl.opengl.GL30;
 import brot.lwjgl.engine.Utils;
+import org.lwjgl.opengl.GL30;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL30.*;
 
@@ -11,7 +12,7 @@ public class ShaderProgram {
 
     private final int programId;
 
-    public ShaderProgram(List<ShaderProgram.ShaderModuleData> shaderModuleDataList) {
+    public ShaderProgram(List<ShaderModuleData> shaderModuleDataList) {
         programId = glCreateProgram();
         if (programId == 0) {
             throw new RuntimeException("Could not create Shader");
@@ -79,5 +80,4 @@ public class ShaderProgram {
 
     public record ShaderModuleData(String shaderFile, int shaderType) {
     }
-
 }

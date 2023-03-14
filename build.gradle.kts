@@ -28,6 +28,7 @@ dependencies {
     implementation("org.lwjgl", "lwjgl-vulkan")
     implementation("org.tinylog:tinylog-api:2.6.1")
     implementation("org.tinylog:tinylog-impl:2.6.1")
+    implementation("org.joml:joml:1.10.5")
     runtimeOnly("org.lwjgl", "lwjgl", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-assimp", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-bgfx", classifier = lwjglNatives)

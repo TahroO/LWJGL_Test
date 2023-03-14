@@ -1,12 +1,13 @@
 package brot.lwjgl.game;
 
 import brot.lwjgl.engine.*;
-import brot.lwjgl.engine.graph.Mesh;
 import brot.lwjgl.engine.graph.Render;
+import brot.lwjgl.engine.graph.mesh.Mesh;
 import brot.lwjgl.engine.scene.Scene;
 import org.lwjgl.glfw.GLFW;
 
-import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main implements AppLogic {
     private int direction = 0;
@@ -30,12 +31,20 @@ public class Main implements AppLogic {
     @Override
     public void init(Window window, Scene scene, Render render) {
         float[] positions = new float[]{
-                0.0f, 0.5f, 0.0f,
-                -0.5f, -0.5f, 0.0f,
-                0.5f, -0.5f, 0.0f
+                -.5f, .5f,
+                -.5f, -.5f,
+                .5f, -.5f,
+                .5f, .5f,
         };
-        Mesh mesh = new Mesh(positions, 3);
-        scene.addMesh("triangle", mesh);
+        float[] colors = new float[]{
+                0f, 0f,
+                0f, .5f,
+                .25f, .5f,
+                .25f, 0f,        };
+        int[] indices = new int[]{0, 1, 3, 3, 1, 2};
+        Mesh mesh = new Mesh(positions, colors, indices);
+        String cubeModelId = "cube-model";
+        scene.addMesh(cubeModelId, mesh);
     }
 
     @Override

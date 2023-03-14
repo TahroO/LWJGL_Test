@@ -4,6 +4,8 @@ import org.lwjgl.glfw.*;
 import org.lwjgl.system.MemoryUtil;
 import org.tinylog.Logger;
 
+import java.awt.*;
+import java.nio.IntBuffer;
 import java.util.concurrent.Callable;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -17,6 +19,11 @@ public class Window {
     private int height;
     private Callable<Void> resizeFunc;
     private int width;
+    private boolean isFullscreen;
+    private int[] windowedWidth = {0};
+    private int[] windowedHeight = {0};
+    private int[] windowedPosX = {0};
+    private int[] windowedPosY = {0};
 
     public Window(String title, WindowOptions opts, Callable<Void> resizeFunc) {
         this.resizeFunc = resizeFunc;
@@ -106,6 +113,30 @@ public class Window {
     public void keyCallBack(int key, int action) {
         if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
             glfwSetWindowShouldClose(windowHandle, true);
+        } else if (key == GLFW_KEY_F11 && action == GLFW_RELEASE) {
+            setFullscreen(!isFullscreen);
+        }
+    }
+
+    /**
+     * Toggles windowed fullscreen mode vs. windowed mode.
+     *
+     * @param fullscreen True to switch to windowed fullscreen mode,
+     *                   false to switch back to windowed mode.
+     */
+    public void setFullscreen(boolean fullscreen) {
+        if (isFullscreen == fullscreen) {
+            return;
+        }
+        isFullscreen = fullscreen;
+        long monitor = glfwGetPrimaryMonitor();
+        GLFWVidMode vidMode = glfwGetVideoMode(monitor);
+        if (fullscreen) {
+            glfwGetWindowSize(windowHandle, windowedWidth, windowedHeight);
+            glfwGetWindowPos(windowHandle, windowedPosX, windowedPosY);
+            glfwSetWindowMonitor(windowHandle, monitor, 0, 0, vidMode.width(), vidMode.height(), vidMode.refreshRate());
+        } else {
+            glfwSetWindowMonitor(windowHandle, NULL, windowedPosX[0], windowedPosY[0], windowedWidth[0], windowedHeight[0], vidMode.refreshRate());
         }
     }
 
