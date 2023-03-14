@@ -1,6 +1,7 @@
 package brot.lwjgl.engine.graph;
 
 import org.joml.Matrix4f;
+import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.lwjgl.system.MemoryStack;
 
@@ -63,4 +64,15 @@ public class UniformsMap {
             glUniform2iv(location, value.get(stack.mallocInt(2)));
         }
     }
+
+    public void setUniform(String uniformName, Vector2f value) {
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            Integer location = uniforms.get(uniformName);
+            if (location == null) {
+                throw new RuntimeException("Could not find uniform [" + uniformName + "]");
+            }
+            glUniform2fv(location, value.get(stack.mallocFloat(2)));
+        }
+    }
+
 }
