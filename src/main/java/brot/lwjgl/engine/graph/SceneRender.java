@@ -13,6 +13,7 @@ public class SceneRender {
     private UniformsMap uniformsMap;
 
     private Texture texture;
+    private Vector2i textureSize = new Vector2i(4, 2);
     private long startedTime;
 
     public SceneRender() {
@@ -46,10 +47,10 @@ public class SceneRender {
         uniformsMap.setUniform("projectionMatrix", scene.getProjection().getProjMatrix());
         uniformsMap.setUniform("time", (System.currentTimeMillis() - startedTime) / 1000f);
         uniformsMap.setUniform("txtSampler", 0);
-        uniformsMap.setUniform("txtSize", new Vector2i(4, 2));
+        uniformsMap.setUniform("txtSize", textureSize);
         uniformsMap.setUniform("txtIndex", 0);
         uniformsMap.setUniform("txtFrames", 8);
-        uniformsMap.setUniform("txtFps", 8f);
+        uniformsMap.setUniform("txtFps", 12f);
 
         glActiveTexture(GL_TEXTURE0);
         texture.bind();
