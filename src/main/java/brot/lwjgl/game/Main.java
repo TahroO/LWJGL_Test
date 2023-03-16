@@ -7,13 +7,10 @@ import brot.lwjgl.engine.graph.texture.SpriteAtlas;
 import brot.lwjgl.engine.scene.Entity;
 import brot.lwjgl.engine.scene.Layer;
 import brot.lwjgl.engine.scene.Scene;
-import org.lwjgl.glfw.GLFW;
 
 public class Main implements AppLogic {
-    private int direction = 0;
-    private float clearColor = 0f;
-    private Entity enemy;
-    private float enemyPosition = -32f;
+    private Entity dude;
+    private float dudePositionX = -32f;
 
     public static void main(String[] args) {
         Main main = new Main();
@@ -80,34 +77,20 @@ public class Main implements AppLogic {
         entity = new Entity("dude-0", "dude");
         entity.setPosition(-32, 8 * 32 + 5).updateModelMatrix();
         scene.addEntity("1", entity);
-        enemy = entity;
+        dude = entity;
     }
 
     @Override
     public void input(Window window, Scene scene, long diffTimeMillis) {
-        if (window.isKeyPressed(GLFW.GLFW_KEY_UP)) {
-            direction = 1;
-        } else if (window.isKeyPressed(GLFW.GLFW_KEY_DOWN)) {
-            direction = -1;
-        } else {
-            direction = 0;
-        }
     }
 
     @Override
     public void update(Window window, Scene scene, long diffTimeMillis) {
-        clearColor += direction * 0.01f;
-        if (clearColor > 1) {
-            clearColor = 1.0f;
-        } else if (clearColor < 0) {
-            clearColor = 0.0f;
+        dudePositionX += 1;
+        if (dudePositionX > 640) {
+            dudePositionX = -32;
         }
-        enemyPosition += 1;
-        if (enemyPosition > 640) {
-            enemyPosition = -32;
-        }
-        enemy.setPosition(enemyPosition, 8 * 32 - 9).updateModelMatrix();
-        window.setClearColor(clearColor, clearColor, clearColor);
+        dude.setPosition(dudePositionX, 8 * 32 - 9).updateModelMatrix();
     }
 
 }
