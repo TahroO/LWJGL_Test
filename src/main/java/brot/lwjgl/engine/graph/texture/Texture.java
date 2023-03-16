@@ -11,11 +11,15 @@ import java.nio.*;
 import static org.lwjgl.opengl.GL30.*;
 
 public class Texture {
-    private int textureId;
-    private String resourceName;
+    protected final int textureId;
+    protected final String resourceName;
+    protected final int width;
+    protected final int height;
 
     public Texture(ByteBuffer buf, int width, int height, String resourceName) {
-        generateTexture(width, height, buf);
+        this.textureId = generateTexture(width, height, buf);
+        this.width = width;
+        this.height = height;
         this.resourceName = "TEXTURE_%d".formatted(textureId);
     }
 
@@ -23,8 +27,10 @@ public class Texture {
         try {
             InputStream is = Texture.class.getResourceAsStream(resourceName);
             BufferedImage image = ImageIO.read(is);
+            this.width = image.getWidth();
+            this.height = image.getHeight();
             ByteBuffer byteBuffer = convertImage(image);
-            generateTexture(image.getWidth(), image.getHeight(), byteBuffer);
+            this.textureId= generateTexture(image.getWidth(), image.getHeight(), byteBuffer);
             this.resourceName = resourceName;
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -58,14 +64,15 @@ public class Texture {
         glDeleteTextures(textureId);
     }
 
-    private void generateTexture(int width, int height, ByteBuffer buf) {
-        textureId = glGenTextures();
+    private int generateTexture(int width, int height, ByteBuffer buf) {
+        int textureId = glGenTextures();
         glBindTexture(GL_TEXTURE_2D, textureId);
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, buf);
         glGenerateMipmap(GL_TEXTURE_2D);
+        return textureId;
     }
 
     public String getResourceName() {

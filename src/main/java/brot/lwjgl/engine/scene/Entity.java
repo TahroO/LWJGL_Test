@@ -9,6 +9,7 @@ public class Entity {
     private Vector3f position;
     private Quaternionf rotation;
     private float scale;
+    private Vector3f eulerAngleBuffer;
 
     public Entity(String id, String modelId) {
         this.id = id;
@@ -16,6 +17,7 @@ public class Entity {
         modelMatrix = new Matrix4f();
         position = new Vector3f();
         rotation = new Quaternionf();
+        eulerAngleBuffer = new Vector3f();
         scale = 1;
     }
 
@@ -23,7 +25,7 @@ public class Entity {
         return id;
     }
 
-    public String getModelId() {
+    public String getSpriteId() {
         return modelId;
     }
 
@@ -43,18 +45,26 @@ public class Entity {
         return scale;
     }
 
-    public final void setPosition(float x, float y, float z) {
+    public final Entity setPosition(float x, float y) {
         position.x = x;
         position.y = y;
-        position.z = z;
+        return this;
     }
 
-    public void setRotation(float x, float y, float z, float angle) {
-        this.rotation.fromAxisAngleRad(x, y, z, angle);
+    public Entity setRotation(float angle) {
+        this.rotation.rotateLocalZ(angle);
+        return this;
     }
 
-    public void setScale(float scale) {
+    public Entity addRotation(float angle) {
+        rotation.getEulerAnglesXYZ(eulerAngleBuffer);
+        rotation.fromAxisAngleRad(0, 0, 1, eulerAngleBuffer.z + angle);
+        return this;
+    }
+
+    public Entity setScale(float scale) {
         this.scale = scale;
+        return this;
     }
 
     public void updateModelMatrix() {

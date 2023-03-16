@@ -5,12 +5,14 @@ import brot.lwjgl.engine.scene.Scene;
 import org.lwjgl.opengl.GL;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL13.GL_MULTISAMPLE;
 
 public class Render {
     private SceneRender sceneRender;
 
     public Render() {
         GL.createCapabilities();
+        glEnable(GL_MULTISAMPLE);
         sceneRender = new SceneRender();
     }
 

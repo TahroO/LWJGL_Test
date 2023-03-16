@@ -1,19 +1,19 @@
 package brot.lwjgl.engine.graph;
 
+import brot.lwjgl.engine.graph.mesh.Mesh;
+import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.graph.texture.SpriteAtlas;
+import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.scene.Layer;
 import brot.lwjgl.engine.scene.Scene;
-import org.joml.Matrix4f;
-import org.joml.Vector2f;
 
 import java.util.*;
 
 import static org.lwjgl.opengl.GL30.*;
 
 public class SceneRender {
-    private ShaderProgram shaderProgram;
+    private final ShaderProgram shaderProgram;
     private UniformsMap uniformsMap;
-
-    private SpriteAtlas spriteAtlas;
     private long startedTime;
 
     public SceneRender() {
@@ -22,13 +22,11 @@ public class SceneRender {
         shaderModuleDataList.add(new ShaderProgram.ShaderModuleData("/shaders/sprite.frag", GL_FRAGMENT_SHADER));
         shaderProgram = new ShaderProgram(shaderModuleDataList);
         createUniforms();
-        spriteAtlas = new SpriteAtlas("/models/bird-animation.png", 2, 4);
         startedTime = System.currentTimeMillis();
     }
 
     public void cleanup() {
         shaderProgram.cleanup();
-        spriteAtlas.cleanup();
     }
 
     private void createUniforms() {
@@ -37,33 +35,63 @@ public class SceneRender {
         uniformsMap.createUniform("modelMatrix");
         uniformsMap.createUniform("time");
         uniformsMap.createUniform("txtSampler");
-        uniformsMap.createUniform("txtSize");
-        uniformsMap.createUniform("txtFps");
-        uniformsMap.createUniform("txtFrames");
-        uniformsMap.createUniform("txtIndex");
+        uniformsMap.createUniform("spriteAtlasSize");
+        uniformsMap.createUniform("spriteFps");
+        uniformsMap.createUniform("spriteFrames");
+        uniformsMap.createUniform("spriteIndex");
     }
 
     public void render(Scene scene) {
+        glEnable(GL_BLEND);
+        glBlendEquation(GL_FUNC_ADD);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         shaderProgram.bind();
+
         uniformsMap.setUniform("projectionMatrix", scene.getProjection().getProjMatrix());
         uniformsMap.setUniform("time", (System.currentTimeMillis() - startedTime) / 1000f);
         uniformsMap.setUniform("txtSampler", 0);
-        uniformsMap.setUniform("txtSize", spriteAtlas.getSize());
-        uniformsMap.setUniform("txtIndex", 0f);
-        uniformsMap.setUniform("txtFrames", 8f);
-        uniformsMap.setUniform("txtFps", 12f);
 
-        glActiveTexture(GL_TEXTURE0);
-        spriteAtlas.bind();
+        Map<String, Sprite> sprites = scene.getSprites();
+        for (Layer layer : scene.getLayers()) {
+            for (Entity entity : layer.getEntities()) {
+                Sprite sprite = sprites.get(entity.getSpriteId());
+                SpriteAtlas sa = sprite.getSpriteAtlas();
+                glActiveTexture(GL_TEXTURE0);
+                sa.bind();
+                Mesh mesh = sa.getSpriteMesh();
+                glBindVertexArray(mesh.getVaoId());
+                // ---
+                uniformsMap.setUniform("spriteAtlasSize", sa.getSize());
+                uniformsMap.setUniform("spriteIndex", sprite.getSpriteIndex());
+                uniformsMap.setUniform("spriteFrames", sprite.getFrames());
+                uniformsMap.setUniform("spriteFps", sprite.getFps());
+                uniformsMap.setUniform("modelMatrix", entity.getModelMatrix());
+                glDrawElements(GL_TRIANGLES, mesh.getNumVertices(), GL_UNSIGNED_INT, 0);
+            }
+        }
 
-        scene.getMeshMap().values().forEach(mesh -> {
-            glBindVertexArray(mesh.getVaoId());
-            uniformsMap.setUniform("modelMatrix", new Matrix4f());
-            glDrawElements(GL_TRIANGLES, mesh.getNumVertices(), GL_UNSIGNED_INT, 0);
-        });
+//        for (Sprite sprite : scene.getSprites().values()) {
+//            SpriteAtlas sa = sprite.getSpriteAtlas();
+//            glActiveTexture(GL_TEXTURE0);
+//            sa.bind();
+//            Mesh mesh = sa.getSpriteMesh();
+//            glBindVertexArray(mesh.getVaoId());
+//            for (Entity entity : sprite.getEntities()) {
+//                uniformsMap.setUniform("spriteAtlasSize", sa.getSize());
+//                uniformsMap.setUniform("spriteIndex", sprite.getSpriteIndex());
+//                uniformsMap.setUniform("spriteFrames", sprite.getFrames());
+//                uniformsMap.setUniform("spriteFps", sprite.getFps());
+//                uniformsMap.setUniform("modelMatrix", entity.getModelMatrix());
+//                glDrawElements(GL_TRIANGLES, mesh.getNumVertices(), GL_UNSIGNED_INT, 0);
+//            }
+//        }
 
         glBindVertexArray(0);
         shaderProgram.unbind();
+    }
+
+    protected void renderEntity(Entity entity) {
+
     }
 
 }
