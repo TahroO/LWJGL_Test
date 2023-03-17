@@ -12,6 +12,6 @@ void main()
 {
 //    vec2 pos_RatioTo1 = position / screenDimension;
 //    vec2 clip_space = (pos_RatioTo1 * 2.0) - 1;
-    gl_Position = projectionMatrix * modelMatrix * vec4(position, 0.0, 1.0); //vec4(clip_space * vec2(1, -1), 0.0, 1.0);
+    gl_Position = projectionMatrix * vec4(position, 0.0, 1.0); //vec4(clip_space * vec2(1, -1), 0.0, 1.0);
     outColor = color;
 }

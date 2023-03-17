@@ -18,6 +18,8 @@ public class Window {
     private final long windowHandle;
     private int height;
     private Callable<Void> resizeFunc;
+    private MouseInput mouseInput;
+
     private int width;
     private boolean isFullscreen;
     private int[] windowedWidth = {0};
@@ -81,6 +83,7 @@ public class Window {
         glfwGetFramebufferSize(windowHandle, arrWidth, arrHeight);
         width = arrWidth[0];
         height = arrHeight[0];
+        mouseInput = new MouseInput(windowHandle);
     }
 
     public void cleanup() {
@@ -137,6 +140,10 @@ public class Window {
         } else {
             glfwSetWindowMonitor(windowHandle, NULL, windowedPosX[0], windowedPosY[0], windowedWidth[0], windowedHeight[0], vidMode.refreshRate());
         }
+    }
+
+    public MouseInput getMouseInput() {
+        return mouseInput;
     }
 
     public void pollEvents() {

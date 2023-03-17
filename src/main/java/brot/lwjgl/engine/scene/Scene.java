@@ -16,12 +16,14 @@ public class Scene {
     private Projection projection;
     protected Map<String, Sprite> spriteMap;
     private Map<String, Layer> layers;
+    protected Camera camera;
 
     public Scene(int width, int height) {
         meshMap = new HashMap<>();
         spriteMap = new HashMap<>();
         projection = new Ortho2D(width, height);
         layers = new HashMap<>();
+        camera = new Camera();
     }
 
     public void cleanup() {
@@ -64,6 +66,10 @@ public class Scene {
 
     public Map<String, Sprite> getSprites() {
         return spriteMap;
+    }
+
+    public Camera getCamera() {
+        return camera;
     }
 
     public Projection getProjection() {

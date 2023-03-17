@@ -5,7 +5,7 @@ import brot.lwjgl.engine.scene.Scene;
 
 public class Engine {
 
-    public static final int TARGET_UPS = 30;
+    public static final int TARGET_UPS = 60;
     private final AppLogic appLogic;
     private final Window window;
     private Render render;
@@ -55,6 +55,7 @@ public class Engine {
             deltaFps += (now - initialTime) / timeR;
 
             if (targetFps <= 0 || deltaFps >= 1) {
+                window.getMouseInput().input();
                 appLogic.input(window, scene, now - initialTime);
             }
 
