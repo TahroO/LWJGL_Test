@@ -24,13 +24,13 @@ public class Render {
     }
 
     public void render(Window window, Scene scene) {
-        glClear(GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-        int targetWidth = 640;
+        glClear(GL_COLOR_BUFFER_BIT);
+        int targetWidth = scene.getViewportWidth();
+        int targetHeight = scene.getViewportHeight();
         int marginX = (window.getWidth() - targetWidth) / 2;
-        int marginY = (window.getHeight() - targetWidth) / 2;
-        glViewport(marginX, marginY, targetWidth, targetWidth);
+        int marginY = (window.getHeight() - targetHeight) / 2;
+        glViewport(marginX, marginY, targetWidth, targetHeight);
 
         sceneRender.render(scene);
-//        testSceneRender.render(scene);
     }
 }

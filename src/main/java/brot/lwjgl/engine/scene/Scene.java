@@ -12,6 +12,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Scene {
+    protected int width;
+    protected int height;
+    protected int viewportWidth;
+    protected int viewportHeight;
+
     private Map<String, Mesh> meshMap;
     private Projection projection;
     protected Map<String, Sprite> spriteMap;
@@ -19,11 +24,36 @@ public class Scene {
     protected Camera camera;
 
     public Scene(int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.viewportWidth = width;
+        this.viewportHeight = height;
         meshMap = new HashMap<>();
         spriteMap = new HashMap<>();
         projection = new Ortho2D(width, height);
         layers = new HashMap<>();
         camera = new Camera();
+    }
+
+    public void setDimension(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public int getViewportWidth() {
+        return viewportWidth;
+    }
+
+    public int getViewportHeight() {
+        return viewportHeight;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public void cleanup() {
@@ -77,7 +107,7 @@ public class Scene {
     }
 
     public void resize(int width, int height) {
-        projection.updateProjMatrix(width, height);
+        //projection.updateProjMatrix(width, height);
     }
 
 }

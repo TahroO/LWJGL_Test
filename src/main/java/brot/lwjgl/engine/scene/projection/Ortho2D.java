@@ -17,8 +17,7 @@ public class Ortho2D extends Projection {
 
     @Override
     public void updateProjMatrix(int width, int height) {
-          projMatrix.setOrtho2D(0, 640, 640, 0);
-//        projMatrix.setOrtho2D(-1, 1, -1, 1);
+          projMatrix.setOrtho2D(0, width, height, 0);
     }
 
 }

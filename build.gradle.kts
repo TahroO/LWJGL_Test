@@ -29,6 +29,8 @@ dependencies {
     implementation("org.tinylog:tinylog-api:2.6.1")
     implementation("org.tinylog:tinylog-impl:2.6.1")
     implementation("org.joml:joml:1.10.5")
+    implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.0")
+    implementation("com.sun.xml.bind:jaxb-impl:4.0.2")
     runtimeOnly("org.lwjgl", "lwjgl", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-assimp", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-bgfx", classifier = lwjglNatives)
