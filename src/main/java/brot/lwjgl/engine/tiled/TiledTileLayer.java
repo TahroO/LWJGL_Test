@@ -1,24 +1,44 @@
 package brot.lwjgl.engine.tiled;
 
+import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.testing.scenes.TiledMapScene;
+import brot.lwjgl.engine.util.XmlLoader;
 import jakarta.xml.bind.annotation.XmlElement;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class TiledTileLayer extends TiledLayer {
     @XmlElement
-    public TiledData data;
+    private TiledData data;
 
     private transient List<TiledTile> tileList;
 
     @Override
-    public List<Entity> getEntities() {
+    public List<Entity> getEntities(TiledMap map) {
         final List<Integer> gids = data.getData();
         return IntStream
                 .range(0, gids.size())
-                .mapToObj(delta -> new Entity("entity-%s-%s".formatted(id, delta), "tile-%s".formatted(gids.get(delta))))
+                .mapToObj(delta -> {
+                    Entity entity = null;
+                    int gid = gids.get(delta);
+                    if (gid > 0) {
+                        entity = new Entity("entity-%s-%s".formatted(id, delta), "tile-%s".formatted(gid));
+                        int y = delta / width;
+                        int x = delta % width;
+                        entity.setPosition(x * map.tilewidth, y * map.tileheight).updateModelMatrix();
+                    }
+                    return entity;
+                })
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Integer> getUniqueGids() {
+        return data.getData().stream().distinct().toList();
+    }
+
 }

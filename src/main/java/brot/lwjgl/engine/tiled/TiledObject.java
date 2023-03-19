@@ -10,7 +10,7 @@ public class TiledObject {
     private int id;
 
     @XmlAttribute
-    private Integer gid;
+    public Integer gid;
 
     @XmlAttribute
     private String name;
@@ -20,11 +20,11 @@ public class TiledObject {
 
     @XmlAttribute
     @XmlJavaTypeAdapter(value = DecimalFloatAdapter.class)
-    private Float x;
+    public Float x;
 
     @XmlAttribute
     @XmlJavaTypeAdapter(value = DecimalFloatAdapter.class)
-    private Float y;
+    public Float y;
 
     @XmlAttribute
     @XmlJavaTypeAdapter(value = DecimalFloatAdapter.class)

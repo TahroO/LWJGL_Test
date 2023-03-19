@@ -81,7 +81,9 @@ public class Scene {
     }
 
     public void addSprite(Sprite sprite) {
-        spriteMap.put(sprite.getId(), sprite);
+        if (!spriteMap.containsKey(sprite.getId())) {
+            spriteMap.put(sprite.getId(), sprite);
+        }
     }
 
     public void addEntity(String layerId, Entity entity) {
