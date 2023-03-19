@@ -10,8 +10,7 @@ import org.joml.Vector3f;
 
 import java.util.*;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_A;
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_D;
+import static org.lwjgl.glfw.GLFW.*;
 
 public class TiledMapScene {
     Entity player;
