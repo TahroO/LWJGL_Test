@@ -3,13 +3,13 @@ package brot.lwjgl.engine.scene;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Layer {
+public class SceneLayer {
     protected static int instanceCouter;
     protected String id;
     protected List<Entity> entities;
     protected int weight;
 
-    public Layer(String id) {
+    public SceneLayer(String id) {
         this.id = id;
         weight = instanceCouter++;
         entities = new ArrayList<>();

@@ -1,10 +1,13 @@
 package brot.lwjgl.engine.tiled;
 
+import brot.lwjgl.engine.scene.Entity;
 import brot.lwjgl.engine.tiled.xml.BooleanIntegerAdapter;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-public class TiledLayer {
+import java.util.List;
+
+public abstract class TiledLayer {
     @XmlAttribute
     public int id;
 
@@ -29,4 +32,7 @@ public class TiledLayer {
 
     @XmlAttribute
     private Integer offsety;
+
+    abstract public List<Entity> getEntities();
+
 }

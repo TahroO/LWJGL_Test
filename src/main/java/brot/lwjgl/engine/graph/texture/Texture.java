@@ -10,19 +10,32 @@ import java.nio.*;
 
 import static org.lwjgl.opengl.GL30.*;
 
+/**
+ * Defines a texture.
+ */
 public class Texture {
     protected final int textureId;
-    protected final String resourceName;
     protected final int width;
     protected final int height;
 
-    public Texture(ByteBuffer buf, int width, int height, String resourceName) {
-        this.textureId = generateTexture(width, height, buf);
+    /**
+     * Creates a new Texture object from a byte buffer.
+     *
+     * @param buf The byte buffer.
+     * @param width Image width.
+     * @param height Image height.
+     */
+    public Texture(ByteBuffer buf, int width, int height) {
+        this.textureId = createTexture(width, height, buf);
         this.width = width;
         this.height = height;
-        this.resourceName = "TEXTURE_%d".formatted(textureId);
     }
 
+    /**
+     * Creates a new Texture object from a resource name.
+     *
+     * @param resourceName Name of the image resource to use.
+     */
     public Texture(String resourceName) {
         try {
             InputStream is = Texture.class.getResourceAsStream(resourceName);
@@ -30,13 +43,18 @@ public class Texture {
             this.width = image.getWidth();
             this.height = image.getHeight();
             ByteBuffer byteBuffer = convertImage(image);
-            this.textureId= generateTexture(image.getWidth(), image.getHeight(), byteBuffer);
-            this.resourceName = resourceName;
+            this.textureId = createTexture(image.getWidth(), image.getHeight(), byteBuffer);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    /**
+     * Converts BufferedImage to ByteBuffer for use as GL texture.
+     *
+     * @param image The BufferedImage.
+     * @return The ByteBuffer.
+     */
     protected ByteBuffer convertImage(BufferedImage image) {
         int bytesPerPixel = 4;
         int[] pixels = new int[image.getWidth() * image.getHeight()];
@@ -56,15 +74,29 @@ public class Texture {
         return buffer;
     }
 
+    /**
+     * Binds the GL texture object.
+     */
     public void bind() {
         glBindTexture(GL_TEXTURE_2D, textureId);
     }
 
+    /**
+     * Deletes the GL texture object.
+     */
     public void cleanup() {
         glDeleteTextures(textureId);
     }
 
-    private int generateTexture(int width, int height, ByteBuffer buf) {
+    /**
+     * Creates the GL texture object.
+     *
+     * @param width  Texture width.
+     * @param height Texture height.
+     * @param buf    The texel data.
+     * @return The GL texture name.
+     */
+    private int createTexture(int width, int height, ByteBuffer buf) {
         int textureId = glGenTextures();
         glBindTexture(GL_TEXTURE_2D, textureId);
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -75,14 +107,20 @@ public class Texture {
         return textureId;
     }
 
-    public String getResourceName() {
-        return resourceName;
-    }
-
+    /**
+     * Gets texture width.
+     *
+     * @return Texture width.
+     */
     public int getWidth() {
         return width;
     }
 
+    /**
+     * Gets texture height.
+     *
+     * @return Texture height.
+     */
     public int getHeight() {
         return height;
     }

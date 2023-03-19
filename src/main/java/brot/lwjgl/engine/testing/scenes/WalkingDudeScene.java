@@ -1,10 +1,10 @@
 package brot.lwjgl.engine.testing.scenes;
 
 import brot.lwjgl.engine.graph.model.Sprite;
-import brot.lwjgl.engine.graph.texture.SpriteAtlas;
+import brot.lwjgl.engine.graph.texture.SpriteSheet;
 import brot.lwjgl.engine.scene.Camera;
 import brot.lwjgl.engine.scene.Entity;
-import brot.lwjgl.engine.scene.Layer;
+import brot.lwjgl.engine.scene.SceneLayer;
 import brot.lwjgl.engine.scene.Scene;
 
 public class WalkingDudeScene {
@@ -14,19 +14,19 @@ public class WalkingDudeScene {
     private static boolean moveCameraBack;
 
     public static void init(Scene scene) {
-        scene.addLayer(new Layer("0"));
-        scene.addLayer(new Layer("1"));
-        scene.addLayer(new Layer("effects"));
-        SpriteAtlas spriteAtlas = new SpriteAtlas("/models/spriteatlas.png", 10, 5);
-        SpriteAtlas dudeAtlas = new SpriteAtlas("/models/dude-walking.png", 9, 1);
+        scene.addLayer(new SceneLayer("0"));
+        scene.addLayer(new SceneLayer("1"));
+        scene.addLayer(new SceneLayer("effects"));
+        SpriteSheet spriteAtlas = new SpriteSheet("/models/spriteatlas.png", 10, 5);
+        SpriteSheet dudeAtlas = new SpriteSheet("/models/dude-walking.png", 9, 1);
 
-        Sprite waterSprite = new Sprite("water", spriteAtlas, 0, 4, 1);
-        Sprite explosionSprite = new Sprite("explosion", spriteAtlas, 20, 6, 9);
+        Sprite waterSprite = new Sprite("water", spriteAtlas, 0);
+        Sprite explosionSprite = new Sprite("explosion", spriteAtlas, 20);
         Sprite grassSprite = new Sprite("grass", spriteAtlas, 9);
         Sprite pathSprite = new Sprite("path", spriteAtlas, 8);
         Sprite batSprite = new Sprite("enemy", spriteAtlas, 12);
         Sprite borderSprite = new Sprite("border", spriteAtlas, 6);
-        Sprite dudeSprite = new Sprite("dude", dudeAtlas, 0, 9, 14f);
+        Sprite dudeSprite = new Sprite("dude", dudeAtlas, 0);
         scene.addSprite(grassSprite);
         scene.addSprite(borderSprite);
         scene.addSprite(pathSprite);

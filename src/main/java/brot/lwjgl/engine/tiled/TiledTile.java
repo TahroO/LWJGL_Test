@@ -61,4 +61,12 @@ public class TiledTile {
     public Integer getId() {
         return id;
     }
+
+    public boolean hasAnimation() {
+        return animation != null;
+    }
+
+    public TiledAnimation getAnimation() {
+        return animation;
+    }
 }

@@ -1,52 +1,107 @@
 package brot.lwjgl.engine.graph.model;
 
 import brot.lwjgl.engine.graph.mesh.Mesh;
-import brot.lwjgl.engine.graph.mesh.Quad;
-import brot.lwjgl.engine.graph.texture.SpriteAtlas;
-import brot.lwjgl.engine.scene.Entity;
-import org.joml.Vector2f;
+import brot.lwjgl.engine.graph.texture.SpriteSheet;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * Defines a Sprite.
+ */
 public class Sprite extends Model {
-    protected SpriteAtlas spriteAtlas;
+    protected SpriteSheet spriteSheet;
     protected Mesh mesh;
     protected float spriteIndex;
-    protected float frames;
-    protected float fps;
+    protected int[] animationDurations;
+    protected long totalAnimationDuration;
+    protected boolean hasAnimation;
 
-    public Sprite(String id, SpriteAtlas spriteAtlas, int spriteIndex) {
-        this(id, spriteAtlas, spriteIndex, 1, 0);
+    /**
+     * Creates a new Sprite object.
+     *
+     * @param id Sprite ID.
+     * @param spriteIndex The sprite index on sprite sheet.
+     */
+    public Sprite(String id, SpriteSheet spriteAtlas, int spriteIndex) {
+        this(id, spriteAtlas, spriteIndex, null);
     }
 
-    public Sprite(String id, SpriteAtlas spriteAtlas, int spriteIndex, int frames, float fps) {
-        this(id, spriteAtlas.getSpriteMesh(), spriteAtlas, spriteIndex, frames, fps);
+    /**
+     * Creates a new Sprite object.
+     *
+     * @param id Sprite ID.
+     * @param spriteSheet The sprite sheet.
+     * @param spriteIndex The sprite index on sprite sheet.
+     * @param animationDurations Animation durations in ms.
+     */
+    public Sprite(String id, SpriteSheet spriteSheet, int spriteIndex, int[] animationDurations) {
+        this(id, spriteSheet.getSpriteMesh(), spriteSheet, spriteIndex, animationDurations);
     }
 
-    public Sprite(String id, Mesh mesh, SpriteAtlas spriteAtlas, int spriteIndex, int frames, float fps) {
+    /**
+     * Creates a new Sprite object.
+     *
+     * @param id Sprite ID.
+     * @param mesh Sprite mesh.
+     * @param spriteSheet The sprite sheet.
+     * @param spriteIndex The sprite index on sprite sheet.
+     * @param animationDurations Animation durations in ms.
+     */
+    public Sprite(String id, Mesh mesh, SpriteSheet spriteSheet, int spriteIndex, int[] animationDurations) {
         super(id);
-        this.spriteAtlas = spriteAtlas;
+        this.spriteSheet = spriteSheet;
         this.spriteIndex = spriteIndex;
-        this.frames = frames;
-        this.fps = fps;
         this.mesh = mesh;
+        setAnimationDurations(animationDurations);
     }
 
-    public SpriteAtlas getSpriteAtlas() {
-        return spriteAtlas;
+    public SpriteSheet getSpriteSheet() {
+        return spriteSheet;
     }
 
+    /**
+     * Gets the sprites (start) index on sprite sheet.
+     *
+     * @return Sprite index.
+     */
     public float getSpriteIndex() {
         return spriteIndex;
     }
 
-    public float getFrames() {
-        return frames;
+    /**
+     * Gets the animation frame sprite index delta for the provided time.
+     *
+     * @param time Time in ms.
+     * @return Animation frame sprite index delta.
+     */
+    // TODO scale animation duration in entity.
+    public float getAnimationFrame(long time) {
+        if (totalAnimationDuration > 0) {
+            long modTime = time % totalAnimationDuration;
+            for (int i = animationDurations.length - 1; i >= 0; i--) {
+                if (modTime >= animationDurations[i]) {
+                    return i + 1;
+                }
+            }
+        }
+        return 0;
     }
 
-    public float getFps() {
-        return fps;
+    public void setAnimationDurations(int[] animationDurations) {
+        int totalDuration = 0;
+        if (animationDurations != null && animationDurations.length > 0) {
+            int[] durationsSeries = new int[animationDurations.length];
+            durationsSeries[0] = 0;
+            for (int i = 0; i < animationDurations.length; i++) {
+                totalDuration += animationDurations[i];
+                durationsSeries[i] = totalDuration;
+            }
+            this.animationDurations = durationsSeries;
+            hasAnimation = true;
+        }
+        this.totalAnimationDuration = totalDuration;
+    }
+
+    public boolean hasAnimation() {
+        return hasAnimation;
     }
 
 }

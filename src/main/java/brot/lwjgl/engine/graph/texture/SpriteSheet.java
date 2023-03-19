@@ -5,9 +5,9 @@ import brot.lwjgl.engine.graph.mesh.Quad;
 import org.joml.Vector2f;
 
 /**
- * Defines a sprite atlas texture.
+ * Defines a sprite sheet texture.
  */
-public class SpriteAtlas extends Texture {
+public class SpriteSheet extends Texture {
     /**
      * Number of sprites per column and row.
      */
@@ -18,11 +18,11 @@ public class SpriteAtlas extends Texture {
     /**
      * Creates a new SpriteAtlas object.
      *
-     * @param resourceName Name of an image resource.
+     * @param resourceName Name of an image resource file.
      * @param columns      Number of sprite columns.
      * @param rows         Number of sprite rows.
      */
-    public SpriteAtlas(String resourceName, int columns, int rows) {
+    public SpriteSheet(String resourceName, int columns, int rows) {
         super(resourceName);
         size = new Vector2f(columns, rows);
         spriteSize = new Vector2f(this.width / (float) columns, this.height / (float) rows);
@@ -36,14 +36,16 @@ public class SpriteAtlas extends Texture {
         return size;
     }
 
-    public float getSpriteAspectRatio() {
-        return ((float) width / (float) height) / (size.x / size.y);
-    }
-
+    /**
+     * Gets the sprite mesh.
+     */
     public Mesh getSpriteMesh() {
         return mesh;
     }
 
+    /**
+     * Gets texture UV coordinates.
+     */
     public float[] getTextureCoordinates() {
         return new float[]{
                 0f, 0f,

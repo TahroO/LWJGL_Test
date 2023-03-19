@@ -10,4 +10,9 @@ import java.util.List;
 public class TiledAnimation {
     @XmlElement(name = "frame", type = TiledFrame.class)
     private List<TiledFrame> frames;
+
+    public List<TiledFrame> getFrames() {
+        return frames;
+    }
+
 }

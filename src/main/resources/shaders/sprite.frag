@@ -6,16 +6,16 @@ out vec4 fragColor;
 
 uniform float time;
 uniform sampler2D txtSampler;
-uniform vec2 spriteAtlasSize;
+uniform vec2 spriteSheetSize;
 uniform float spriteIndex;
-uniform float spriteFrames;
-uniform float spriteFps;
+uniform float spriteAnimationFrame;
 
 void main()
 {
-    float spriteIndexFrame = spriteIndex + mod(floor(time * spriteFps), spriteFrames);
-    float txtDeltaY = floor(spriteIndexFrame / spriteAtlasSize.x);
-    float txtDeltaX = spriteIndexFrame - txtDeltaY * spriteAtlasSize.x;
-    vec2 txtDelta = vec2(txtDeltaX / spriteAtlasSize.x, txtDeltaY / spriteAtlasSize.y);
+    float spriteIndexFrame = spriteIndex + spriteAnimationFrame;
+    float txtDeltaY = floor(spriteIndexFrame / spriteSheetSize.x);
+    float txtDeltaX = spriteIndexFrame - txtDeltaY * spriteSheetSize.x;
+    vec2 txtDelta = vec2(txtDeltaX / spriteSheetSize.x, txtDeltaY / spriteSheetSize.y);
     fragColor = texture2D(txtSampler, outTextCoord + txtDelta);
 }
+

@@ -20,7 +20,7 @@ public class Scene {
     private Map<String, Mesh> meshMap;
     private Projection projection;
     protected Map<String, Sprite> spriteMap;
-    private Map<String, Layer> layers;
+    private Map<String, SceneLayer> layers;
     protected Camera camera;
 
     public Scene(int width, int height) {
@@ -64,15 +64,15 @@ public class Scene {
         meshMap.put(meshId, mesh);
     }
 
-    public void addLayer(Layer layer) {
+    public void addLayer(SceneLayer layer) {
         layers.put(layer.getId(), layer);
     }
 
-    public List<Layer> getLayers() {
+    public List<SceneLayer> getLayers() {
         return layers
                 .values()
                 .stream()
-                .sorted(Comparator.comparingInt(Layer::getWeight))
+                .sorted(Comparator.comparingInt(SceneLayer::getWeight))
                 .collect(Collectors.toList());
     }
 

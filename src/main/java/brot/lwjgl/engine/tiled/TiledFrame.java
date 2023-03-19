@@ -16,6 +16,11 @@ public class TiledFrame {
         return this.tileid;
     }
 
+    /**
+     * Gets animation frame duration in ms.
+     *
+     * @return Frame duration in ms.
+     */
     public int getDuration() {
         return this.duration;
     }
