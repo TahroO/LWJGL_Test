@@ -90,7 +90,7 @@ public class Scene {
         String spriteId = entity.getSpriteId();
         Sprite sprite = spriteMap.get(spriteId);
         if (sprite == null) {
-            throw new RuntimeException("Could not find model [" + spriteId + "]");
+            throw new RuntimeException("Could not find model [" + spriteId + "] for entity [" + entity.getId() + "]");
         }
         sprite.addEntity(entity);
         layers.get(layerId).addEntity(entity);

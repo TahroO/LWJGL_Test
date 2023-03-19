@@ -47,6 +47,9 @@ public abstract class TiledLayer {
         List<Sprite> sprites = new ArrayList<>();
         List<Integer> gids = getUniqueGids();
         for (TiledTileSetRef ref : map.tilesetRefs.stream().sorted(Comparator.comparingInt(tileSetRef -> -tileSetRef.firstgid)).toList()) {
+            if (gids == null) {
+                break;
+            }
             TiledTileSet tileset = XmlLoader.loadTileSet(ref.source);
             Map<Boolean, List<Integer>> groupedGids = gids.stream().collect(Collectors.groupingBy(gid -> gid >= ref.firstgid));
             if (groupedGids.containsKey(true)) {
