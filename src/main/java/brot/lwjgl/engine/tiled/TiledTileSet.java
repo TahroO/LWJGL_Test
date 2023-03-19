@@ -39,15 +39,11 @@ public class TiledTileSet {
     @XmlElement(name = "tile")
     public List<TiledTile> tiles = new ArrayList<>();
 
+    protected SpriteSheet spriteSheet;
+
     @XmlTransient
     public Map<Integer, TiledTile> tilesMap;
 
-//    public void setTiles(Map<Integer, TiledTile> tiles) {
-//        this.tiles = tiles;
-//    }
-//
-//    @XmlElement(name = "tile")
-//    @XmlJavaTypeAdapter(TiledTileMapAdapter.class)
     public Map<Integer, TiledTile> getTiles() {
         if (tilesMap == null) {
             tilesMap = tiles.stream().collect(Collectors.toMap(TiledTile::getId, Function.identity()));
@@ -55,11 +51,9 @@ public class TiledTileSet {
         return tilesMap;
     }
 
-    protected SpriteSheet spriteAtlas;
-
     public Sprite getSprite(int gid, int firstgid) {
-        if (spriteAtlas == null) {
-            spriteAtlas = new SpriteSheet("/tiled/test1/" + image.source, columns, tilecount / columns);
+        if (spriteSheet == null) {
+            spriteSheet = new SpriteSheet("/tiled/test1/" + image.source, columns, tilecount / columns);
         }
         TiledTile tile = getTiles().get(gid - firstgid);
         int[] durations = null;
@@ -71,7 +65,7 @@ public class TiledTileSet {
                 durations[i] = frame.getDuration();
             }
         }
-        return new Sprite("tile-%s".formatted(gid), spriteAtlas, gid - firstgid, durations);
+        return new Sprite("tile-%s".formatted(gid), spriteSheet, gid - firstgid, durations);
     }
 
 }
