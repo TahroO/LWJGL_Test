@@ -10,7 +10,7 @@ import java.util.*;
 public class TiledMapScene {
 
     public static void init(Scene scene) {
-        TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "map2-60x40.tmx");
+        TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "map1-60x40.tmx");
         scene.setDimension(map.width * map.tilewidth, map.height * map.tileheight);
         for (TiledLayer layer : map.layers) {
             if (layer instanceof TiledTileLayer || layer instanceof TiledObjectGroup) {
