@@ -13,10 +13,10 @@ public class TiledObject {
     public Integer gid;
 
     @XmlAttribute
-    private String name;
+    public String name;
 
     @XmlAttribute
-    private String type;
+    public String type;
 
     @XmlAttribute
     @XmlJavaTypeAdapter(value = DecimalFloatAdapter.class)
@@ -28,11 +28,11 @@ public class TiledObject {
 
     @XmlAttribute
     @XmlJavaTypeAdapter(value = DecimalFloatAdapter.class)
-    private Float width = 0f;
+    public Float width = 0f;
 
     @XmlAttribute
     @XmlJavaTypeAdapter(value = DecimalFloatAdapter.class)
-    private Float height = 0f;
+    public Float height = 0f;
 
     @XmlElement
     private String point;

@@ -22,8 +22,8 @@ public class TiledObjectGroup extends TiledLayer {
                 .range(0, objects.size())
                 .mapToObj(delta -> {
                     TiledObject object = objects.get(delta);
-                    Entity entity = new Entity("entity-%s-%s".formatted(id, delta), "tile-%s".formatted(object.gid));
-                    entity.setPosition(object.x, object.y).updateModelMatrix();
+                    Entity entity = new Entity("entity-%s-%s".formatted(id, delta), "tile-%s".formatted(object.gid), object.type, object.name);
+                    entity.setPosition(object.x, object.y - object.height).updateModelMatrix();
                     return entity;
                 })
                 .toList();

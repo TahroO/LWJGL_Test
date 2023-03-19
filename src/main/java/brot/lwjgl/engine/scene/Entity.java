@@ -10,6 +10,8 @@ public class Entity {
     private Quaternionf rotation;
     private float scale;
     private Vector3f eulerAngleBuffer;
+    private String type;
+    private String name;
 
     public Entity(String id, String modelId) {
         this.id = id;
@@ -21,12 +23,26 @@ public class Entity {
         scale = 1;
     }
 
+    public Entity(String id, String modelId, String type, String name) {
+        this(id, modelId);
+        this.type = type;
+        this.name = name;
+    }
+
     public String getId() {
         return id;
     }
 
     public String getSpriteId() {
         return modelId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Matrix4f getModelMatrix() {
