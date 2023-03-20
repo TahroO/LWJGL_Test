@@ -4,18 +4,24 @@ in vec2 outTextCoord;
 
 out vec4 fragColor;
 
-uniform float time;
 uniform sampler2D txtSampler;
 uniform vec2 spriteSheetSize;
 uniform float spriteIndex;
-uniform float spriteAnimationFrame;
+uniform vec2 spriteOrientation;
+
+vec2 flipTexture = vec2(spriteOrientation.x, spriteOrientation.y);
 
 void main()
 {
-    float spriteIndexFrame = spriteIndex + spriteAnimationFrame;
-    float txtDeltaY = floor(spriteIndexFrame / spriteSheetSize.x);
-    float txtDeltaX = spriteIndexFrame - txtDeltaY * spriteSheetSize.x;
+    float txtDeltaY = floor(spriteIndex / spriteSheetSize.x);
+    float txtDeltaX = spriteIndex - txtDeltaY * spriteSheetSize.x;
+    if (spriteOrientation.y < 0) {
+        txtDeltaY = spriteSheetSize.y - 1 - txtDeltaY;
+    }
+    if (spriteOrientation.x < 0) {
+        txtDeltaX = spriteSheetSize.x - 1 - txtDeltaX;
+    }
     vec2 txtDelta = vec2(txtDeltaX / spriteSheetSize.x, txtDeltaY / spriteSheetSize.y);
-    fragColor = texture2D(txtSampler, outTextCoord + txtDelta);
+    fragColor = texture2D(txtSampler, (outTextCoord + txtDelta) * flipTexture);
 }
 

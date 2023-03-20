@@ -2,8 +2,11 @@
 <tileset version="1.10" tiledversion="1.10.0" name="king-idle-78x58" tilewidth="78" tileheight="58" tilecount="11" columns="11">
  <image source="01-King Human/Idle (78x58).png" width="858" height="58"/>
  <tile id="0">
+  <properties>
+   <property name="enum0" propertytype="Enum0" value="Enum0_1"/>
+  </properties>
   <animation>
-   <frame tileid="0" duration="100"/>
+   <frame tileid="0" duration="3000"/>
    <frame tileid="1" duration="100"/>
    <frame tileid="2" duration="100"/>
    <frame tileid="3" duration="100"/>

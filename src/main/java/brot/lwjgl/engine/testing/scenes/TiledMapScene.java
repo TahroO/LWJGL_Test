@@ -46,15 +46,21 @@ public class TiledMapScene {
     public void input(Window window, Scene scene, long diffTimeMillis) {
         if (window.isKeyPressed(GLFW_KEY_A)) {
             player.getPosition().x -= 1.8;
+            player.setOrientationX(-1);
         } else if (window.isKeyPressed(GLFW_KEY_D)) {
             player.getPosition().x += 1.8;
+            player.setOrientationX(1);
         }
         player.updateModelMatrix();
 
     }
 
     public void update(Scene scene, long diffTimeMillis) {
+//        updatePlayerGravity();
+    }
 
+    private void updatePlayerGravity() {
+        player.getPosition().y += 8;
     }
 
 }

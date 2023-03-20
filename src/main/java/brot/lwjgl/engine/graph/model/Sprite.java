@@ -4,12 +4,13 @@ import brot.lwjgl.engine.graph.mesh.Mesh;
 import brot.lwjgl.engine.graph.texture.SpriteSheet;
 
 /**
- * Defines a Sprite.
+ * Defines a Sprite object.
  */
 public class Sprite extends Model {
     protected SpriteSheet spriteSheet;
     protected Mesh mesh;
     protected float spriteIndex;
+    protected AnimationFrame[] animationFrames;
     protected int[] animationDurations;
     protected long totalAnimationDuration;
     protected boolean hasAnimation;
@@ -32,7 +33,7 @@ public class Sprite extends Model {
      * @param spriteIndex The sprite index on sprite sheet.
      * @param animationDurations Animation durations in ms.
      */
-    public Sprite(String id, SpriteSheet spriteSheet, int spriteIndex, int[] animationDurations) {
+    public Sprite(String id, SpriteSheet spriteSheet, int spriteIndex, AnimationFrame[] animationDurations) {
         this(id, spriteSheet.getSpriteMesh(), spriteSheet, spriteIndex, animationDurations);
     }
 
@@ -45,14 +46,19 @@ public class Sprite extends Model {
      * @param spriteIndex The sprite index on sprite sheet.
      * @param animationDurations Animation durations in ms.
      */
-    public Sprite(String id, Mesh mesh, SpriteSheet spriteSheet, int spriteIndex, int[] animationDurations) {
+    public Sprite(String id, Mesh mesh, SpriteSheet spriteSheet, int spriteIndex, AnimationFrame[] animationDurations) {
         super(id);
         this.spriteSheet = spriteSheet;
         this.spriteIndex = spriteIndex;
         this.mesh = mesh;
-        setAnimationDurations(animationDurations);
+        setAnimationFrames(animationDurations);
     }
 
+    /**
+     * Gets this sprite's sprite sheet.
+     *
+     * @return The sprite sheet.
+     */
     public SpriteSheet getSpriteSheet() {
         return spriteSheet;
     }
@@ -78,30 +84,47 @@ public class Sprite extends Model {
             long modTime = time % totalAnimationDuration;
             for (int i = animationDurations.length - 1; i >= 0; i--) {
                 if (modTime >= animationDurations[i]) {
-                    return i + 1;
+                    return i;
                 }
             }
         }
-        return 0;
+        return spriteIndex;
     }
 
-    public void setAnimationDurations(int[] animationDurations) {
+    /**
+     * Sets sprite animation frames.
+     *
+     * @param animationFrames The animation frames and durations.
+     */
+    public void setAnimationFrames(AnimationFrame[] animationFrames) {
         int totalDuration = 0;
-        if (animationDurations != null && animationDurations.length > 0) {
-            int[] durationsSeries = new int[animationDurations.length];
-            durationsSeries[0] = 0;
-            for (int i = 0; i < animationDurations.length; i++) {
-                totalDuration += animationDurations[i];
+        if (animationFrames != null && animationFrames.length > 0) {
+            int[] durationsSeries = new int[animationFrames.length];
+            for (int i = 0; i < animationFrames.length; i++) {
+                totalDuration += animationFrames[i].duration;
                 durationsSeries[i] = totalDuration;
             }
+            this.animationFrames = animationFrames;
             this.animationDurations = durationsSeries;
             hasAnimation = true;
         }
         this.totalAnimationDuration = totalDuration;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean hasAnimation() {
         return hasAnimation;
     }
+
+    /**
+     * Defines a sprite animation frame.
+     *
+     * @param spriteIndex The sprite index of the frame.
+     * @param duration The frame's duration in ms.
+     */
+    public record AnimationFrame(int spriteIndex, int duration) {}
 
 }

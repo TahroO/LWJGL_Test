@@ -21,11 +21,11 @@
             }
         },
         "map-2.tmx": {
-            "scale": 2,
+            "scale": 3,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 213.5,
-                "y": 326.25
+                "x": 179.33333333333331,
+                "y": 284.16666666666663
             }
         },
         "terrain-32x32.tsx": {
@@ -33,7 +33,8 @@
             "scaleInEditor": 1
         }
     },
-    "last.imagePath": "/home/steffen/prog/tiled/pigs-and-king/01-King Human",
+    "last.imagePath": "01-King Human",
+    "last.objectTemplatePath": "templates",
     "map.lastUsedFormat": "tmx",
     "map.width": 20,
     "openFiles": [
@@ -42,10 +43,10 @@
         "decorations-32x32.tsx"
     ],
     "project": "pigs-and-kings.tiled-project",
-    "property.type": "int",
+    "property.type": "Enum0",
     "recentFiles": [
-        "map-1.tmx",
         "map-2.tmx",
+        "map-1.tmx",
         "terrain-32x32.tsx",
         "decorations-32x32.tsx"
     ],

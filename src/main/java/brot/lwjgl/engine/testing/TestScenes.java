@@ -2,8 +2,12 @@ package brot.lwjgl.engine.testing;
 
 import brot.lwjgl.engine.MouseInput;
 import brot.lwjgl.engine.Window;
+import brot.lwjgl.engine.graph.model.Sprite;
+import brot.lwjgl.engine.graph.texture.SpriteSheet;
 import brot.lwjgl.engine.scene.Camera;
+import brot.lwjgl.engine.scene.Entity;
 import brot.lwjgl.engine.scene.Scene;
+import brot.lwjgl.engine.scene.SceneLayer;
 import org.joml.Math;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -58,6 +62,16 @@ public class TestScenes {
         float camY = Math.min(Math.max(cameraPosition.y, 0), scene.getHeight() - scene.getViewportHeight());
         float camX = Math.min(Math.max(cameraPosition.x, 0), scene.getWidth() - scene.getViewportWidth());
         camera.setPosition(camX, camY);
+    }
+
+    public static void initTestSprite(Scene scene) {
+        SpriteSheet s = new SpriteSheet("/test-texture.png", 4, 4);
+        Sprite sprite = new Sprite("test-1", s, 5);
+        Entity e = new Entity("test-1", "test-1");
+        SceneLayer l = new SceneLayer("test");
+        scene.addLayer(l);
+        scene.addSprite(sprite);
+        scene.addEntity("test", e);
     }
 
 }

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.10" tiledversion="1.10.0" name="king-pig-idle-38x28" tilewidth="38" tileheight="28" tilecount="12" columns="12">
+ <properties>
+  <property name="enum0" propertytype="Enum0" value="Enum0_2"/>
+ </properties>
  <image source="02-King Pig/Idle (38x28).png" width="456" height="28"/>
  <tile id="0">
   <animation>

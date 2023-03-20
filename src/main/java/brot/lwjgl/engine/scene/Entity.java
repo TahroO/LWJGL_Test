@@ -5,20 +5,28 @@ import org.joml.*;
 public class Entity {
     private final String id;
     private final String modelId;
-    private Matrix4f modelMatrix;
-    private Vector3f position;
-    private Quaternionf rotation;
+    private final Matrix4f modelMatrix;
+    private final Vector3f position;
+    private final Quaternionf rotation;
+    private final Vector2f orientation;
     private float scale;
-    private Vector3f eulerAngleBuffer;
+    private final Vector3f eulerAngleBuffer;
     private String type;
     private String name;
 
+    /**
+     * Creates a new Entity object.
+     *
+     * @param id The entity ID.
+     * @param modelId ID of the sprite to use.
+     */
     public Entity(String id, String modelId) {
         this.id = id;
         this.modelId = modelId;
         modelMatrix = new Matrix4f();
         position = new Vector3f();
         rotation = new Quaternionf();
+        orientation = new Vector2f(1f, 1f);
         eulerAngleBuffer = new Vector3f();
         scale = 1;
     }
@@ -85,6 +93,18 @@ public class Entity {
 
     public void updateModelMatrix() {
         modelMatrix.translationRotateScale(position, rotation, scale);
+    }
+
+    public void setOrientationX(float value) {
+        orientation.x = value;
+    }
+
+    public void setOrientationY(float value) {
+        orientation.y = value;
+    }
+
+    public Vector2f getOrientation() {
+        return orientation;
     }
 
 }
