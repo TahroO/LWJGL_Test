@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="6">
+<map version="1.10" tiledversion="1.10.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="8">
  <tileset firstgid="1" source="decorations-32x32.tsx"/>
  <tileset firstgid="43" source="terrain-32x32.tsx"/>
  <tileset firstgid="290" source="king-pig-run-38x28.tsx"/>
  <tileset firstgid="296" source="king-pig-idle-38x28.tsx"/>
  <tileset firstgid="308" source="king-idle-78x58.tsx"/>
  <tileset firstgid="319" source="pig.tsx"/>
+ <tileset firstgid="328" source="Looking Out.tsx"/>
+ <tileset firstgid="331" source="BombPig.tsx"/>
+ <tileset firstgid="341" source="Kings and Pigs.tsx"/>
  <layer id="3" name="Background" width="20" height="20">
   <data encoding="csv">
 83,83,83,83,83,83,83,83,83,83,83,83,83,83,83,83,83,83,83,83,
@@ -62,7 +65,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,9,0,26,27,24,25,0,0,0,
+0,0,0,0,0,0,341,0,0,0,0,9,0,26,27,24,25,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,16,0,33,34,31,32,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,23,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,17,18,18,19,0,0,0,0,
@@ -86,5 +89,7 @@
   </object>
   <object id="4" name="king" type="player" gid="308" x="143.182" y="300.727" width="78" height="58"/>
   <object id="5" gid="319" x="388.753" y="288" width="26" height="30"/>
+  <object id="6" gid="328" x="549.275" y="383.978" width="26" height="20"/>
+  <object id="7" gid="331" x="433.159" y="288.646" width="26" height="26"/>
  </objectgroup>
 </map>
