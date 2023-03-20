@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.10" tiledversion="1.10.0" name="Looking Out" tilewidth="26" tileheight="20" tilecount="3" columns="3">
- <image source="king-pigs/06-Pig Hide in the Box/Looking Out (26x20).png" width="78" height="20"/>
+ <image source="06-Pig Hide in the Box/Looking Out (26x20).png" width="78" height="20"/>
  <tile id="0">
   <animation>
    <frame tileid="0" duration="3000"/>
