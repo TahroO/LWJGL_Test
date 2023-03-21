@@ -7,10 +7,6 @@
  <tileset firstgid="68" source="Thorn3.tsx"/>
  <tileset firstgid="72" source="Plant1.tsx"/>
  <tileset firstgid="73" source="Plants2.tsx"/>
- <tileset firstgid="89" source="HangPlant1.tsx"/>
- <tileset firstgid="92" source="WindPlant.tsx"/>
- <tileset firstgid="122" source="Slime1.tsx"/>
- <tileset firstgid="152" source="BlueFlower.tsx"/>
  <layer id="1" name="Base1" width="40" height="20">
   <data encoding="csv">
 8,9,10,8,9,10,8,9,10,0,11,0,0,0,8,9,9,10,0,0,0,0,0,0,0,0,0,0,11,0,0,0,0,0,0,0,0,0,11,0,
