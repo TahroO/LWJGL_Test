@@ -56,19 +56,23 @@ public class TiledTileSet {
             spriteSheet = new SpriteSheet("/tiled/king-pigs/" + image.source, columns, tilecount / columns);
         }
         TiledTile tile = getTiles().get(gid - firstgid);
-        int[] durations = null;
         Sprite.AnimationFrame[] animationFrames = null;
         if (tile != null && tile.hasAnimation()) {
             List<TiledFrame> frames = tile.getAnimation().getFrames();
-            durations = new int[frames.size()];
             animationFrames = new Sprite.AnimationFrame[frames.size()];
             for (int i = 0; i < frames.size(); i++) {
                 TiledFrame frame = frames.get(i);
-                durations[i] = frame.getDuration();
                 animationFrames[i] = new Sprite.AnimationFrame(frame.getTileId(), frame.getDuration());
             }
         }
-        return new Sprite("tile-%s".formatted(gid), spriteSheet, gid - firstgid, animationFrames);
+        Sprite sprite = new Sprite("tile-%s".formatted(gid), spriteSheet, gid - firstgid, animationFrames);
+        if (tile != null && tile.hasCollisionData()) {
+            List<TiledObject> objects = tile.getCollisionData().objects;
+            for (TiledObject object : objects) {
+                sprite.addCollisionObject(new Sprite.CollisionObject(object.x, object.y, object.width, object.height));
+            }
+        }
+        return sprite;
     }
 
 }

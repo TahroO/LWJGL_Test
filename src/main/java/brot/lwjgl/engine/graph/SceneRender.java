@@ -4,9 +4,8 @@ import brot.lwjgl.engine.graph.mesh.Mesh;
 import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.graph.texture.SpriteSheet;
 import brot.lwjgl.engine.scene.Entity;
-import brot.lwjgl.engine.scene.SceneLayer;
+import brot.lwjgl.engine.scene.layers.SceneLayer;
 import brot.lwjgl.engine.scene.Scene;
-import org.joml.Vector2f;
 
 import java.util.*;
 
@@ -41,41 +40,49 @@ public class SceneRender {
         uniformsMap.createUniform("spriteOrientation");
     }
 
+    /**
+     * Renders a scene.
+     *
+     * @param scene A scene object.
+     */
     public void render(Scene scene) {
         glEnable(GL_BLEND);
         glBlendEquation(GL_FUNC_ADD);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         shaderProgram.bind();
-
-        long time = System.currentTimeMillis() - startedTime;
         uniformsMap.setUniform("projectionMatrix", scene.getProjection().getProjMatrix());
         uniformsMap.setUniform("viewMatrix", scene.getCamera().getViewMatrix());
         uniformsMap.setUniform("txtSampler", 0);
-
-        SpriteSheet currentSpriteSheet = null;
-        Mesh mesh = null;
-        Map<String, Sprite> sprites = scene.getSprites();
-        for (SceneLayer layer : scene.getLayers()) {
-            for (Entity entity : layer.getEntities()) {
-                Sprite sprite = sprites.get(entity.getSpriteId());
-                // TODO bind mesh and texture only once per sprite sheet.
-                SpriteSheet sa = sprite.getSpriteSheet();
-                if (currentSpriteSheet != sa) {
-                    glActiveTexture(GL_TEXTURE0);
-                    sa.bind();
-                    mesh = sa.getSpriteMesh();
-                    glBindVertexArray(mesh.getVaoId());
-                    uniformsMap.setUniform("spriteSheetSize", sa.getSize());
-                    currentSpriteSheet = sa;
-                }
-                uniformsMap.setUniform("spriteIndex", sprite.hasAnimation() ? sprite.getAnimationFrame(time) : sprite.getSpriteIndex());
-                uniformsMap.setUniform("spriteOrientation", entity.getOrientation());
-                uniformsMap.setUniform("modelMatrix", entity.getModelMatrix());
-                glDrawElements(GL_TRIANGLES, mesh.getNumVertices(), GL_UNSIGNED_INT, 0);
-            }
-        }
+        // TODO Animation start time from entity.
+        long time = System.currentTimeMillis() - startedTime;
+        scene.getLayers().forEach(layer -> renderLayer(layer, time));
         glBindVertexArray(0);
         shaderProgram.unbind();
+    }
+
+    /**
+     * Renders a scene layer.
+     *
+     * @param layer The scene layer.
+     * @param time Current time delta sth.
+     */
+    protected void renderLayer(SceneLayer layer, long time) {
+        for (Map.Entry<SpriteSheet, Collection<Sprite>> spriteSheetEntry : layer.getTextures().entrySet()) {
+            SpriteSheet spriteSheet = spriteSheetEntry.getKey();
+            glActiveTexture(GL_TEXTURE0);
+            spriteSheet.bind();
+            Mesh spriteMesh = spriteSheet.getSpriteMesh();
+            glBindVertexArray(spriteMesh.getVaoId());
+            uniformsMap.setUniform("spriteSheetSize", spriteSheet.getSize());
+            for (Sprite sprite : spriteSheetEntry.getValue()) {
+                uniformsMap.setUniform("spriteIndex", sprite.hasAnimation() ? sprite.getAnimationFrame(time) : sprite.getSpriteIndex());
+                for (Entity entity : sprite.getEntities()) {
+                    uniformsMap.setUniform("spriteOrientation", entity.getOrientation());
+                    uniformsMap.setUniform("modelMatrix", entity.getModelMatrix());
+                    glDrawElements(GL_TRIANGLES, spriteMesh.getNumVertices(), GL_UNSIGNED_INT, 0);
+                }
+            }
+        }
     }
 
 }
