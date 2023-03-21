@@ -21,7 +21,7 @@ public class XmlLoader {
     }
 
     public static <T> T loadTiledXml(Class<T> cls, String resourceName) {
-        String pathFormat = "/tiled/king-pigs/%s";
+        String pathFormat = "/tiled/Mossy/%s";
         return XmlLoader.load(cls, pathFormat.formatted(resourceName));
     }
 

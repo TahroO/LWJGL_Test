@@ -23,7 +23,9 @@ public class TiledTileLayer extends TiledLayer {
                 .range(0, gids.size())
                 .mapToObj(delta -> {
                     Entity entity = null;
-                    int gid = gids.get(delta);
+                    int gid = gids.get(delta) & ~(TiledTile.FLIPPED_HORIZONTALLY_FLAG
+                                    | TiledTile.FLIPPED_VERTICALLY_FLAG
+                                    | TiledTile.FLIPPED_DIAGONALLY_FLAG);
                     if (gid > 0) {
                         entity = new Entity("entity-%s-%s".formatted(id, delta), "tile-%s".formatted(gid));
                         int y = delta / width;
