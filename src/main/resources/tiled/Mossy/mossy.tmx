@@ -59,36 +59,6 @@
 0,0,0,0,9,12,3,0,0,0,0,0,43,0,0,0,22,23,24,22,23,24,0,0,0,0,0,0,0,0,0,1,2,13,0,0,0,10,0,0
 </data>
  </layer>
- <objectgroup id="9" name="Object Layer 1">
-  <object id="1" gid="92" x="3189.45" y="6449.94" width="512" height="512"/>
-  <object id="2" gid="92" x="4028.85" y="5934.79" width="512" height="512" rotation="90"/>
-  <object id="3" gid="92" x="2631.88" y="7068.12" width="512" height="512" rotation="90"/>
-  <object id="5" gid="92" x="1010.67" y="7510.55" width="512" height="512"/>
-  <object id="6" gid="92" x="2922.79" y="8207.52" width="512" height="512"/>
-  <object id="7" gid="92" x="1734.91" y="8104.48" width="512" height="512"/>
-  <object id="10" gid="92" x="1892.48" y="3871.15" width="512" height="512"/>
-  <object id="12" gid="92" x="5552" y="5336" width="512" height="512"/>
-  <object id="13" gid="92" x="3312" y="4584" width="512" height="512" rotation="90"/>
-  <object id="14" gid="92" x="2296" y="5272" width="512" height="512" rotation="-90"/>
-  <object id="17" gid="92" x="4560" y="4384" width="512" height="512"/>
-  <object id="18" gid="92" x="4848" y="8104" width="512" height="512"/>
-  <object id="19" gid="92" x="8640" y="7432" width="512" height="512"/>
-  <object id="20" gid="92" x="12192" y="9560" width="512" height="512"/>
-  <object id="22" gid="92" x="15360" y="3504" width="512" height="512"/>
-  <object id="23" gid="92" x="16728" y="4288" width="512" height="512" rotation="90"/>
-  <object id="24" gid="92" x="12040" y="2760" width="512" height="512" rotation="90"/>
-  <object id="25" gid="92" x="10664" y="2288" width="512" height="512"/>
-  <object id="26" gid="92" x="16544" y="9936" width="512" height="512"/>
-  <object id="27" gid="92" x="18144" y="9520" width="512" height="512"/>
-  <object id="28" gid="92" x="15664" y="8488" width="512" height="512"/>
-  <object id="30" gid="92" x="19000" y="8640" width="512" height="512" rotation="90"/>
-  <object id="33" gid="92" x="18864" y="6000" width="512" height="512"/>
-  <object id="34" gid="92" x="16224" y="6576" width="512" height="512"/>
-  <object id="35" gid="92" x="11696" y="6880" width="512" height="512"/>
-  <object id="36" gid="122" x="5289" y="4237" width="510" height="410"/>
-  <object id="37" gid="122" x="7921" y="7845" width="510" height="410"/>
-  <object id="41" gid="122" x="11265" y="2229" width="510" height="410"/>
- </objectgroup>
  <layer id="7" name="Decoration" width="40" height="20">
   <data encoding="csv">
 2684354626,2684354623,0,3221225539,3221225538,3221225537,0,0,0,0,0,0,0,0,1610612805,1610612807,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
