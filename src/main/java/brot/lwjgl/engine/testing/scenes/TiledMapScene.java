@@ -22,7 +22,7 @@ public class TiledMapScene {
 
 
     public void init(Scene scene) {
-        TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "mossy.tmx");
+        TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "graveTest.tmx");
         scene.setDimension(map.width * map.tilewidth, map.height * map.tileheight);
         for (TiledLayer layer : map.layers) {
             if (layer instanceof TiledTileLayer || layer instanceof TiledObjectGroup) {

@@ -53,7 +53,7 @@ public class TiledTileSet {
 
     public Sprite getSprite(int gid, int firstgid) {
         if (spriteSheet == null) {
-            spriteSheet = new SpriteSheet("/tiled/Mossy/" + image.source, columns, tilecount / columns);
+            spriteSheet = new SpriteSheet("/tiled/grave/" + image.source, columns, tilecount / columns);
         }
         TiledTile tile = getTiles().get(gid - firstgid);
         int[] durations = null;
