@@ -62,7 +62,7 @@ public class TestScenes {
     }
 
     public static void initTestSprite(Scene scene) {
-        SpriteSheet s = new SpriteSheet("/test-texture.png", 4, 4);
+        SpriteSheet s = new SpriteSheet("/tiled/testmap/test-texture.png", 4, 4);
         Sprite sprite = new Sprite("test-1", s, 5);
         Entity e = new Entity("test-1", "test-1");
         SceneLayer l = new SceneLayer("test");
