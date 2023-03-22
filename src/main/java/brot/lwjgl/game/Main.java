@@ -2,9 +2,8 @@ package brot.lwjgl.game;
 
 import brot.lwjgl.engine.*;
 import brot.lwjgl.engine.graph.Render;
-import brot.lwjgl.engine.testing.scenes.TiledMapScene;
 import brot.lwjgl.engine.scene.Scene;
-import brot.lwjgl.game.scene.GraveScene;
+import brot.lwjgl.game.scene.TiledMapScene;
 
 /**
  * TODO
@@ -15,7 +14,7 @@ import brot.lwjgl.game.scene.GraveScene;
  * - layer show, hide
  */
 public class Main implements AppLogic {
-    private GraveScene tiledMapScene;
+    private TiledMapScene tiledMapScene;
 
     public static void main(String[] args) {
         Main main = new Main();
@@ -33,7 +32,8 @@ public class Main implements AppLogic {
 
     @Override
     public void init(Window window, Scene scene, Render render) {
-        tiledMapScene = new GraveScene();
+//        tiledMapScene = new GraveScene();
+        tiledMapScene = new TiledMapScene();
         tiledMapScene.init(scene);
     }
 

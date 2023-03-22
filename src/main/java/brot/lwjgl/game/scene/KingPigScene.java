@@ -1,36 +1,40 @@
 package brot.lwjgl.game.scene;
 
-import brot.lwjgl.engine.MouseInput;
 import brot.lwjgl.engine.Window;
-import brot.lwjgl.engine.graph.model.Sprite;
-import brot.lwjgl.engine.scene.Camera;
 import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.scene.Scene;
 import brot.lwjgl.engine.scene.layers.ObjectLayer;
 import brot.lwjgl.engine.scene.layers.SceneLayer;
-import brot.lwjgl.engine.scene.Scene;
 import brot.lwjgl.engine.scene.layers.TileLayer;
-import brot.lwjgl.engine.tiled.*;
+import brot.lwjgl.engine.tiled.TiledLayer;
+import brot.lwjgl.engine.tiled.TiledMap;
+import brot.lwjgl.engine.tiled.TiledObjectLayer;
+import brot.lwjgl.engine.tiled.TiledTileLayer;
 import brot.lwjgl.engine.util.XmlLoader;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public class TiledMapScene {
+public class KingPigScene {
     public static final float MOVE_SPEED = 1.8f;
-    private static final float MOUSE_SENSITIVITY = 55f;
-    private static final float MOVEMENT_SPEED = .3f;
     Entity player;
 
     public void init(Scene scene) {
-        XmlLoader.setBasePath("/tiled/testmap/");
-        TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "flip-tiles--image-layer.tmx");
+        XmlLoader.setBasePath("/tiled/king-pigs/");
+        TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "map-2.tmx");
         scene.setDimension(map.width * map.tilewidth, map.height * map.tileheight);
         for (TiledLayer layer : map.layers) {
             if (layer instanceof TiledTileLayer || layer instanceof TiledObjectLayer) {
                 SceneLayer sceneLayer = addSceneLayer(scene, map, layer);
+                if (layer.id == 4) {
+                    player = sceneLayer.getEntities().stream()
+                            .filter(entity -> entity.getName() != null && entity.getType().equals("player"))
+                            .findFirst()
+                            .orElseThrow(RuntimeException::new);
+                    player.sprite = sceneLayer.getSprite("tile-308");
+                }
             }
         }
     }
@@ -46,6 +50,7 @@ public class TiledMapScene {
             throw new RuntimeException("Missing scene layer type for " + tiledLayer.getClass().getName());
         }
         scene.addLayer(sceneLayer);
+
         // Add sprites.
         tiledLayer.getSprites(map).forEach(sceneLayer::addSprite);
         // Add entities.
@@ -54,30 +59,20 @@ public class TiledMapScene {
     }
 
     public void input(Window window, Scene scene, long diffTimeMillis) {
-        float move = Math.round(diffTimeMillis * MOVEMENT_SPEED);
-        Camera camera = scene.getCamera();
-        if (window.isKeyPressed(GLFW_KEY_W)) {
-            camera.moveUp(move);
-        } else if (window.isKeyPressed(GLFW_KEY_S)) {
-            camera.moveDown(move);
-        }
         if (window.isKeyPressed(GLFW_KEY_A)) {
-            camera.moveLeft(move);
+            player.getPosition().x -= MOVE_SPEED;
+            player.setOrientationX(-1);
         } else if (window.isKeyPressed(GLFW_KEY_D)) {
-            camera.moveRight(move);
+            player.getPosition().x += MOVE_SPEED;
+            player.setOrientationX(1);
+        } else if (window.isKeyPressed(GLFW_KEY_W)) {
+            player.getPosition().y -= MOVE_SPEED;
+        } else if (window.isKeyPressed(GLFW_KEY_S)) {
+            player.getPosition().y += MOVE_SPEED;
         }
 
-        MouseInput mouseInput = window.getMouseInput();
-        if (mouseInput.isRightButtonPressed()) {
-            Vector2f displVec = mouseInput.getDisplVec();
-            camera.moveUp(Math.round(Math.toRadians(-displVec.x * MOUSE_SENSITIVITY)));
-            camera.moveRight(Math.round(Math.toRadians(-displVec.y * MOUSE_SENSITIVITY)));
-        }
+        player.updateModelMatrix();
 
-        Vector3f cameraPosition = camera.getPosition();
-        float camY = Math.min(Math.max(cameraPosition.y, 0), scene.getHeight() - scene.getViewportHeight());
-        float camX = Math.min(Math.max(cameraPosition.x, 0), scene.getWidth() - scene.getViewportWidth());
-        camera.setPosition(camX, camY);
     }
 
     public void update(Scene scene, long diffTimeMillis) {

@@ -6,6 +6,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class TiledObjectGroup extends TiledLayer {
     @XmlElement(name = "object")
@@ -20,7 +21,12 @@ public class TiledObjectGroup extends TiledLayer {
     }
 
     @Override
-    public List<Integer> getUniqueGids() {
+    public List<Integer> getUniqueGids(boolean unmask) {
+        return null;
+    }
+
+    @Override
+    public Stream<Integer> getGids() {
         return null;
     }
 

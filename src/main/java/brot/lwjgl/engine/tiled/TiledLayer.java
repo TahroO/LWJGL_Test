@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public abstract class TiledLayer {
     @XmlAttribute
@@ -41,11 +42,19 @@ public abstract class TiledLayer {
 
     abstract public List<Entity> getEntities(TiledMap map);
 
-    abstract public List<Integer> getUniqueGids();
+    abstract public Stream<Integer> getGids();
+
+    public List<Integer> getUniqueGids(boolean unmask) {
+        Stream<Integer> gids = getGids();
+        if (unmask) {
+            gids = gids.map(this::unmaskGid);
+        }
+        return gids.toList();
+    }
 
     public List<Sprite> getSprites(TiledMap map) {
         List<Sprite> sprites = new ArrayList<>();
-        List<Integer> gids = getUniqueGids();
+        List<Integer> gids = getUniqueGids(true);
         for (TiledTileSetRef ref : map.tilesetRefs.stream().sorted(Comparator.comparingInt(tileSetRef -> -tileSetRef.firstgid)).toList()) {
             if (gids == null) {
                 break;
@@ -60,6 +69,12 @@ public abstract class TiledLayer {
             gids = groupedGids.get(false);
         }
         return sprites;
+    }
+
+    protected int unmaskGid(int gid) {
+        return gid & ~(TiledTile.FLIPPED_HORIZONTALLY_FLAG
+                | TiledTile.FLIPPED_VERTICALLY_FLAG
+                | TiledTile.FLIPPED_DIAGONALLY_FLAG);
     }
 
 }

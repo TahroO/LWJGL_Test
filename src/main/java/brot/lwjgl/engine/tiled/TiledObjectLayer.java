@@ -4,6 +4,7 @@ import brot.lwjgl.engine.scene.Entity;
 
 import java.util.List;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class TiledObjectLayer extends TiledObjectGroup {
     @Override
@@ -20,8 +21,7 @@ public class TiledObjectLayer extends TiledObjectGroup {
     }
 
     @Override
-    public List<Integer> getUniqueGids() {
-        return objects.stream().map(object -> object.gid).distinct().toList();
+    public Stream<Integer> getGids() {
+        return objects.stream().map(object -> object.gid);
     }
-
 }
