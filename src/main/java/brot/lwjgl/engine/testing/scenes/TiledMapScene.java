@@ -51,10 +51,8 @@ public class TiledMapScene {
 
         // Add sprites.
         tiledLayer.getSprites(map).forEach(sceneLayer::addSprite);
-
         // Add entities.
         tiledLayer.getEntities(map).forEach(sceneLayer::addEntity);
-
         return sceneLayer;
     }
 
@@ -88,14 +86,15 @@ public class TiledMapScene {
         for (SceneLayer.CollisionResultTest collisionResult : collisions.getValue()) {
             float deltaX = collisionResult.delta().x;
             float deltaY = collisionResult.delta().y;
-            if (Math.abs(deltaX) <= MOVE_SPEED) {
+            System.out.println(deltaX + " " + deltaY);
+            if (Math.abs(deltaX) > 0) {
                 collisionResult.e2().getPosition().x += deltaX;
-                collisionResult.e2().updateModelMatrix();
+//                collisionResult.e2().updateModelMatrix();
             }
             if (Math.abs(deltaY) <= MOVE_SPEED) {
                 collisionResult.e2().getPosition().y += deltaY;
-                collisionResult.e2().updateModelMatrix();
             }
+            collisionResult.e2().updateModelMatrix();
         }
     }
 

@@ -186,7 +186,7 @@ public class Sprite extends Model {
                                 r1.y <= r2.y + otherCo.height       // r1 bottom edge past r2 top
                 ) {
                     float deltaX = r1.x < r2.x ? r1.x + width - r2.x + POS_FIX : r1.x - r2.x - otherCo.width - POS_FIX;
-                    float deltaY = r1.y - r2.y - otherCo.height - POS_FIX;
+                    float deltaY = 0; //r1.y - r2.y - otherCo.height - POS_FIX;
                     System.out.println("collision " + deltaX);
                     return new SceneLayer.CollisionResultTest(layerEntity, r1, this, otherEntity, r2, otherCo, new Vector2f(deltaX, deltaY));
                 }

@@ -5,13 +5,14 @@
     },
     "activeFile": "testmap.tmx",
     "expandedProjectPaths": [
-        "templates",
-        "."
+        ".",
+        "templates"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "BombPig.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "Kings and Pigs.tsx": {
             "scaleInDock": 1
@@ -28,7 +29,8 @@
             "scaleInEditor": 1
         },
         "king-pig-idle-38x28.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "king-pig-run-38x28.tsx": {
             "scaleInDock": 1
@@ -37,16 +39,16 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 364.5,
-                "y": 167.5
+                "x": 479.5,
+                "y": 319.5
             }
         },
         "map-2.tmx": {
             "scale": 1.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 319.6666666666667,
-                "y": 319.66666666666663
+                "x": 319,
+                "y": 319
             }
         },
         "pig.tsx": {
@@ -58,10 +60,10 @@
         },
         "testmap.tmx": {
             "scale": 0.25,
-            "selectedLayer": 1,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 954,
-                "y": 314
+                "x": 946,
+                "y": 302
             }
         },
         "testset.tsx": {
@@ -79,18 +81,21 @@
         "decorations-32x32.tsx",
         "map-2.tmx",
         "testmap.tmx",
-        "king-idle-78x58.tsx"
+        "king-idle-78x58.tsx",
+        "king-pig-idle-38x28.tsx"
     ],
     "project": "pigs-and-kings.tiled-project",
     "property.type": "Enum0",
     "recentFiles": [
-        "testset.tsx",
         "terrain-32x32.tsx",
         "map-1.tmx",
         "decorations-32x32.tsx",
         "map-2.tmx",
+        "king-pig-idle-38x28.tsx",
         "king-idle-78x58.tsx",
-        "testmap.tmx"
+        "testmap.tmx",
+        "BombPig.tsx",
+        "testset.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
