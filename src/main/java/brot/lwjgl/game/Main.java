@@ -2,10 +2,6 @@ package brot.lwjgl.game;
 
 import brot.lwjgl.engine.*;
 import brot.lwjgl.engine.graph.Render;
-import brot.lwjgl.engine.graph.model.Sprite;
-import brot.lwjgl.engine.graph.texture.SpriteSheet;
-import brot.lwjgl.engine.scene.Entity;
-import brot.lwjgl.engine.scene.SceneLayer;
 import brot.lwjgl.engine.testing.scenes.TiledMapScene;
 import brot.lwjgl.engine.scene.Scene;
 

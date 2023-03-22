@@ -7,12 +7,10 @@ import brot.lwjgl.engine.graph.texture.SpriteSheet;
 import brot.lwjgl.engine.scene.Camera;
 import brot.lwjgl.engine.scene.Entity;
 import brot.lwjgl.engine.scene.Scene;
-import brot.lwjgl.engine.scene.SceneLayer;
+import brot.lwjgl.engine.scene.layers.SceneLayer;
 import org.joml.Math;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-
-import java.util.Arrays;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_D;
@@ -30,7 +28,6 @@ public class TestScenes {
             float x = time - totalDuration * (float) Math.floor(time / totalDuration);
             for (int i = durations.length - 1; i >= 0; i--) {
                 if (x >= durations[i]) {
-                    System.out.println(time + ": " + i);
                     break;
                 }
             }
@@ -70,8 +67,8 @@ public class TestScenes {
         Entity e = new Entity("test-1", "test-1");
         SceneLayer l = new SceneLayer("test");
         scene.addLayer(l);
-        scene.addSprite(sprite);
-        scene.addEntity("test", e);
+        l.addSprite(sprite);
+        l.addEntity(e);
     }
 
 }

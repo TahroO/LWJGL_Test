@@ -5,6 +5,9 @@
   <properties>
    <property name="enum0" propertytype="Enum0" value="Enum0_1"/>
   </properties>
+  <objectgroup draworder="index" id="2">
+   <object id="1" type="collision" x="20.5" y="18" width="22.25" height="26"/>
+  </objectgroup>
   <animation>
    <frame tileid="0" duration="3000"/>
    <frame tileid="1" duration="100"/>

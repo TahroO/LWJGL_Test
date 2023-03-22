@@ -33,7 +33,7 @@ public class TiledMap {
 
     @XmlElements({
             @XmlElement(name = "layer", type = TiledTileLayer.class),
-            @XmlElement(name = "objectgroup", type = TiledObjectGroup.class),
+            @XmlElement(name = "objectgroup", type = TiledObjectLayer.class),
     })
     public List<TiledLayer> layers;
 

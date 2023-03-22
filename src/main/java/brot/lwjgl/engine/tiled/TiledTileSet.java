@@ -2,6 +2,7 @@ package brot.lwjgl.engine.tiled;
 
 import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.graph.texture.SpriteSheet;
+import brot.lwjgl.engine.util.XmlLoader;
 import jakarta.xml.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -53,22 +54,26 @@ public class TiledTileSet {
 
     public Sprite getSprite(int gid, int firstgid) {
         if (spriteSheet == null) {
-            spriteSheet = new SpriteSheet("/tiled/Mossy/" + image.source, columns, tilecount / columns);
+            spriteSheet = new SpriteSheet(XmlLoader.getBasePath() + image.source, columns, tilecount / columns);
         }
         TiledTile tile = getTiles().get(gid - firstgid);
-        int[] durations = null;
         Sprite.AnimationFrame[] animationFrames = null;
         if (tile != null && tile.hasAnimation()) {
             List<TiledFrame> frames = tile.getAnimation().getFrames();
-            durations = new int[frames.size()];
             animationFrames = new Sprite.AnimationFrame[frames.size()];
             for (int i = 0; i < frames.size(); i++) {
                 TiledFrame frame = frames.get(i);
-                durations[i] = frame.getDuration();
                 animationFrames[i] = new Sprite.AnimationFrame(frame.getTileId(), frame.getDuration());
             }
         }
-        return new Sprite("tile-%s".formatted(gid), spriteSheet, gid - firstgid, animationFrames);
+        Sprite sprite = new Sprite("tile-%s".formatted(gid), spriteSheet, gid - firstgid, animationFrames);
+        if (tile != null && tile.hasCollisionData()) {
+            List<TiledObject> objects = tile.getCollisionData().objects;
+            for (TiledObject object : objects) {
+                sprite.addCollisionObject(new Sprite.CollisionObject(object.x, object.y, object.width, object.height));
+            }
+        }
+        return sprite;
     }
 
 }
