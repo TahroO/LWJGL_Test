@@ -1,4 +1,4 @@
-package brot.lwjgl.engine.testing.scenes;
+package brot.lwjgl.game.scene;
 
 import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.graph.texture.SpriteSheet;

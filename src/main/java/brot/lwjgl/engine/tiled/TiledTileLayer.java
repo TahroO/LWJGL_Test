@@ -1,9 +1,6 @@
 package brot.lwjgl.engine.tiled;
 
-import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.scene.Entity;
-import brot.lwjgl.engine.testing.scenes.TiledMapScene;
-import brot.lwjgl.engine.util.XmlLoader;
 import jakarta.xml.bind.annotation.XmlElement;
 
 import java.util.*;

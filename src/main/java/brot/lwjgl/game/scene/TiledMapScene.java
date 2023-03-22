@@ -1,4 +1,4 @@
-package brot.lwjgl.engine.testing.scenes;
+package brot.lwjgl.game.scene;
 
 import brot.lwjgl.engine.MouseInput;
 import brot.lwjgl.engine.Window;
