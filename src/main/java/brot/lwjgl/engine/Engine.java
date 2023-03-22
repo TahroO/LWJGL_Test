@@ -39,6 +39,12 @@ public class Engine {
         scene.resize(window.getWidth(), window.getHeight());
     }
 
+    // Debugging.
+    private boolean printUpdateDurations;
+    private long timeer;
+    private int frames;
+    private int durationSum;
+
     private void run() {
         long initialTime = System.currentTimeMillis();
         float timeU = 1000.0f / targetUps;
@@ -51,6 +57,7 @@ public class Engine {
             window.pollEvents();
 
             long now = System.currentTimeMillis();
+            long startUpdate = System.nanoTime();
             deltaUpdate += (now - initialTime) / timeU;
             deltaFps += (now - initialTime) / timeR;
 
@@ -64,6 +71,16 @@ public class Engine {
                 appLogic.update(window, scene, diffTimeMillis);
                 updateTime = now;
                 deltaUpdate--;
+            }
+
+            long updateDuration = System.nanoTime() - startUpdate;
+            durationSum += updateDuration;
+            frames++;
+            if (printUpdateDurations && startUpdate - timeer > 1000000000L) {
+                System.out.println((durationSum / (float) frames) / 1000000f + " ms");
+                timeer = startUpdate;
+                frames = 0;
+                durationSum = 0;
             }
 
             if (targetFps <= 0 || deltaFps >= 1) {

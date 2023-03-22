@@ -5,11 +5,10 @@ import brot.lwjgl.engine.Window;
 import brot.lwjgl.engine.scene.Camera;
 import brot.lwjgl.engine.scene.Entity;
 import brot.lwjgl.engine.scene.Scene;
-import brot.lwjgl.engine.scene.SceneLayer;
-import brot.lwjgl.engine.tiled.TiledLayer;
-import brot.lwjgl.engine.tiled.TiledMap;
-import brot.lwjgl.engine.tiled.TiledObjectGroup;
-import brot.lwjgl.engine.tiled.TiledTileLayer;
+import brot.lwjgl.engine.scene.layers.ObjectLayer;
+import brot.lwjgl.engine.scene.layers.SceneLayer;
+import brot.lwjgl.engine.scene.layers.TileLayer;
+import brot.lwjgl.engine.tiled.*;
 import brot.lwjgl.engine.util.XmlLoader;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -23,6 +22,7 @@ public class GraveScene {
 
 
     public void init(Scene scene) {
+        XmlLoader.setBasePath("/tiled/grave/");
         TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "graveTest.tmx");
         scene.setDimension(map.width * map.tilewidth, map.height * map.tileheight);
         for (TiledLayer layer : map.layers) {
@@ -38,15 +38,22 @@ public class GraveScene {
         }
     }
 
-    private SceneLayer addSceneLayer(Scene scene, TiledMap map, TiledLayer objectLayer) {
+    private SceneLayer addSceneLayer(Scene scene, TiledMap map, TiledLayer tiledLayer) {
         // Add scene layer.
-        SceneLayer sceneLayer = new SceneLayer("tiled-layer-%s".formatted(objectLayer.id));
+        SceneLayer sceneLayer;
+        if (tiledLayer instanceof TiledTileLayer) {
+            sceneLayer = new TileLayer("tiled-layer-%s".formatted(tiledLayer.id));
+        } else if (tiledLayer instanceof TiledObjectLayer) {
+            sceneLayer = new ObjectLayer("tiled-layer-%s".formatted(tiledLayer.id));
+        } else {
+            throw new RuntimeException("Missing scene layer type for " + tiledLayer.getClass().getName());
+        }
         scene.addLayer(sceneLayer);
-        // Add sprites.
-        objectLayer.getSprites(map).forEach(scene::addSprite);
-        // Add entities.
-        objectLayer.getEntities(map).forEach(entity -> scene.addEntity(sceneLayer.getId(), entity));
 
+        // Add sprites.
+        tiledLayer.getSprites(map).forEach(sceneLayer::addSprite);
+        // Add entities.
+        tiledLayer.getEntities(map).forEach(sceneLayer::addEntity);
         return sceneLayer;
     }
 

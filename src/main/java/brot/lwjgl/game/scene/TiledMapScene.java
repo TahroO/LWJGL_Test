@@ -1,92 +1,101 @@
-package brot.lwjgl.game.scene;
+package brot.lwjgl.engine.testing.scenes;
 
 import brot.lwjgl.engine.MouseInput;
 import brot.lwjgl.engine.Window;
-import brot.lwjgl.engine.scene.Camera;
+import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.scene.Entity;
-import brot.lwjgl.engine.scene.SceneLayer;
+import brot.lwjgl.engine.scene.layers.ObjectLayer;
+import brot.lwjgl.engine.scene.layers.SceneLayer;
 import brot.lwjgl.engine.scene.Scene;
+import brot.lwjgl.engine.scene.layers.TileLayer;
 import brot.lwjgl.engine.tiled.*;
 import brot.lwjgl.engine.util.XmlLoader;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
 
 import java.util.*;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 public class TiledMapScene {
+    public static final float MOVE_SPEED = 1.8f;
     Entity player;
-    private static final float MOUSE_SENSITIVITY = 40f;
-    private static final float MOVEMENT_SPEED = .3f;
-
 
     public void init(Scene scene) {
-        TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "graveTest.tmx");
+        XmlLoader.setBasePath("/tiled/king-pigs/");
+        TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "map-2.tmx");
         scene.setDimension(map.width * map.tilewidth, map.height * map.tileheight);
         for (TiledLayer layer : map.layers) {
-            if (layer instanceof TiledTileLayer || layer instanceof TiledObjectGroup) {
+            if (layer instanceof TiledTileLayer || layer instanceof TiledObjectLayer) {
                 SceneLayer sceneLayer = addSceneLayer(scene, map, layer);
                 if (layer.id == 4) {
                     player = sceneLayer.getEntities().stream()
                             .filter(entity -> entity.getName() != null && entity.getType().equals("player"))
                             .findFirst()
                             .orElseThrow(RuntimeException::new);
+                    player.sprite = sceneLayer.getSprite("tile-308");
                 }
             }
         }
     }
 
-    private SceneLayer addSceneLayer(Scene scene, TiledMap map, TiledLayer objectLayer) {
+    private SceneLayer addSceneLayer(Scene scene, TiledMap map, TiledLayer tiledLayer) {
         // Add scene layer.
-        SceneLayer sceneLayer = new SceneLayer("tiled-layer-%s".formatted(objectLayer.id));
+        SceneLayer sceneLayer;
+        if (tiledLayer instanceof TiledTileLayer) {
+            sceneLayer = new TileLayer("tiled-layer-%s".formatted(tiledLayer.id));
+        } else if (tiledLayer instanceof TiledObjectLayer) {
+            sceneLayer = new ObjectLayer("tiled-layer-%s".formatted(tiledLayer.id));
+        } else {
+            throw new RuntimeException("Missing scene layer type for " + tiledLayer.getClass().getName());
+        }
         scene.addLayer(sceneLayer);
-        // Add sprites.
-        objectLayer.getSprites(map).forEach(scene::addSprite);
-        // Add entities.
-        objectLayer.getEntities(map).forEach(entity -> scene.addEntity(sceneLayer.getId(), entity));
 
+        // Add sprites.
+        tiledLayer.getSprites(map).forEach(sceneLayer::addSprite);
+        // Add entities.
+        tiledLayer.getEntities(map).forEach(sceneLayer::addEntity);
         return sceneLayer;
     }
 
     public void input(Window window, Scene scene, long diffTimeMillis) {
-        float move = Math.round(diffTimeMillis * MOVEMENT_SPEED);
-        Camera camera = scene.getCamera();
-        if (window.isKeyPressed(GLFW_KEY_W)) {
-            camera.moveUp(move);
-        } else if (window.isKeyPressed(GLFW_KEY_S)) {
-            camera.moveDown(move);
-        }
         if (window.isKeyPressed(GLFW_KEY_A)) {
-            camera.moveLeft(move);
+            player.getPosition().x -= MOVE_SPEED;
+            player.setOrientationX(-1);
         } else if (window.isKeyPressed(GLFW_KEY_D)) {
-            camera.moveRight(move);
+            player.getPosition().x += MOVE_SPEED;
+            player.setOrientationX(1);
+        } else if (window.isKeyPressed(GLFW_KEY_W)) {
+            player.getPosition().y -= MOVE_SPEED;
+        } else if (window.isKeyPressed(GLFW_KEY_S)) {
+            player.getPosition().y += MOVE_SPEED;
         }
 
-        MouseInput mouseInput = window.getMouseInput();
-        if (mouseInput.isRightButtonPressed()) {
-            Vector2f displVec = mouseInput.getDisplVec();
-            camera.moveUp(Math.round(Math.toRadians(-displVec.x * MOUSE_SENSITIVITY)));
-            camera.moveRight(Math.round(Math.toRadians(-displVec.y * MOUSE_SENSITIVITY)));
-        }
-
-        Vector3f cameraPosition = camera.getPosition();
-        float camY = Math.min(Math.max(cameraPosition.y, 0), scene.getHeight() - scene.getViewportHeight());
-        float camX = Math.min(Math.max(cameraPosition.x, 0), scene.getWidth() - scene.getViewportWidth());
-        camera.setPosition(camX, camY);
-//        if (window.isKeyPressed(GLFW_KEY_A)) {
-//            player.getPosition().x -= 1.8;
-//            player.setOrientationX(-1);
-//        } else if (window.isKeyPressed(GLFW_KEY_D)) {
-//            player.getPosition().x += 1.8;
-//            player.setOrientationX(1);
-//        }
-//        player.updateModelMatrix();
+        player.updateModelMatrix();
 
     }
 
     public void update(Scene scene, long diffTimeMillis) {
 //        updatePlayerGravity();
+        // Last step - resolve collision.
+        scene.getLayers().stream()
+                .map(layer -> layer.getCollisions(player))
+                .flatMap(c -> c.entrySet().stream())
+                .forEach(this::resolveCollision);
+    }
+
+    protected void resolveCollision(Map.Entry<Entity, List<SceneLayer.CollisionResultTest>> collisions) {
+        for (SceneLayer.CollisionResultTest collisionResult : collisions.getValue()) {
+            float deltaX = collisionResult.delta().x;
+            float deltaY = collisionResult.delta().y;
+            if (Math.abs(deltaX) > 0) {
+                collisionResult.e2().getPosition().x += deltaX;
+                collisionResult.e2().updateModelMatrix();
+            }
+            if (Math.abs(deltaY) <= MOVE_SPEED) {
+                collisionResult.e2().getPosition().y += deltaY;
+                collisionResult.e2().updateModelMatrix();
+            }
+        }
     }
 
     private void updatePlayerGravity() {

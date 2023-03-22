@@ -12,17 +12,28 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class XmlLoader {
+    private static String basePath;
+    private static String basePathFormat;
     private static Map<String, TiledTileSet> tileSetCache;
     private static final Map<Class<?>, JAXBContext> jaxbContexts;
 
     static {
         jaxbContexts = new ConcurrentHashMap<>();
         tileSetCache = new HashMap<>();
+        setBasePath("/tiled/king-pigs/");
+    }
+
+    public static void setBasePath(String basePath) {
+        XmlLoader.basePath = basePath.endsWith("/") ? basePath : basePath + "/";
+        basePathFormat = basePath + "%s";
+    }
+
+    public static String getBasePath() {
+        return basePath;
     }
 
     public static <T> T loadTiledXml(Class<T> cls, String resourceName) {
-        String pathFormat = "/tiled/grave/%s";
-        return XmlLoader.load(cls, pathFormat.formatted(resourceName));
+        return XmlLoader.load(cls, basePathFormat.formatted(resourceName));
     }
 
     public static TiledTileSet loadTileSet(String resourceName) {
@@ -37,7 +48,6 @@ public class XmlLoader {
         try (InputStream inputStream = XmlLoader.class.getResourceAsStream(resourceName)) {
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             T o = (T) jaxbUnmarshaller.unmarshal(inputStream);
-            System.out.println(o);
             return o;
         } catch (JAXBException | IOException e) {
             throw new RuntimeException(e);

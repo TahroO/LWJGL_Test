@@ -69,4 +69,12 @@ public class TiledTile {
     public TiledAnimation getAnimation() {
         return animation;
     }
+
+    public boolean hasCollisionData() {
+        return collisionData != null;
+    }
+
+    public TiledObjectGroup getCollisionData() {
+        return collisionData;
+    }
 }

@@ -35,6 +35,13 @@ public class ShaderProgram {
         }
     }
 
+    /**
+     * Creates, compiles and attaches a shader program.
+     *
+     * @param shaderCode The shader program.
+     * @param shaderType The shader type (OpenGL constant).
+     * @return The shader ID.
+     */
     protected int createShader(String shaderCode, int shaderType) {
         int shaderId = glCreateShader(shaderType);
         if (shaderId == 0) {

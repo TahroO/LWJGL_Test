@@ -43,6 +43,10 @@ public class SpriteSheet extends Texture {
         return mesh;
     }
 
+    public Vector2f getSpriteSize() {
+        return spriteSize;
+    }
+
     /**
      * Gets texture UV coordinates.
      */
