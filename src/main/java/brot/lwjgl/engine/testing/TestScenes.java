@@ -28,7 +28,6 @@ public class TestScenes {
             float x = time - totalDuration * (float) Math.floor(time / totalDuration);
             for (int i = durations.length - 1; i >= 0; i--) {
                 if (x >= durations[i]) {
-                    System.out.println(time + ": " + i);
                     break;
                 }
             }

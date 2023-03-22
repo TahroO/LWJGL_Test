@@ -3,6 +3,10 @@ package brot.lwjgl.engine.scene;
 import brot.lwjgl.engine.graph.model.Sprite;
 import org.joml.*;
 
+/**
+ * needs:
+ * - sprite dimension for collision detection
+ */
 public class Entity {
     private final String id;
     private final String modelId;

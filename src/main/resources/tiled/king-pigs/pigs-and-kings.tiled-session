@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "king-idle-78x58.tsx",
+    "activeFile": "testmap.tmx",
     "expandedProjectPaths": [
-        ".",
-        "templates"
+        "templates",
+        "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -35,10 +35,10 @@
         },
         "map-1.tmx": {
             "scale": 1,
-            "selectedLayer": 0,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 479.5,
-                "y": 319.5
+                "x": 364.5,
+                "y": 167.5
             }
         },
         "map-2.tmx": {
@@ -60,12 +60,16 @@
             "scale": 0.25,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 960,
-                "y": 322
+                "x": 954,
+                "y": 314
             }
+        },
+        "testset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         }
     },
-    "last.imagePath": "01-King Human",
+    "last.imagePath": "/home/steffen/prog/tiled/towerDefense",
     "last.objectTemplatePath": "templates",
     "map.lastUsedFormat": "tmx",
     "map.width": 60,
@@ -80,16 +84,17 @@
     "project": "pigs-and-kings.tiled-project",
     "property.type": "Enum0",
     "recentFiles": [
+        "testset.tsx",
         "terrain-32x32.tsx",
         "map-1.tmx",
         "decorations-32x32.tsx",
         "map-2.tmx",
-        "testmap.tmx",
-        "king-idle-78x58.tsx"
+        "king-idle-78x58.tsx",
+        "testmap.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 58,
-        "width": 78
+        "height": 32,
+        "width": 32
     }
 }

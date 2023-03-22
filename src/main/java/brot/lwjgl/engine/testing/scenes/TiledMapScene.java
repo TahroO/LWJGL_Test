@@ -16,6 +16,7 @@ import java.util.*;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class TiledMapScene {
+    public static final float MOVE_SPEED = 1.8f;
     Entity player;
 
     public void init(Scene scene) {
@@ -59,18 +60,24 @@ public class TiledMapScene {
 
     public void input(Window window, Scene scene, long diffTimeMillis) {
         if (window.isKeyPressed(GLFW_KEY_A)) {
-            player.getPosition().x -= 1.8;
+            player.getPosition().x -= MOVE_SPEED;
             player.setOrientationX(-1);
         } else if (window.isKeyPressed(GLFW_KEY_D)) {
-            player.getPosition().x += 1.8;
+            player.getPosition().x += MOVE_SPEED;
             player.setOrientationX(1);
+        } else if (window.isKeyPressed(GLFW_KEY_W)) {
+            player.getPosition().y -= MOVE_SPEED;
+        } else if (window.isKeyPressed(GLFW_KEY_S)) {
+            player.getPosition().y += MOVE_SPEED;
         }
+
         player.updateModelMatrix();
 
     }
 
     public void update(Scene scene, long diffTimeMillis) {
 //        updatePlayerGravity();
+        // Last step - resolve collision.
         scene.getLayers().stream()
                 .map(layer -> layer.getCollisions(player))
                 .flatMap(c -> c.entrySet().stream())
@@ -78,27 +85,18 @@ public class TiledMapScene {
     }
 
     protected void resolveCollision(Map.Entry<Entity, List<SceneLayer.CollisionResultTest>> collisions) {
-//        Entity layerEntity = collisions.getValue().get(0).layerEntity();
-//
-//        Sprite layerEntitySprite = collisions.getValue().get(0).layerSprite();
-//        Entity otherEntity = collisions.getValue().get(0).otherEntity();
-//        Sprite otherEntitySprite = player.sprite;
-        for (SceneLayer.CollisionResultTest cr : collisions.getValue()) {
-            Sprite.CollisionObject lco = cr.c1();
-            Sprite.CollisionObject pco = cr.c2();
-            Vector2f lep = cr.p1();
-            Vector2f pep = cr.p2();
-            if (lep.x < pep.x) {
-                // Move back right.
-                cr.e2().getPosition().x = lco.x() + lco.width() + 10;
-            } else if (lep.x > pep.x) {
-                // Move back left.
-                cr.e2().getPosition().x = lep.x + 1;
+        for (SceneLayer.CollisionResultTest collisionResult : collisions.getValue()) {
+            float deltaX = collisionResult.delta().x;
+            float deltaY = collisionResult.delta().y;
+            if (Math.abs(deltaX) <= MOVE_SPEED) {
+                collisionResult.e2().getPosition().x += deltaX;
+                collisionResult.e2().updateModelMatrix();
+            }
+            if (Math.abs(deltaY) <= MOVE_SPEED) {
+                collisionResult.e2().getPosition().y += deltaY;
+                collisionResult.e2().updateModelMatrix();
             }
         }
-
-
-        int x = 1;
     }
 
     private void updatePlayerGravity() {

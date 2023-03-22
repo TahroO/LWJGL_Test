@@ -82,12 +82,12 @@ public class SceneLayer {
                 if (!collisionObjects.containsKey(co)) {
                     collisionObjects.put(co, new ArrayList<>());
                 }
-                sprite.getCollisionObjects().forEach(co2 -> collisionObjects.get(co2).add(entity));
             }
+            sprite.getCollisionObjects().forEach(co2 -> collisionObjects.get(co2).add(entity));
         }
     }
 
-    public record CollisionResultTest(Entity e1, Vector2f p1, Sprite.CollisionObject c1, Entity e2, Vector2f p2, Sprite.CollisionObject c2) {}
+    public record CollisionResultTest(Entity e1, Vector2f p1, Sprite.CollisionObject c1, Entity e2, Vector2f p2, Sprite.CollisionObject c2, Vector2f delta) {}
 
     public Map<Entity, List<CollisionResultTest>> getCollisions(Entity... entities) {
         Map<Entity, List<CollisionResultTest>> collisions = new HashMap<>();

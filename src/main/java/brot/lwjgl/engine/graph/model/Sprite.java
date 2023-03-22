@@ -28,7 +28,7 @@ public class Sprite extends Model {
     /**
      * Creates a new Sprite object.
      *
-     * @param id Sprite ID.
+     * @param id          Sprite ID.
      * @param spriteIndex The sprite index on sprite sheet.
      */
     public Sprite(String id, SpriteSheet spriteAtlas, int spriteIndex) {
@@ -38,9 +38,9 @@ public class Sprite extends Model {
     /**
      * Creates a new Sprite object.
      *
-     * @param id Sprite ID.
-     * @param spriteSheet The sprite sheet.
-     * @param spriteIndex The sprite index on sprite sheet.
+     * @param id                 Sprite ID.
+     * @param spriteSheet        The sprite sheet.
+     * @param spriteIndex        The sprite index on sprite sheet.
      * @param animationDurations Animation durations in ms.
      */
     public Sprite(String id, SpriteSheet spriteSheet, int spriteIndex, AnimationFrame[] animationDurations) {
@@ -50,10 +50,10 @@ public class Sprite extends Model {
     /**
      * Creates a new Sprite object.
      *
-     * @param id Sprite ID.
-     * @param mesh Sprite mesh.
-     * @param spriteSheet The sprite sheet.
-     * @param spriteIndex The sprite index on sprite sheet.
+     * @param id                 Sprite ID.
+     * @param mesh               Sprite mesh.
+     * @param spriteSheet        The sprite sheet.
+     * @param spriteIndex        The sprite index on sprite sheet.
      * @param animationDurations Animation durations in ms.
      */
     public Sprite(String id, Mesh mesh, SpriteSheet spriteSheet, int spriteIndex, AnimationFrame[] animationDurations) {
@@ -123,7 +123,6 @@ public class Sprite extends Model {
     }
 
     /**
-     *
      * @return
      */
     public boolean hasAnimation() {
@@ -147,32 +146,49 @@ public class Sprite extends Model {
      * Defines a sprite animation frame.
      *
      * @param spriteIndex The sprite index of the frame.
-     * @param duration The frame's duration in ms.
+     * @param duration    The frame's duration in ms.
      */
-    public record AnimationFrame(int spriteIndex, int duration) {}
+    public record AnimationFrame(int spriteIndex, int duration) {
+    }
 
-    private static long timeer;
     public record CollisionObject(float x, float y, float width, float height) {
-        public SceneLayer.CollisionResultTest checkCollision(Entity self, Entity other) {
-            if (self == other) {
+        public static float POS_FIX = .0001f;
+
+        /**
+         * Gets the absolute position of a collision object on screen.
+         */
+        private Vector2f getAbsolutePosition(CollisionObject co, Entity entity) {
+            Vector3f entityPosition = entity.getPosition();
+            float x;
+            if (entity.getOrientation().x < 0) {
+                Vector2f spriteSize = entity.sprite.getSpriteSheet().getSpriteSize();
+                x = entityPosition.x + spriteSize.x - (co.x + co.width);
+            } else {
+                x = entityPosition.x + co.x;
+            }
+            float y = entityPosition.y + co.y;
+            return new Vector2f(x, y);
+        }
+
+        public SceneLayer.CollisionResultTest checkCollision(Entity layerEntity, Entity otherEntity) {
+            if (layerEntity == otherEntity) {
                 return null;
             }
-            for (CollisionObject otherCo : other.sprite.collisionObjects) {
-                Vector3f r1Position = self.getPosition();
-                Vector3f r2Position = other.getPosition();
-                Vector2f r1 = new Vector2f(r1Position.x + x, r1Position.y + y);
-                Vector2f r2 = new Vector2f(r2Position.x + otherCo.x, r2Position.y + otherCo.y);
+            for (CollisionObject otherCo : otherEntity.sprite.collisionObjects) {
+                // Get absolute positions of collision objects.
+                Vector2f r1 = getAbsolutePosition(this, layerEntity);
+                Vector2f r2 = getAbsolutePosition(otherCo, otherEntity);
 
-                if (System.currentTimeMillis() - 1000 > timeer) {
-                    System.out.println(r2.x);
-                    timeer = System.currentTimeMillis();
-                }
-
-                if (r1.x + width >= r2.x &&     // r1 right edge past r2 left
-                        r1.x <= r2.x + otherCo.width &&       // r1 left edge past r2 right
-                        r1.y + otherCo.height >= r2.y &&       // r1 top edge past r2 bottom
-                        r1.y <= r2.y + otherCo.height) {       // r1 bottom edge past r2 top
-                    return new SceneLayer.CollisionResultTest(self, r1, this, other, r2, otherCo);
+                if (
+                        r1.x + width >= r2.x &&             // r1 right edge past r2 left
+                                r1.x <= r2.x + otherCo.width &&     // r1 left edge past r2 right
+                                r1.y + otherCo.height >= r2.y &&    // r1 top edge past r2 bottom
+                                r1.y <= r2.y + otherCo.height       // r1 bottom edge past r2 top
+                ) {
+                    float deltaX = r1.x < r2.x ? r1.x + width - r2.x + POS_FIX : r1.x - r2.x - otherCo.width - POS_FIX;
+                    float deltaY = r1.y - r2.y - otherCo.height - POS_FIX;
+                    System.out.println("collision " + deltaX);
+                    return new SceneLayer.CollisionResultTest(layerEntity, r1, this, otherEntity, r2, otherCo, new Vector2f(deltaX, deltaY));
                 }
             }
             return null;

@@ -37,7 +37,6 @@ public class XmlLoader {
         try (InputStream inputStream = XmlLoader.class.getResourceAsStream(resourceName)) {
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             T o = (T) jaxbUnmarshaller.unmarshal(inputStream);
-            System.out.println(o);
             return o;
         } catch (JAXBException | IOException e) {
             throw new RuntimeException(e);
