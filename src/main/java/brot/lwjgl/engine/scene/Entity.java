@@ -13,7 +13,7 @@ public class Entity {
     private final Matrix4f modelMatrix;
     private final Vector3f position;
     private final Quaternionf rotation;
-    private final Vector2f orientation;
+    private final Vector3f orientation;
     private float scale;
     private final Vector3f eulerAngleBuffer;
     private String type;
@@ -34,7 +34,7 @@ public class Entity {
         modelMatrix = new Matrix4f();
         position = new Vector3f();
         rotation = new Quaternionf();
-        orientation = new Vector2f(1f, 1f);
+        orientation = new Vector3f(1f, 1f, 1f);
         eulerAngleBuffer = new Vector3f();
         scale = 1;
     }
@@ -77,6 +77,12 @@ public class Entity {
         return scale;
     }
 
+    /**
+     * Sets the entity's position.
+     * @param x New x position.
+     * @param y New y position.
+     * @return This entity object.
+     */
     public final Entity setPosition(float x, float y) {
         position.x = x;
         position.y = y;
@@ -103,15 +109,32 @@ public class Entity {
         modelMatrix.translationRotateScale(position, rotation, scale);
     }
 
-    public void setOrientationX(float value) {
-        orientation.x = value;
+    /**
+     * Flips texture vertically.
+     */
+    public void flipV() {
+        orientation.y = orientation.y * -1;
     }
 
-    public void setOrientationY(float value) {
-        orientation.y = value;
+    /**
+     * Flips texture horizontally.
+     */
+    public void flipH() {
+        orientation.x = orientation.x * -1;
     }
 
-    public Vector2f getOrientation() {
+    /**
+     * Flips texture anti diagonally.
+     */
+    public void flipD() {
+        orientation.z = orientation.z * -1;
+    }
+
+    /**
+     * Gets the texture orientation.
+     * @return
+     */
+    public Vector3f getOrientation() {
         return orientation;
     }
 

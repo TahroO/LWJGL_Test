@@ -93,7 +93,7 @@ public class Sprite extends Model {
     // TODO scale animation duration in entity.
     public float getAnimationFrame(long time) {
         if (totalAnimationDuration > 0) {
-            long modTime = time % totalAnimationDuration;
+            long modTime = time % totalAnimationDuration + 1000;
             for (int i = animationDurations.length - 1; i >= 0; i--) {
                 if (modTime >= animationDurations[i]) {
                     return animationFrames[i].spriteIndex;

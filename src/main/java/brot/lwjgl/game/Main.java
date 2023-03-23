@@ -3,6 +3,7 @@ package brot.lwjgl.game;
 import brot.lwjgl.engine.*;
 import brot.lwjgl.engine.graph.Render;
 import brot.lwjgl.engine.scene.Scene;
+import brot.lwjgl.engine.testing.TestScenes;
 import brot.lwjgl.game.scene.TiledMapScene;
 
 /**
@@ -35,6 +36,7 @@ public class Main implements AppLogic {
 //        tiledMapScene = new GraveScene();
         tiledMapScene = new TiledMapScene();
         tiledMapScene.init(scene);
+//        TestScenes.initTestSprite(scene);
     }
 
     @Override
@@ -44,7 +46,7 @@ public class Main implements AppLogic {
 
     @Override
     public void update(Window window, Scene scene, long timeDelta) {
-        tiledMapScene.update(scene, timeDelta);
+//        tiledMapScene.update(scene, timeDelta);
     }
 
 }

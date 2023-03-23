@@ -61,10 +61,10 @@ public class KingPigScene {
     public void input(Window window, Scene scene, long diffTimeMillis) {
         if (window.isKeyPressed(GLFW_KEY_A)) {
             player.getPosition().x -= MOVE_SPEED;
-            player.setOrientationX(-1);
+            player.flipH();
         } else if (window.isKeyPressed(GLFW_KEY_D)) {
             player.getPosition().x += MOVE_SPEED;
-            player.setOrientationX(1);
+            player.flipH();
         } else if (window.isKeyPressed(GLFW_KEY_W)) {
             player.getPosition().y -= MOVE_SPEED;
         } else if (window.isKeyPressed(GLFW_KEY_S)) {

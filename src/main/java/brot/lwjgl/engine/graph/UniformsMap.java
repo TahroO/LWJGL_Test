@@ -1,8 +1,6 @@
 package brot.lwjgl.engine.graph;
 
-import org.joml.Matrix4f;
-import org.joml.Vector2f;
-import org.joml.Vector2i;
+import org.joml.*;
 import org.lwjgl.system.MemoryStack;
 
 import java.util.HashMap;
@@ -11,7 +9,6 @@ import java.util.Map;
 import static org.lwjgl.opengl.GL20.*;
 
 public class UniformsMap {
-
     private int programId;
     private Map<String, Integer> uniforms;
 
@@ -72,6 +69,16 @@ public class UniformsMap {
                 throw new RuntimeException("Could not find uniform [" + uniformName + "]");
             }
             glUniform2fv(location, value.get(stack.mallocFloat(2)));
+        }
+    }
+
+    public void setUniform(String uniformName, Vector3f value) {
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            Integer location = uniforms.get(uniformName);
+            if (location == null) {
+                throw new RuntimeException("Could not find uniform [" + uniformName + "]");
+            }
+            glUniform3fv(location, value.get(stack.mallocFloat(3)));
         }
     }
 

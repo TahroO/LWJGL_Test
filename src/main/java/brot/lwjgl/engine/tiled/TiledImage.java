@@ -9,14 +9,20 @@ public class TiledImage {
     @XmlAttribute
     public String source;
 
+    /**
+     * Defines a specific color that is treated as transparent
+     * (example value: “#FF00FF” for magenta). Including
+     * the “#” is optional and Tiled leaves it out for compatibility
+     * reasons. (optional)
+     */
     @XmlAttribute(name = "trans")
     private String transparentcolor;
 
     @XmlAttribute
-    private int width;
+    public int width;
 
     @XmlAttribute
-    private int height;
+    public int height;
 
     public TiledImage() {
         super();

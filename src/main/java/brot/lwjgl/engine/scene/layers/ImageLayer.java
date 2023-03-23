@@ -1,6 +1,6 @@
 package brot.lwjgl.engine.scene.layers;
 
-public class ImageLayer extends SceneLayer{
+public class ImageLayer extends SceneLayer {
     /**
      * Creates a new ImageLayer object.
      *

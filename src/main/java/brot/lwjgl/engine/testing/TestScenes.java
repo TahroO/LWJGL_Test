@@ -62,13 +62,56 @@ public class TestScenes {
     }
 
     public static void initTestSprite(Scene scene) {
-        SpriteSheet s = new SpriteSheet("/tiled/testmap/test-texture.png", 4, 4);
-        Sprite sprite = new Sprite("test-1", s, 5);
-        Entity e = new Entity("test-1", "test-1");
+        SpriteSheet s = new SpriteSheet("/tiled/testmap/test-texture.png", 1, 1);
+        Sprite sprite = new Sprite("test-1", s, 0);
         SceneLayer l = new SceneLayer("test");
         scene.addLayer(l);
         l.addSprite(sprite);
+
+        Entity e = new Entity("test-1", "test-1");
+        e.flipH();
+        e.flipV();
+        e.flipD();
         l.addEntity(e);
+
+//        e = new Entity("test-2", "test-1");
+//        e.setPosition(32, 0).updateModelMatrix();
+//        e.flipV();
+//        l.addEntity(e);
+//
+//        e = new Entity("test-3", "test-1");
+//        e.setPosition(64, 0).updateModelMatrix();
+//        e.flipH();
+//        e.flipV();
+//        l.addEntity(e);
+
+//        e = new Entity("test-2", "test-1");
+//        e.setPosition(32, 0).updateModelMatrix();
+//        l.addEntity(e);
+//
+//        e = new Entity("test-2", "test-1");
+//        e.setPosition(32, 0).updateModelMatrix();
+//        l.addEntity(e);
+//
+//        e = new Entity("test-2", "test-1");
+//        e.setPosition(32, 0).updateModelMatrix();
+//        l.addEntity(e);
+//
+//        e = new Entity("test-2", "test-1");
+//        e.setPosition(32, 0).updateModelMatrix();
+//        l.addEntity(e);
+//
+//        e = new Entity("test-2", "test-1");
+//        e.setPosition(32, 0).updateModelMatrix();
+//        l.addEntity(e);
+//
+//        e = new Entity("test-2", "test-1");
+//        e.setPosition(32, 0).updateModelMatrix();
+//        l.addEntity(e);
+//
+//        //        e.flipD();
+////        e.flipH();
+//        e.flipV();
     }
 
 }

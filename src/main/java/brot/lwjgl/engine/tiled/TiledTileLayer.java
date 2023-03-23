@@ -34,13 +34,19 @@ public class TiledTileLayer extends TiledLayer {
                 | TiledTile.FLIPPED_VERTICALLY_FLAG
                 | TiledTile.FLIPPED_DIAGONALLY_FLAG);
         Entity entity = null;
+        // 270° VD
+        // 180° HV
+        //  90° HD
         if (gid > 0) {
             entity = new Entity("entity-%s-%s".formatted(id, delta), Sprite.ID_FORMAT.formatted(gid));
             if (flippedHorizontally) {
-                entity.setOrientationX(-1f);
+                entity.flipH();
             }
             if (flippedVertically) {
-                entity.setOrientationY(-1f);
+                entity.flipV();
+            }
+            if (flippedDiagonally) {
+                entity.flipD();
             }
             int y = delta / width;
             int x = delta % width;

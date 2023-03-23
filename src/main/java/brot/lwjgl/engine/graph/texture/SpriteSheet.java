@@ -23,10 +23,14 @@ public class SpriteSheet extends Texture {
      * @param rows         Number of sprite rows.
      */
     public SpriteSheet(String resourceName, int columns, int rows) {
+        this(resourceName, null, columns, rows);
+    }
+
+    public SpriteSheet(String resourceName, Mesh mesh, int columns, int rows) {
         super(resourceName);
         size = new Vector2f(columns, rows);
         spriteSize = new Vector2f(this.width / (float) columns, this.height / (float) rows);
-        mesh = new Quad(spriteSize.x, spriteSize.y, getTextureCoordinates());
+        this.mesh = mesh == null ? new Quad(spriteSize.x, spriteSize.y, getTextureCoordinates(size.x, size.y)) : mesh;
     }
 
     /**
@@ -50,12 +54,12 @@ public class SpriteSheet extends Texture {
     /**
      * Gets texture UV coordinates.
      */
-    public float[] getTextureCoordinates() {
+    public static float[] getTextureCoordinates(float sizeX, float sizeY) {
         return new float[]{
                 0f, 0f,
-                0f, 1f / size.y,
-                1f / size.x, 1f / size.y,
-                1f /  size.x, 0f
+                0f, 1f / sizeY,
+                1f / sizeX, 1f / sizeY,
+                1f /  sizeX, 0f
         };
     }
 
