@@ -6,6 +6,7 @@ import brot.lwjgl.engine.graph.texture.SpriteSheet;
 import brot.lwjgl.engine.scene.Entity;
 import brot.lwjgl.engine.scene.layers.SceneLayer;
 import brot.lwjgl.engine.scene.Scene;
+import brot.lwjgl.engine.tiled.TiledLayer;
 
 import java.util.*;
 
@@ -56,7 +57,9 @@ public class SceneRender {
         uniformsMap.setUniform("txtSampler", 0);
         // TODO Animation start time from entity.
         long time = System.currentTimeMillis() - startedTime;
-        scene.getLayers().forEach(layer -> renderLayer(layer, time));
+        scene.getLayers()
+                .stream().filter(SceneLayer::isVisible)
+                .forEach(layer -> renderLayer(layer, time));
         glBindVertexArray(0);
         shaderProgram.unbind();
     }

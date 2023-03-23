@@ -32,7 +32,7 @@ public abstract class TiledLayer {
 
     @XmlAttribute
     @XmlJavaTypeAdapter(BooleanIntegerAdapter.class)
-    protected Boolean visible;
+    public Boolean visible;
 
     @XmlAttribute
     protected Integer offsetx;

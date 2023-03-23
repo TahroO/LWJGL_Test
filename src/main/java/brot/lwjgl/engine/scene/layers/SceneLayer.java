@@ -18,6 +18,7 @@ public class SceneLayer {
     protected String id;
     protected List<Entity> entities;
     protected int weight;
+    protected boolean visible;
 
     /**
      * Creates a new SceneLayer object.
@@ -44,6 +45,14 @@ public class SceneLayer {
 
     public void cleanup() {
 
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
+    public boolean isVisible() {
+        return visible;
     }
 
     public Map<SpriteSheet, Collection<Sprite>> getTextures() {

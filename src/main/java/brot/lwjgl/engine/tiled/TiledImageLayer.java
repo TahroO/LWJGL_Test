@@ -5,9 +5,11 @@ import brot.lwjgl.engine.graph.mesh.Quad;
 import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.graph.texture.SpriteSheet;
 import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.tiled.xml.BooleanIntegerAdapter;
 import brot.lwjgl.engine.util.XmlLoader;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -20,11 +22,21 @@ public class TiledImageLayer extends TiledLayer {
     @XmlAttribute
     private String trans;
 
+    @XmlAttribute
+    @XmlJavaTypeAdapter(BooleanIntegerAdapter.class)
+    private Boolean repeatx;
+
+    @XmlAttribute
+    @XmlJavaTypeAdapter(BooleanIntegerAdapter.class)
+    private Boolean repeaty;
+
     @Override
     public List<Sprite> getSprites(TiledMap map) {
         float mapWidth = map.width * map.tilewidth;
         float mapHeight = map.height * map.tileheight;
-        Mesh quad = new Quad(mapWidth, mapHeight, SpriteSheet.getTextureCoordinates(image.width / mapWidth, image.height / mapHeight));
+        float meshWidth = repeatx == null || !repeatx ? image.width : mapWidth;
+        float meshHeight = repeaty == null || !repeaty ? image.height : mapHeight;
+        Mesh quad = new Quad(meshWidth, meshHeight, SpriteSheet.getTextureCoordinates(image.width / meshWidth, image.height / meshHeight));
         SpriteSheet spriteSheet = new SpriteSheet(XmlLoader.getBasePath() + image.source, quad, 1, 1);
         return List.of(new Sprite(getSpriteId(), spriteSheet, 0));
     }

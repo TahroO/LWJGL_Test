@@ -35,7 +35,7 @@ void main()
 
     vec2 txtDelta = vec2(txtDeltaX / spriteSheetSize.x, txtDeltaY / spriteSheetSize.y);
     vec4 txtColor = texture2D(txtSampler, (txtCoord + txtDelta) * flipTxt);
-    if (txtColor == vec4(transparentColor, 1.0)) {
+    if (txtColor == vec4(transparentColor, 0.0)) {
         discard;
     } else {
         fragColor = txtColor;

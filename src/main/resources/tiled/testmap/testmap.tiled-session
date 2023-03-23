@@ -12,13 +12,16 @@
             "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 443,
-                "y": 478.5
+                "x": 511,
+                "y": 318.5
             }
         },
         "king-idle-78x58.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "rgb.tsx": {
+            "scaleInDock": 1
         },
         "spriteatlas.tsx": {
             "scaleInDock": 1,
