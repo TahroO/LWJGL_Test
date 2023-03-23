@@ -15,6 +15,7 @@ import java.util.HashSet;
  * Defines a Sprite object.
  */
 public class Sprite extends Model {
+    public static final String ID_FORMAT = "gid-%s";
     protected SpriteSheet spriteSheet;
     protected Mesh mesh;
     protected float spriteIndex;
@@ -95,7 +96,7 @@ public class Sprite extends Model {
             long modTime = time % totalAnimationDuration;
             for (int i = animationDurations.length - 1; i >= 0; i--) {
                 if (modTime >= animationDurations[i]) {
-                    return i;
+                    return animationFrames[i].spriteIndex;
                 }
             }
         }
@@ -171,25 +172,25 @@ public class Sprite extends Model {
         }
 
         public SceneLayer.CollisionResultTest checkCollision(Entity layerEntity, Entity otherEntity) {
-            if (layerEntity == otherEntity) {
-                return null;
-            }
-            for (CollisionObject otherCo : otherEntity.sprite.collisionObjects) {
-                // Get absolute positions of collision objects.
-                Vector2f r1 = getAbsolutePosition(this, layerEntity);
-                Vector2f r2 = getAbsolutePosition(otherCo, otherEntity);
-
-                if (
-                        r1.x + width >= r2.x &&             // r1 right edge past r2 left
-                                r1.x <= r2.x + otherCo.width &&     // r1 left edge past r2 right
-                                r1.y + otherCo.height >= r2.y &&    // r1 top edge past r2 bottom
-                                r1.y <= r2.y + otherCo.height       // r1 bottom edge past r2 top
-                ) {
-                    float deltaX = r1.x < r2.x ? r1.x + width - r2.x + POS_FIX : r1.x - r2.x - otherCo.width - POS_FIX;
-                    float deltaY = 0; //r1.y - r2.y - otherCo.height - POS_FIX;
-                    return new SceneLayer.CollisionResultTest(layerEntity, r1, this, otherEntity, r2, otherCo, new Vector2f(deltaX, deltaY));
-                }
-            }
+//            if (layerEntity == otherEntity) {
+//                return null;
+//            }
+//            for (CollisionObject otherCo : otherEntity.sprite.collisionObjects) {
+//                // Get absolute positions of collision objects.
+//                Vector2f r1 = getAbsolutePosition(this, layerEntity);
+//                Vector2f r2 = getAbsolutePosition(otherCo, otherEntity);
+//
+//                if (
+//                        r1.x + width >= r2.x &&             // r1 right edge past r2 left
+//                                r1.x <= r2.x + otherCo.width &&     // r1 left edge past r2 right
+//                                r1.y + otherCo.height >= r2.y &&    // r1 top edge past r2 bottom
+//                                r1.y <= r2.y + otherCo.height       // r1 bottom edge past r2 top
+//                ) {
+//                    float deltaX = r1.x < r2.x ? r1.x + width - r2.x + POS_FIX : r1.x - r2.x - otherCo.width - POS_FIX;
+//                    float deltaY = 0; //r1.y - r2.y - otherCo.height - POS_FIX;
+//                    return new SceneLayer.CollisionResultTest(layerEntity, r1, this, otherEntity, r2, otherCo, new Vector2f(deltaX, deltaY));
+//                }
+//            }
             return null;
         }
     }

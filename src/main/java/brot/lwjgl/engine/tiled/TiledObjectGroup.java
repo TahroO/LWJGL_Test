@@ -21,11 +21,6 @@ public class TiledObjectGroup extends TiledLayer {
     }
 
     @Override
-    public List<Integer> getUniqueGids(boolean unmask) {
-        return null;
-    }
-
-    @Override
     public Stream<Integer> getGids() {
         return null;
     }

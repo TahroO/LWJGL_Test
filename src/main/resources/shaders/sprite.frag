@@ -15,13 +15,14 @@ void main()
 {
     float txtDeltaY = floor(spriteIndex / spriteSheetSize.x);
     float txtDeltaX = spriteIndex - txtDeltaY * spriteSheetSize.x;
-    if (spriteOrientation.y < 0) {
-        txtDeltaY = spriteSheetSize.y - 1 - txtDeltaY;
-    }
-    if (spriteOrientation.x < 0) {
-        txtDeltaX = spriteSheetSize.x - 1 - txtDeltaX;
-    }
+
+//    if (spriteOrientation.y < 0) {
+//        txtDeltaY = spriteSheetSize.y - 1 - txtDeltaY;
+//    }
+//    if (spriteOrientation.x < 0) {
+//        txtDeltaX = spriteSheetSize.x - 1 - txtDeltaX;
+//    }
     vec2 txtDelta = vec2(txtDeltaX / spriteSheetSize.x, txtDeltaY / spriteSheetSize.y);
-    fragColor = texture2D(txtSampler, (outTextCoord + txtDelta) * flipTexture);
+    fragColor = texture2D(txtSampler, (outTextCoord + txtDelta));
 }
 

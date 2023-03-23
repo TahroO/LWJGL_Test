@@ -37,7 +37,7 @@ public class SceneRender {
         uniformsMap.createUniform("txtSampler");
         uniformsMap.createUniform("spriteSheetSize");
         uniformsMap.createUniform("spriteIndex");
-        uniformsMap.createUniform("spriteOrientation");
+//        uniformsMap.createUniform("spriteOrientation");
     }
 
     /**
@@ -77,7 +77,7 @@ public class SceneRender {
             for (Sprite sprite : spriteSheetEntry.getValue()) {
                 uniformsMap.setUniform("spriteIndex", sprite.hasAnimation() ? sprite.getAnimationFrame(time) : sprite.getSpriteIndex());
                 for (Entity entity : sprite.getEntities()) {
-                    uniformsMap.setUniform("spriteOrientation", entity.getOrientation());
+//                    uniformsMap.setUniform("spriteOrientation", entity.getOrientation());
                     uniformsMap.setUniform("modelMatrix", entity.getModelMatrix());
                     glDrawElements(GL_TRIANGLES, spriteMesh.getNumVertices(), GL_UNSIGNED_INT, 0);
                 }

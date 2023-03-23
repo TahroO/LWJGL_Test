@@ -9,18 +9,23 @@
     ],
     "fileStates": {
         "flip-tiles--image-layer.tmx": {
-            "scale": 0.7313020833333332,
+            "scale": 1,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 479.282102414358,
-                "y": 320.66092158678157
+                "x": 329.5,
+                "y": 346.5
             }
+        },
+        "spriteatlas.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "test-texture.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         }
     },
+    "frame.defaultDuration": 1000,
     "last.imagePath": "/home/steffen/prog/java/lwjgl-test-2/src/main/resources/tiled/testmap",
     "map.lastUsedFormat": "tmx",
     "openFiles": [
@@ -29,8 +34,9 @@
     ],
     "project": "testmap.tiled-project",
     "recentFiles": [
-        "test-texture.tsx",
-        "flip-tiles--image-layer.tmx"
+        "spriteatlas.tsx",
+        "flip-tiles--image-layer.tmx",
+        "test-texture.tsx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }

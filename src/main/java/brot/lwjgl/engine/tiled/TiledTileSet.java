@@ -66,7 +66,7 @@ public class TiledTileSet {
                 animationFrames[i] = new Sprite.AnimationFrame(frame.getTileId(), frame.getDuration());
             }
         }
-        Sprite sprite = new Sprite("tile-%s".formatted(gid), spriteSheet, gid - firstgid, animationFrames);
+        Sprite sprite = new Sprite(Sprite.ID_FORMAT.formatted(gid), spriteSheet, gid - firstgid, animationFrames);
         if (tile != null && tile.hasCollisionData()) {
             List<TiledObject> objects = tile.getCollisionData().objects;
             for (TiledObject object : objects) {

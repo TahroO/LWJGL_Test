@@ -1,5 +1,6 @@
 package brot.lwjgl.engine.tiled;
 
+import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.scene.Entity;
 import jakarta.xml.bind.annotation.XmlElement;
 
@@ -34,7 +35,7 @@ public class TiledTileLayer extends TiledLayer {
                 | TiledTile.FLIPPED_DIAGONALLY_FLAG);
         Entity entity = null;
         if (gid > 0) {
-            entity = new Entity("entity-%s-%s".formatted(id, delta), "tile-%s".formatted(gid));
+            entity = new Entity("entity-%s-%s".formatted(id, delta), Sprite.ID_FORMAT.formatted(gid));
             if (flippedHorizontally) {
                 entity.setOrientationX(-1f);
             }
