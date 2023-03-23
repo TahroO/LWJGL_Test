@@ -32,6 +32,7 @@ public class SceneLayer {
         textures =  new HashMap<>();
         collisionObjects = new HashMap<>();
         sprites = new HashMap<>();
+        visible = true;
     }
 
     /**
