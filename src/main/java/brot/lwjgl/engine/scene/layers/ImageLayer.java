@@ -1,5 +1,7 @@
 package brot.lwjgl.engine.scene.layers;
 
+import brot.lwjgl.engine.scene.Camera;
+import brot.lwjgl.engine.scene.Scene;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 
@@ -20,14 +22,12 @@ public class ImageLayer extends SceneLayer {
         this.imageHeight = imageHeight;
     }
 
-    public Vector2f getDisplacement(Matrix4f viewMatrix) {
-        float viewportWidth = 640;
+    public Vector2f getDisplacement(Scene scene) {
+        Matrix4f viewMatrix = scene.getCamera().getViewMatrix();
+        float viewportWidth = scene.getViewportWidth();
         float viewportX = viewMatrix.m30();
-        float parallaxFactorX = .5f;
-
         float offsetX = (1 - parallaxFactor.x) * -0.5f * (viewportWidth / imageWidth);
-        float displace = offsetX - .2f; // (.75) + 0.1875f; // (.5) + .125f;
-        displace = offsetX + viewportX / (imageWidth / (1f - parallaxFactor.x));
+        float displace = offsetX + viewportX / (imageWidth / (1f - parallaxFactor.x));
         return new Vector2f(displace, 0);
     }
 

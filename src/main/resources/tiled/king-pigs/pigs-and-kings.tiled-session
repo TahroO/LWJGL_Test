@@ -47,8 +47,8 @@
             "scale": 1.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 319.6666666666667,
-                "y": 319.66666666666663
+                "x": 319.66666666666663,
+                "y": 319.6666666666667
             }
         },
         "pig.tsx": {
@@ -62,8 +62,8 @@
             "scale": 0.25,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 942,
-                "y": 298
+                "x": 938,
+                "y": 294
             }
         },
         "testset.tsx": {
@@ -87,13 +87,13 @@
     "project": "pigs-and-kings.tiled-project",
     "property.type": "Enum0",
     "recentFiles": [
+        "testmap.tmx",
         "terrain-32x32.tsx",
         "map-1.tmx",
         "decorations-32x32.tsx",
         "map-2.tmx",
         "king-pig-idle-38x28.tsx",
         "king-idle-78x58.tsx",
-        "testmap.tmx",
         "BombPig.tsx",
         "testset.tsx"
     ],

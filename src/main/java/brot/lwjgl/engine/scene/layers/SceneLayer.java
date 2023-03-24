@@ -2,7 +2,9 @@ package brot.lwjgl.engine.scene.layers;
 
 import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.graph.texture.SpriteSheet;
+import brot.lwjgl.engine.scene.Camera;
 import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.scene.Scene;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 
@@ -68,7 +70,7 @@ public class SceneLayer {
         this.parallaxFactor = parallaxFactor;
     }
 
-    public Vector2f getDisplacement(Matrix4f viewMatrix) {
+    public Vector2f getDisplacement(Scene scene) {
         return new Vector2f(0, 0);
     }
 

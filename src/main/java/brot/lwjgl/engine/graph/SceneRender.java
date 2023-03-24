@@ -73,7 +73,7 @@ public class SceneRender {
      * @param time Current time delta sth.
      */
     protected void renderLayer(Scene scene, SceneLayer layer, long time) {
-        uniformsMap.setUniform("txtDisplace", layer.getDisplacement(scene.getCamera().getViewMatrix()));
+        uniformsMap.setUniform("txtDisplace", layer.getDisplacement(scene));
         for (Map.Entry<SpriteSheet, Collection<Sprite>> spriteSheetEntry : layer.getTextures().entrySet()) {
             SpriteSheet spriteSheet = spriteSheetEntry.getKey();
             glActiveTexture(GL_TEXTURE0);

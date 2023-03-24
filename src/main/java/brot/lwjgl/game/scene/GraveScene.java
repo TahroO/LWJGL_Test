@@ -5,7 +5,6 @@ import brot.lwjgl.engine.Window;
 import brot.lwjgl.engine.scene.Camera;
 import brot.lwjgl.engine.scene.Entity;
 import brot.lwjgl.engine.scene.Scene;
-import brot.lwjgl.engine.scene.layers.ImageLayer;
 import brot.lwjgl.engine.scene.layers.ObjectLayer;
 import brot.lwjgl.engine.scene.layers.SceneLayer;
 import brot.lwjgl.engine.scene.layers.TileLayer;
@@ -21,38 +20,13 @@ public class GraveScene {
     private static final float MOUSE_SENSITIVITY = 40f;
     private static final float MOVEMENT_SPEED = .3f;
 
-
     public void init(Scene scene) {
         XmlLoader.setBasePath("/tiled/grave/");
         TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "graveTest.tmx");
         scene.setDimension(map.width * map.tilewidth, map.height * map.tileheight);
-        for (TiledLayer layer : map.layers) {
-            if (layer instanceof TiledTileLayer || layer instanceof TiledObjectLayer || layer instanceof TiledImageLayer) {
-                SceneLayer sceneLayer = addSceneLayer(scene, map, layer);
-            }
-        }
-    }
-
-    private SceneLayer addSceneLayer(Scene scene, TiledMap map, TiledLayer tiledLayer) {
-        // Add scene layer.
-        SceneLayer sceneLayer;
-        if (tiledLayer instanceof TiledTileLayer) {
-            sceneLayer = new TileLayer("tiled-layer-%s".formatted(tiledLayer.id));
-        } else if (tiledLayer instanceof TiledObjectLayer) {
-            sceneLayer = new ObjectLayer("tiled-layer-%s".formatted(tiledLayer.id));
-        } else if (tiledLayer instanceof TiledImageLayer) {
-            sceneLayer = tiledLayer.getSceneLayer(map);
-        } else {
-            throw new RuntimeException("Missing scene layer type for " + tiledLayer.getClass().getName());
-        }
-        // Set visibility.
-        sceneLayer.setVisible(tiledLayer.visible == null || tiledLayer.visible);
-        scene.addLayer(sceneLayer);
-        // Add sprites.
-        tiledLayer.getSprites(map).forEach(sceneLayer::addSprite);
-        // Add entities.
-        tiledLayer.getEntities(map).forEach(sceneLayer::addEntity);
-        return sceneLayer;
+        map.layers.stream()
+                .filter(tiledLayer -> tiledLayer instanceof TiledTileLayer || tiledLayer instanceof TiledObjectLayer || tiledLayer instanceof TiledImageLayer)
+                .forEach(tiledLayer -> tiledLayer.createSceneLayer(map, scene));
     }
 
     public void input(Window window, Scene scene, long diffTimeMillis) {

@@ -2,6 +2,8 @@ package brot.lwjgl.engine.tiled;
 
 import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.scene.layers.ObjectLayer;
+import brot.lwjgl.engine.scene.layers.SceneLayer;
 
 import java.util.List;
 import java.util.stream.IntStream;
@@ -25,4 +27,10 @@ public class TiledObjectLayer extends TiledObjectGroup {
     public Stream<Integer> getGids() {
         return objects.stream().map(object -> object.gid);
     }
+
+    @Override
+    protected SceneLayer getSceneLayerInstance(TiledMap map) {
+        return new ObjectLayer(SceneLayer.ID_FORMAT.formatted(id));
+    }
+
 }

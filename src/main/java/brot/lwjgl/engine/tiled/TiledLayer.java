@@ -3,7 +3,6 @@ package brot.lwjgl.engine.tiled;
 import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.scene.Entity;
 import brot.lwjgl.engine.scene.Scene;
-import brot.lwjgl.engine.scene.layers.ImageLayer;
 import brot.lwjgl.engine.scene.layers.SceneLayer;
 import brot.lwjgl.engine.tiled.xml.BooleanIntegerAdapter;
 import brot.lwjgl.engine.util.XmlLoader;
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -93,10 +93,17 @@ public abstract class TiledLayer {
 
     protected abstract SceneLayer getSceneLayerInstance(TiledMap map);
 
-    public SceneLayer getSceneLayer(TiledMap map) {
+    public Map<String, Entity> createSceneLayer(TiledMap map, Scene scene) {
         SceneLayer layer = getSceneLayerInstance(map);
         layer.setVisible(visible == null || visible);
-        return layer;
+        layer.setParallaxFactor(getParallaxFactor());
+        getSprites(map).forEach(layer::addSprite);
+        List<Entity> entities = getEntities(map);
+        entities.forEach(layer::addEntity);
+        scene.addLayer(layer);
+        return entities.stream()
+                .filter(entity -> entity.getName() != null)
+                .collect(Collectors.toMap(Entity::getName, Function.identity()));
     }
 
 }

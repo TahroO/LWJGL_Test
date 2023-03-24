@@ -9,11 +9,11 @@
     ],
     "fileStates": {
         "flip-tiles--image-layer.tmx": {
-            "scale": 1,
-            "selectedLayer": 0,
+            "scale": 0.75,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 511,
-                "y": 318.5
+                "x": 591.3333333333333,
+                "y": 214
             }
         },
         "king-idle-78x58.tsx": {

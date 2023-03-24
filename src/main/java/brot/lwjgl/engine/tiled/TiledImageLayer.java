@@ -45,9 +45,7 @@ public class TiledImageLayer extends TiledLayer {
 
     @Override
     protected SceneLayer getSceneLayerInstance(TiledMap map) {
-        ImageLayer layer = new ImageLayer(SceneLayer.ID_FORMAT.formatted(id), image.width, image.height);
-        layer.setParallaxFactor(getParallaxFactor());
-        return layer;
+        return new ImageLayer(SceneLayer.ID_FORMAT.formatted(id), image.width, image.height);
     }
 
     @Override
