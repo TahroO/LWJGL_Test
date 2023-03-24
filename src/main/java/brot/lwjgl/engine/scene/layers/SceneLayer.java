@@ -12,6 +12,7 @@ import java.util.*;
  * Defines a SceneLayer object.
  */
 public class SceneLayer {
+    public static String ID_FORMAT = "layer-%s";
     protected Map<String, Sprite> sprites;
     protected Map<SpriteSheet, Collection<Sprite>> textures;
     protected Map<Sprite.CollisionObject, List<Entity>> collisionObjects;
@@ -21,6 +22,8 @@ public class SceneLayer {
     protected int weight;
     protected boolean visible;
     protected Vector2f parallaxFactor;
+    protected float width;
+    protected float height;
 
     /**
      * Creates a new SceneLayer object.
@@ -71,6 +74,11 @@ public class SceneLayer {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+    }
+
+    public void setDimension(float width, float height) {
+        this.width = width;
+        this.height = height;
     }
 
     public boolean isVisible() {

@@ -3,17 +3,17 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "rgb.tsx",
+    "activeFile": "flip-tiles--image-layer.tmx",
     "expandedProjectPaths": [
         "."
     ],
     "fileStates": {
         "flip-tiles--image-layer.tmx": {
-            "scale": 0.75,
+            "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 521.3333333333334,
-                "y": 318
+                "x": 511,
+                "y": 318.5
             }
         },
         "king-idle-78x58.tsx": {
@@ -47,9 +47,9 @@
     "project": "testmap.tiled-project",
     "recentFiles": [
         "test-texture.tsx",
-        "flip-tiles--image-layer.tmx",
-        "king-idle-78x58.tsx",
         "rgb.tsx",
+        "king-idle-78x58.tsx",
+        "flip-tiles--image-layer.tmx",
         "spriteatlas.tsx"
     ],
     "tileset.lastUsedFormat": "tsx",

@@ -8,6 +8,10 @@ import org.joml.*;
  * - sprite dimension for collision detection
  */
 public class Entity {
+    /**
+     * 1st placeholder = layer ID, 2nd = entity ID.
+     */
+    public static final String ID_FORMAT = "entity-%s-%s";
     private final String id;
     private final String modelId;
     private final Matrix4f modelMatrix;

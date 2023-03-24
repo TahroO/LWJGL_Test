@@ -2,6 +2,9 @@ package brot.lwjgl.engine.tiled;
 
 import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.scene.Scene;
+import brot.lwjgl.engine.scene.layers.ImageLayer;
+import brot.lwjgl.engine.scene.layers.SceneLayer;
 import brot.lwjgl.engine.tiled.xml.BooleanIntegerAdapter;
 import brot.lwjgl.engine.util.XmlLoader;
 import jakarta.xml.bind.annotation.XmlAttribute;
@@ -86,6 +89,14 @@ public abstract class TiledLayer {
         return gid & ~(TiledTile.FLIPPED_HORIZONTALLY_FLAG
                 | TiledTile.FLIPPED_VERTICALLY_FLAG
                 | TiledTile.FLIPPED_DIAGONALLY_FLAG);
+    }
+
+    protected abstract SceneLayer getSceneLayerInstance(TiledMap map);
+
+    public SceneLayer getSceneLayer(TiledMap map) {
+        SceneLayer layer = getSceneLayerInstance(map);
+        layer.setVisible(visible == null || visible);
+        return layer;
     }
 
 }

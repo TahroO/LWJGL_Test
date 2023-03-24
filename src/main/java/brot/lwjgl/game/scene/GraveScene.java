@@ -41,7 +41,7 @@ public class GraveScene {
         } else if (tiledLayer instanceof TiledObjectLayer) {
             sceneLayer = new ObjectLayer("tiled-layer-%s".formatted(tiledLayer.id));
         } else if (tiledLayer instanceof TiledImageLayer) {
-            sceneLayer = new ImageLayer("tiled-layer-%s".formatted(tiledLayer.id));
+            sceneLayer = tiledLayer.getSceneLayer(map);
         } else {
             throw new RuntimeException("Missing scene layer type for " + tiledLayer.getClass().getName());
         }

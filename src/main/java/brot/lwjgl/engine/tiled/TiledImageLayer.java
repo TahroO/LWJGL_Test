@@ -5,6 +5,8 @@ import brot.lwjgl.engine.graph.mesh.Quad;
 import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.graph.texture.SpriteSheet;
 import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.scene.layers.ImageLayer;
+import brot.lwjgl.engine.scene.layers.SceneLayer;
 import brot.lwjgl.engine.tiled.xml.BooleanIntegerAdapter;
 import brot.lwjgl.engine.util.XmlLoader;
 import jakarta.xml.bind.annotation.XmlAttribute;
@@ -42,8 +44,15 @@ public class TiledImageLayer extends TiledLayer {
     }
 
     @Override
+    protected SceneLayer getSceneLayerInstance(TiledMap map) {
+        ImageLayer layer = new ImageLayer(SceneLayer.ID_FORMAT.formatted(id), image.width, image.height);
+        layer.setParallaxFactor(getParallaxFactor());
+        return layer;
+    }
+
+    @Override
     public List<Entity> getEntities(TiledMap map) {
-        return List.of(new Entity("imagelayer-%s-1".formatted(this.id), getSpriteId()));
+        return List.of(new Entity(Entity.ID_FORMAT.formatted(this.id, 1), getSpriteId()));
     }
 
     @Override

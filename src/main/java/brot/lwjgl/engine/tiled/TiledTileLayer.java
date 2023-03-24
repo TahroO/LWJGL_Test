@@ -2,6 +2,7 @@ package brot.lwjgl.engine.tiled;
 
 import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.scene.layers.SceneLayer;
 import jakarta.xml.bind.annotation.XmlElement;
 
 import java.util.*;
@@ -59,6 +60,11 @@ public class TiledTileLayer extends TiledLayer {
     @Override
     public Stream<Integer> getGids() {
         return data.getData().stream();
+    }
+
+    @Override
+    protected SceneLayer getSceneLayerInstance(TiledMap map) {
+        return null;
     }
 
 }

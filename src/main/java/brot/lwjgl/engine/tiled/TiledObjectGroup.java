@@ -1,6 +1,7 @@
 package brot.lwjgl.engine.tiled;
 
 import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.scene.layers.SceneLayer;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 
@@ -22,6 +23,11 @@ public class TiledObjectGroup extends TiledLayer {
 
     @Override
     public Stream<Integer> getGids() {
+        return null;
+    }
+
+    @Override
+    protected SceneLayer getSceneLayerInstance(TiledMap map) {
         return null;
     }
 

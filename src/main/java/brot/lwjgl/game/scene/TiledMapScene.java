@@ -44,10 +44,13 @@ public class TiledMapScene {
         } else if (tiledLayer instanceof TiledObjectLayer) {
             sceneLayer = new ObjectLayer("tiled-layer-%s".formatted(tiledLayer.id));
         } else if (tiledLayer instanceof TiledImageLayer) {
-            sceneLayer = new ImageLayer("tiled-layer-%s".formatted(tiledLayer.id));
+            sceneLayer = tiledLayer.getSceneLayer(map);
         } else {
             throw new RuntimeException("Missing scene layer type for " + tiledLayer.getClass().getName());
         }
+        // Set visibility.
+        sceneLayer.setVisible(tiledLayer.visible == null || tiledLayer.visible);
+        // Add layer to scene.
         scene.addLayer(sceneLayer);
         // Set parallax factor.
         sceneLayer.setParallaxFactor(tiledLayer.getParallaxFactor());
