@@ -6,6 +6,7 @@ import brot.lwjgl.engine.tiled.xml.BooleanIntegerAdapter;
 import brot.lwjgl.engine.util.XmlLoader;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -31,6 +32,12 @@ public abstract class TiledLayer {
     protected Float opacity;
 
     @XmlAttribute
+    protected Float parallaxx;
+
+    @XmlAttribute
+    protected Float parallaxy;
+
+    @XmlAttribute
     @XmlJavaTypeAdapter(BooleanIntegerAdapter.class)
     public Boolean visible;
 
@@ -43,6 +50,10 @@ public abstract class TiledLayer {
     abstract public List<Entity> getEntities(TiledMap map);
 
     abstract public Stream<Integer> getGids();
+
+    public Vector2f getParallaxFactor() {
+        return new Vector2f(parallaxx == null ? 1f : parallaxx, parallaxy == null ? 1f : parallaxy);
+    }
 
     public List<Integer> getUniqueGids(boolean unmask) {
         Stream<Integer> gids = getGids();

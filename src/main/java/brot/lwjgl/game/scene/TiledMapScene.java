@@ -49,6 +49,8 @@ public class TiledMapScene {
             throw new RuntimeException("Missing scene layer type for " + tiledLayer.getClass().getName());
         }
         scene.addLayer(sceneLayer);
+        // Set parallax factor.
+        sceneLayer.setParallaxFactor(tiledLayer.getParallaxFactor());
         // Add sprites.
         tiledLayer.getSprites(map).forEach(sceneLayer::addSprite);
         // Add entities.

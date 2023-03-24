@@ -3,6 +3,7 @@ package brot.lwjgl.engine.scene.layers;
 import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.graph.texture.SpriteSheet;
 import brot.lwjgl.engine.scene.Entity;
+import org.joml.Matrix4f;
 import org.joml.Vector2f;
 
 import java.util.*;
@@ -19,6 +20,7 @@ public class SceneLayer {
     protected List<Entity> entities;
     protected int weight;
     protected boolean visible;
+    protected Vector2f parallaxFactor;
 
     /**
      * Creates a new SceneLayer object.
@@ -33,6 +35,7 @@ public class SceneLayer {
         collisionObjects = new HashMap<>();
         sprites = new HashMap<>();
         visible = true;
+        parallaxFactor = new Vector2f(1f, 1f);
     }
 
     /**
@@ -46,6 +49,24 @@ public class SceneLayer {
 
     public void cleanup() {
 
+    }
+
+    /**
+     * // TODO Parallax factor vs. group layers.
+     * When the parallax scrolling factor is set on a group layer,
+     * it applies to all its child layers. The effective parallax
+     * scrolling factor of a layer is determined by multiplying the
+     * parallax scrolling factor by the scrolling factors of all
+     * parent layers.
+     *
+     * @param parallaxFactor
+     */
+    public void setParallaxFactor(Vector2f parallaxFactor) {
+        this.parallaxFactor = parallaxFactor;
+    }
+
+    public Vector2f getDisplacement(Matrix4f viewMatrix) {
+        return new Vector2f(0, 0);
     }
 
     public void setVisible(boolean visible) {

@@ -7,6 +7,7 @@ import brot.lwjgl.engine.scene.Entity;
 import brot.lwjgl.engine.scene.layers.SceneLayer;
 import brot.lwjgl.engine.scene.Scene;
 import brot.lwjgl.engine.tiled.TiledLayer;
+import org.joml.Vector2f;
 
 import java.util.*;
 
@@ -40,6 +41,7 @@ public class SceneRender {
         uniformsMap.createUniform("spriteIndex");
         uniformsMap.createUniform("flipSprite");
         uniformsMap.createUniform("transparentColor");
+        uniformsMap.createUniform("txtDisplace");
     }
 
     /**
@@ -59,7 +61,7 @@ public class SceneRender {
         long time = System.currentTimeMillis() - startedTime;
         scene.getLayers()
                 .stream().filter(SceneLayer::isVisible)
-                .forEach(layer -> renderLayer(layer, time));
+                .forEach(layer -> renderLayer(scene, layer, time));
         glBindVertexArray(0);
         shaderProgram.unbind();
     }
@@ -70,7 +72,8 @@ public class SceneRender {
      * @param layer The scene layer.
      * @param time Current time delta sth.
      */
-    protected void renderLayer(SceneLayer layer, long time) {
+    protected void renderLayer(Scene scene, SceneLayer layer, long time) {
+        uniformsMap.setUniform("txtDisplace", layer.getDisplacement(scene.getCamera().getViewMatrix()));
         for (Map.Entry<SpriteSheet, Collection<Sprite>> spriteSheetEntry : layer.getTextures().entrySet()) {
             SpriteSheet spriteSheet = spriteSheetEntry.getKey();
             glActiveTexture(GL_TEXTURE0);
