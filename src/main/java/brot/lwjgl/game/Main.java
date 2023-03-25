@@ -49,4 +49,9 @@ public class Main implements AppLogic {
 //        tiledMapScene.update(scene, timeDelta);
     }
 
+    @Override
+    public void keyEvent(int key, int action) {
+
+    }
+
 }

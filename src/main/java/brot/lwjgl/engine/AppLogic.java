@@ -12,4 +12,6 @@ public interface AppLogic {
     void input(Window window, Scene scene, long diffTimeMillis);
 
     void update(Window window, Scene scene, long diffTimeMillis);
+
+    void keyEvent(int key, int action);
 }

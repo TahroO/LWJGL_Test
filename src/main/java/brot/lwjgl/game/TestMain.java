@@ -49,4 +49,9 @@ public class TestMain implements AppLogic {
     public void update(Window window, Scene scene, long diffTimeMillis) {
     }
 
+    @Override
+    public void keyEvent(int key, int action) {
+
+    }
+
 }

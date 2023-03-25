@@ -15,10 +15,7 @@ public class Engine {
     private int targetUps;
 
     public Engine(String windowTitle, Window.WindowOptions opts, AppLogic appLogic) {
-        window = new Window(windowTitle, opts, () -> {
-            resize();
-            return null;
-        });
+        window = new Window(windowTitle, opts, this::resize, this::keyEvent);
         targetFps = opts.fps;
         targetUps = opts.ups;
         this.appLogic = appLogic;
@@ -35,8 +32,9 @@ public class Engine {
         window.cleanup();
     }
 
-    private void resize() {
+    private Void resize() {
         scene.resize(window.getWidth(), window.getHeight());
+        return null;
     }
 
     // Debugging.
@@ -101,6 +99,11 @@ public class Engine {
 
     public void stop() {
         running = false;
+    }
+
+    public Void keyEvent(int key, int action) {
+        appLogic.keyEvent(key, action);
+        return null;
     }
 
 }

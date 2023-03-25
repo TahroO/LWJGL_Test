@@ -7,6 +7,8 @@ import org.tinylog.Logger;
 import java.awt.*;
 import java.nio.IntBuffer;
 import java.util.concurrent.Callable;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -18,6 +20,7 @@ public class Window {
     private final long windowHandle;
     private int height;
     private Callable<Void> resizeFunc;
+    private BiFunction<Integer, Integer, Void> keyEventHandler;
     private MouseInput mouseInput;
 
     private int width;
@@ -27,8 +30,10 @@ public class Window {
     private int[] windowedPosX = {0};
     private int[] windowedPosY = {0};
 
-    public Window(String title, WindowOptions opts, Callable<Void> resizeFunc) {
+    public Window(String title, WindowOptions opts, Callable<Void> resizeFunc, BiFunction<Integer, Integer, Void> keyEventHandler) {
         this.resizeFunc = resizeFunc;
+        this.keyEventHandler = keyEventHandler;
+
         if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW");
         }
@@ -117,6 +122,8 @@ public class Window {
             glfwSetWindowShouldClose(windowHandle, true);
         } else if (key == GLFW_KEY_F11 && action == GLFW_RELEASE) {
             setFullscreen(!isFullscreen);
+        } else {
+            keyEventHandler.apply(key, action);
         }
     }
 

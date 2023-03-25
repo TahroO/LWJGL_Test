@@ -47,6 +47,12 @@ public class KingPigsMain implements AppLogic {
     @Override
     public void update(Window window, Scene scene, long timeDelta) {
 //        tiledMapScene.update(scene, timeDelta);
+        kingPigsScene.update(scene, timeDelta);
+    }
+
+    @Override
+    public void keyEvent(int key, int action) {
+        kingPigsScene.keyEvent(key, action);
     }
 
 }
