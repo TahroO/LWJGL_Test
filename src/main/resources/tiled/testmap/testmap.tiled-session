@@ -7,13 +7,14 @@
     "expandedProjectPaths": [
         "."
     ],
+    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "flip-tiles--image-layer.tmx": {
             "scale": 1.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 131.66666666666663,
-                "y": 169.66666666666669
+                "x": 250,
+                "y": 169
             }
         },
         "king-idle-78x58.tsx": {

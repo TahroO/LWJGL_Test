@@ -24,7 +24,7 @@ public class MossyScene {
         XmlLoader.setBasePath("/tiled/Mossy/");
         TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "mossy.tmx");
         scene.setDimension(map.width * map.tilewidth, map.height * map.tileheight);
-        scene.getCamera().setScale(.25f);
+        scene.getCamera().setScale(.1f);
         map.layers.stream()
                 .filter(tiledLayer -> tiledLayer instanceof TiledTileLayer || tiledLayer instanceof TiledObjectLayer || tiledLayer instanceof TiledImageLayer)
                 .forEach(tiledLayer -> tiledLayer.createSceneLayer(map, scene));
