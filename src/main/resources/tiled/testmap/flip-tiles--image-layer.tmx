@@ -2,6 +2,9 @@
 <map version="1.10" tiledversion="1.10.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="1">
  <tileset firstgid="1" source="test-texture.tsx"/>
  <tileset firstgid="17" source="rgb.tsx"/>
+ <tileset firstgid="21" source="mossy-tiles-32.tsx"/>
+ <tileset firstgid="70" source="sprites-5x5.tsx"/>
+ <tileset firstgid="95" source="sprites-7x7.tsx"/>
  <imagelayer id="5" name="Image Layer 2" parallaxx="0.25" repeatx="1" repeaty="1">
   <image source="parallax-bg-320.png" width="320" height="320"/>
  </imagelayer>
@@ -10,9 +13,9 @@
  </imagelayer>
  <layer id="1" name="Tile Layer 1" width="30" height="20">
   <data encoding="csv">
-3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-3,3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,3,6,3,2684354566,3,3221225478,3,1610612742,3,13,3,
-3,3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,3,3,3,3,3,3,3,3,3,3,3,
+102,103,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
+102,103,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,3,6,3,2684354566,3,3221225478,3,1610612742,3,13,3,
+109,3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,0,0,0,3,3,3,3,3,3,3,3,3,3,3,
 3,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,3,2147483654,3,3758096390,3,1073741830,3,536870918,3,2147483661,3,
 3,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,3,3,3,3,3,3,3,3,3,3,3,
 3,0,0,0,0,0,0,0,3,3,3,0,0,0,0,0,0,0,0,3,3,3,3,3,3,3,3,3,536870925,3,

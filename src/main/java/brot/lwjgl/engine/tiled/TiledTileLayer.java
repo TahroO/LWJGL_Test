@@ -41,7 +41,7 @@ public class TiledTileLayer extends TiledLayer {
         // 180° HV
         //  90° HD
         if (gid > 0) {
-            entity = new Entity("entity-%s-%s".formatted(id, delta), Sprite.ID_FORMAT.formatted(gid));
+            entity = new Entity(Entity.ID_FORMAT.formatted(id, delta), Sprite.ID_FORMAT.formatted(gid));
             if (flippedHorizontally) {
                 entity.flipH();
             }

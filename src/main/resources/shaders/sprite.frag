@@ -5,15 +5,15 @@ in vec2 outTxtCoord;
 out vec4 fragColor;
 
 uniform sampler2D txtSampler;
-uniform vec2 spriteSheetSize;
-uniform float spriteIndex;
+uniform ivec2 spriteSheetSize;
+uniform int spriteIndex;
 uniform vec3 flipSprite;
 uniform vec3 transparentColor;
 
 void main()
 {
-    float txtDeltaY = floor(spriteIndex / spriteSheetSize.x);
-    float txtDeltaX = spriteIndex - txtDeltaY * spriteSheetSize.x;
+    int txtDeltaY = spriteIndex / spriteSheetSize.x;
+    int txtDeltaX = spriteIndex - txtDeltaY * spriteSheetSize.x;
     vec2 txtCoord = outTxtCoord;
     vec2 flipTxt = vec2(flipSprite);
 
@@ -33,7 +33,7 @@ void main()
         txtDeltaY = spriteSheetSize.y - 1 - txtDeltaY;
     }
 
-    vec2 txtDelta = vec2(txtDeltaX / spriteSheetSize.x, txtDeltaY / spriteSheetSize.y);
+    vec2 txtDelta = vec2(float(txtDeltaX) / float(spriteSheetSize.x), float(txtDeltaY) / float(spriteSheetSize.y));
     vec4 txtColor = texture2D(txtSampler, (txtCoord + txtDelta) * flipTxt);
     if (txtColor == vec4(transparentColor, 0.0)) {
         discard;

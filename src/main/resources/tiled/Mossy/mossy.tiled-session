@@ -1,0 +1,61 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "mossy-32.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "Mossy - TileSet.tsx": {
+            "scaleInDock": 1
+        },
+        "mossy-32.tmx": {
+            "scale": 0.9722656249999999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.3856970670953,
+                "y": 319.3571715548414
+            }
+        },
+        "mossy-tiles-32.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "mossy.tmx": {
+            "scale": 0.12,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 2120.833333333334,
+                "y": 2629.1666666666665
+            }
+        },
+        "mossy2.tmx": {
+            "scale": 0.12153320312499999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 2563.0855765367623,
+                "y": 2554.857372438731
+            }
+        }
+    },
+    "last.imagePath": "/home/steffen/prog/java/lwjgl-test-2/src/main/resources/tiled/Mossy",
+    "map.height": 20,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 32,
+    "map.tileWidth": 32,
+    "map.width": 20,
+    "openFiles": [
+        "mossy2.tmx",
+        "mossy-32.tmx",
+        "mossy-tiles-32.tsx"
+    ],
+    "project": "mossy.tiled-project",
+    "recentFiles": [
+        "mossy2.tmx",
+        "mossy-tiles-32.tsx",
+        "mossy-32.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}

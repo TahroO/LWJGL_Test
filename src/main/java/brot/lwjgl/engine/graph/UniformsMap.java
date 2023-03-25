@@ -35,7 +35,11 @@ public class UniformsMap {
     }
 
     public void setUniform(String uniformName, int value) {
-        glUniform1i(getUniformLocation(uniformName), value);
+        Integer location = uniforms.get(uniformName);
+        if (location == null) {
+            throw new RuntimeException("Could not find uniform [" + uniformName + "]");
+        }
+        glUniform1i(location, value);
     }
 
     public void setUniform(String uniformName, float value) {

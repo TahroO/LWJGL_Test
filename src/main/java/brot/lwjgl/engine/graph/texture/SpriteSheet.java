@@ -3,6 +3,7 @@ package brot.lwjgl.engine.graph.texture;
 import brot.lwjgl.engine.graph.mesh.Mesh;
 import brot.lwjgl.engine.graph.mesh.Quad;
 import org.joml.Vector2f;
+import org.joml.Vector2i;
 
 /**
  * Defines a sprite sheet texture.
@@ -11,7 +12,7 @@ public class SpriteSheet extends Texture {
     /**
      * Number of sprites per column and row.
      */
-    protected final Vector2f size;
+    protected final Vector2i size;
     protected Mesh mesh;
     protected Vector2f spriteSize;
 
@@ -28,7 +29,7 @@ public class SpriteSheet extends Texture {
 
     public SpriteSheet(String resourceName, Mesh mesh, int columns, int rows) {
         super(resourceName);
-        size = new Vector2f(columns, rows);
+        size = new Vector2i(columns, rows);
         spriteSize = new Vector2f(this.width / (float) columns, this.height / (float) rows);
         this.mesh = mesh == null ? new Quad(spriteSize.x, spriteSize.y, getTextureCoordinates(size.x, size.y)) : mesh;
     }
@@ -36,7 +37,7 @@ public class SpriteSheet extends Texture {
     /**
      * Gets the size in sprites per column and row.
      */
-    public Vector2f getSize() {
+    public Vector2i getSize() {
         return size;
     }
 

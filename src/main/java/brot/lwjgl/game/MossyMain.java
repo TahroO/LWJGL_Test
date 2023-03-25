@@ -1,10 +1,12 @@
 package brot.lwjgl.game;
 
-import brot.lwjgl.engine.*;
+import brot.lwjgl.engine.AppLogic;
+import brot.lwjgl.engine.Engine;
+import brot.lwjgl.engine.Window;
 import brot.lwjgl.engine.graph.Render;
 import brot.lwjgl.engine.scene.Scene;
-import brot.lwjgl.engine.testing.TestScenes;
-import brot.lwjgl.game.scene.TiledMapScene;
+import brot.lwjgl.game.scene.KingPigsScene;
+import brot.lwjgl.game.scene.MossyScene;
 
 /**
  * TODO
@@ -14,15 +16,15 @@ import brot.lwjgl.game.scene.TiledMapScene;
  * - entity switch sprite
  * - layer show, hide
  */
-public class Main implements AppLogic {
-    private TiledMapScene tiledMapScene;
+public class MossyMain implements AppLogic {
+    private MossyScene mossyScene;
 
     public static void main(String[] args) {
-        Main main = new Main();
+        MossyMain main = new MossyMain();
         Window.WindowOptions windowOptions = new Window.WindowOptions();
         windowOptions.width = 1280;
         windowOptions.height = 960;
-        Engine gameEng = new Engine("chapter-02", windowOptions, main);
+        Engine gameEng = new Engine("Mossy", windowOptions, main);
         gameEng.start();
     }
 
@@ -33,20 +35,19 @@ public class Main implements AppLogic {
 
     @Override
     public void init(Window window, Scene scene, Render render) {
-//        tiledMapScene = new GraveScene();
-        tiledMapScene = new TiledMapScene();
-        tiledMapScene.init(window, scene);
-//        TestScenes.initTestSprite(scene);
+        mossyScene = new MossyScene();
+        mossyScene.init(window, scene);
     }
 
     @Override
     public void input(Window window, Scene scene, long timeDelta) {
-        tiledMapScene.input(window, scene, timeDelta);
+        mossyScene.input(window, scene, timeDelta);
     }
 
     @Override
     public void update(Window window, Scene scene, long timeDelta) {
 //        tiledMapScene.update(scene, timeDelta);
+        mossyScene.update(scene, timeDelta);
     }
 
     @Override

@@ -11,20 +11,22 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Scene {
-    protected int width;
-    protected int height;
+    protected int sceneWidth;
+    protected int sceneHeight;
     protected int viewportWidth;
     protected int viewportHeight;
     private Projection projection;
     private Map<String, SceneLayer> layers;
     protected Camera camera;
+    protected float aspectRatio;
 
     public Scene(int width, int height) {
-        this.width = width;
-        this.height = height;
+        this.sceneWidth = width;
+        this.sceneHeight = height;
         this.viewportWidth = width;
         this.viewportHeight = height;
-        projection = new Ortho2D(width, height);
+        this.aspectRatio = (float) viewportWidth / (float) viewportHeight;
+        projection = new Ortho2D(width, height, width, height);
         layers = new HashMap<>();
         camera = new Camera();
     }
@@ -33,9 +35,15 @@ public class Scene {
         layers.values().forEach(SceneLayer::cleanup);
     }
 
+    /**
+     * Sets the scene dimension.
+     *
+     * @param width Scene width in pixel.
+     * @param height Scene height in pixel.
+     */
     public void setDimension(int width, int height) {
-        this.width = width;
-        this.height = height;
+        this.sceneWidth = width;
+        this.sceneHeight = height;
     }
 
     public int getViewportWidth() {
@@ -47,11 +55,11 @@ public class Scene {
     }
 
     public int getWidth() {
-        return width;
+        return sceneWidth;
     }
 
     public int getHeight() {
-        return height;
+        return sceneHeight;
     }
 
     public void addLayer(SceneLayer layer) {
@@ -74,8 +82,10 @@ public class Scene {
         return projection;
     }
 
-    public void resize(int width, int height) {
-        //projection.updateProjMatrix(width, height);
+    public void resize(int windowWidth, int windowHeight) {
+        viewportWidth = windowWidth;
+        viewportHeight = windowHeight;
+        projection.updateProjMatrix(windowWidth, windowHeight);
     }
 
 }

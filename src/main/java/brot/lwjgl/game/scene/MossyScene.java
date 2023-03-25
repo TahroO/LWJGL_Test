@@ -4,31 +4,27 @@ import brot.lwjgl.engine.MouseInput;
 import brot.lwjgl.engine.Window;
 import brot.lwjgl.engine.scene.Camera;
 import brot.lwjgl.engine.scene.Entity;
-import brot.lwjgl.engine.scene.layers.ObjectLayer;
-import brot.lwjgl.engine.scene.layers.SceneLayer;
 import brot.lwjgl.engine.scene.Scene;
-import brot.lwjgl.engine.scene.layers.TileLayer;
-import brot.lwjgl.engine.tiled.*;
+import brot.lwjgl.engine.tiled.TiledImageLayer;
+import brot.lwjgl.engine.tiled.TiledMap;
+import brot.lwjgl.engine.tiled.TiledObjectLayer;
+import brot.lwjgl.engine.tiled.TiledTileLayer;
 import brot.lwjgl.engine.util.XmlLoader;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-import java.util.*;
-
 import static org.lwjgl.glfw.GLFW.*;
 
-public class TiledMapScene {
+public class MossyScene {
     private static final float MOUSE_SENSITIVITY = 55f;
     private static final float MOVEMENT_SPEED = .3f;
     Entity player;
 
     public void init(Window window, Scene scene) {
-        window.setClearColor(.5f, .5f, .5f);
-        XmlLoader.setBasePath("/tiled/testmap/");
-//        TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "flip-tiles--image-layer.tmx");
-        TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "mossy-test.tmx");
+        XmlLoader.setBasePath("/tiled/Mossy/");
+        TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "mossy.tmx");
         scene.setDimension(map.width * map.tilewidth, map.height * map.tileheight);
-        scene.getCamera().setScale(.5f);
+        scene.getCamera().setScale(.25f);
         map.layers.stream()
                 .filter(tiledLayer -> tiledLayer instanceof TiledTileLayer || tiledLayer instanceof TiledObjectLayer || tiledLayer instanceof TiledImageLayer)
                 .forEach(tiledLayer -> tiledLayer.createSceneLayer(map, scene));
@@ -56,8 +52,8 @@ public class TiledMapScene {
         }
 
         Vector3f cameraPosition = camera.getPosition();
-        float camY = Math.min(Math.max(cameraPosition.y, 0), (scene.getHeight() * camera.getScale() - scene.getViewportHeight()) );
-        float camX = Math.min(Math.max(cameraPosition.x, 0), (scene.getWidth() * camera.getScale()- scene.getViewportWidth()));
+        float camY = Math.min(Math.max(cameraPosition.y, 0), scene.getHeight() * camera.getScale() - scene.getViewportHeight());
+        float camX = Math.min(Math.max(cameraPosition.x, 0), scene.getWidth() * camera.getScale() - scene.getViewportWidth());
         camera.setPosition(camX, camY);
     }
 

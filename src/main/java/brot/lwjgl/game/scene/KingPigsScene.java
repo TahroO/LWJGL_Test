@@ -97,33 +97,7 @@ public class KingPigsScene {
     public void update(Scene scene, long diffTimeMillis) {
         Vector3f pos = player.getPosition();
         pos.x += direction.x * MOVE_SPEED;
-//        pos.y += direction.y * MOVE_SPEED;
         player.updateModelMatrix();
-//        updatePlayerGravity();
-        // Last step - resolve collision.
-//        scene.getLayers().stream()
-//                .map(layer -> layer.getCollisions(player))
-//                .flatMap(c -> c.entrySet().stream())
-//                .forEach(this::resolveCollision);
-    }
-
-    protected void resolveCollision(Map.Entry<Entity, List<SceneLayer.CollisionResultTest>> collisions) {
-        for (SceneLayer.CollisionResultTest collisionResult : collisions.getValue()) {
-            float deltaX = collisionResult.delta().x;
-            float deltaY = collisionResult.delta().y;
-            if (Math.abs(deltaX) > 0) {
-                collisionResult.e2().getPosition().x += deltaX;
-                collisionResult.e2().updateModelMatrix();
-            }
-            if (Math.abs(deltaY) <= MOVE_SPEED) {
-                collisionResult.e2().getPosition().y += deltaY;
-                collisionResult.e2().updateModelMatrix();
-            }
-        }
-    }
-
-    private void updatePlayerGravity() {
-        player.getPosition().y += 8;
     }
 
 }

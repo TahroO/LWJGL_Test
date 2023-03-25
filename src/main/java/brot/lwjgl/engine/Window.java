@@ -4,11 +4,8 @@ import org.lwjgl.glfw.*;
 import org.lwjgl.system.MemoryUtil;
 import org.tinylog.Logger;
 
-import java.awt.*;
-import java.nio.IntBuffer;
 import java.util.concurrent.Callable;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -16,14 +13,13 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
-
     private final long windowHandle;
-    private int height;
+    private int framebufferHeight;
     private Callable<Void> resizeFunc;
     private BiFunction<Integer, Integer, Void> keyEventHandler;
     private MouseInput mouseInput;
 
-    private int width;
+    private int framebufferWidth;
     private boolean isFullscreen;
     private int[] windowedWidth = {0};
     private int[] windowedHeight = {0};
@@ -51,16 +47,16 @@ public class Window {
         }
 
         if (opts.width > 0 && opts.height > 0) {
-            this.width = opts.width;
-            this.height = opts.height;
+            this.framebufferWidth = opts.width;
+            this.framebufferHeight = opts.height;
         } else {
             glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
             GLFWVidMode vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-            width = vidMode.width();
-            height = vidMode.height();
+            framebufferWidth = vidMode.width();
+            framebufferHeight = vidMode.height();
         }
 
-        windowHandle = glfwCreateWindow(width, height, title, NULL, NULL);
+        windowHandle = glfwCreateWindow(framebufferWidth, framebufferHeight, title, NULL, NULL);
         if (windowHandle == NULL) {
             throw new RuntimeException("Failed to create the GLFW window");
         }
@@ -68,7 +64,7 @@ public class Window {
         glfwSetFramebufferSizeCallback(windowHandle, (window, w, h) -> resized(w, h));
 
         glfwSetErrorCallback((int errorCode, long msgPtr) ->
-                Logger.error("Error code [{}], msg [{]]", errorCode, MemoryUtil.memUTF8(msgPtr))
+                Logger.error("Error code [{}], msg [{}]", errorCode, MemoryUtil.memUTF8(msgPtr))
         );
 
         glfwSetKeyCallback(windowHandle, (window, key, scancode, action, mods) -> keyCallBack(key, action));
@@ -86,8 +82,8 @@ public class Window {
         int[] arrWidth = new int[1];
         int[] arrHeight = new int[1];
         glfwGetFramebufferSize(windowHandle, arrWidth, arrHeight);
-        width = arrWidth[0];
-        height = arrHeight[0];
+        framebufferWidth = arrWidth[0];
+        framebufferHeight = arrHeight[0];
         mouseInput = new MouseInput(windowHandle);
     }
 
@@ -102,11 +98,11 @@ public class Window {
     }
 
     public int getHeight() {
-        return height;
+        return framebufferHeight;
     }
 
     public int getWidth() {
-        return width;
+        return framebufferWidth;
     }
 
     public long getWindowHandle() {
@@ -157,9 +153,9 @@ public class Window {
         glfwPollEvents();
     }
 
-    protected void resized(int width, int height) {
-        this.width = width;
-        this.height = height;
+    protected void resized(int framebufferWidth, int framebufferHeight) {
+        this.framebufferWidth = framebufferWidth;
+        this.framebufferHeight = framebufferHeight;
         try {
             resizeFunc.call();
         } catch (Exception excp) {

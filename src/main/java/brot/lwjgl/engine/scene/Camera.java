@@ -10,6 +10,7 @@ public class Camera {
     private Vector3f up;
     private Matrix4f viewMatrix;
     private float rot;
+    private float scale = 1f;
 
     public Camera() {
         right = new Vector3f();
@@ -58,12 +59,21 @@ public class Camera {
     private void recalculate() {
         viewMatrix.identity()
                 .rotateZ(rot)
-                .translate(-position.x, -position.y, 0);
+                .translate(-position.x, -position.y, 0)
+                .scale(scale, scale, 1f);
     }
 
     public void setPosition(float x, float y) {
         position.set(x, y, 0);
         recalculate();
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
+
+    public float getScale() {
+        return scale;
     }
 
     public void setRotation(float angle) {

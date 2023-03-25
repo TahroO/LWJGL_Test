@@ -8,16 +8,32 @@ public class Ortho2D extends Projection {
 
     /**
      * Creates a new Ortho2D object.
-     * @param width Viewport width in pixel.
-     * @param height Viewport height in pixel.
+     *
+     * @param windowWidth  Viewport width in pixel.
+     * @param windowHeight Viewport height in pixel.
      */
-    public Ortho2D(int width, int height) {
-        super(width, height);
+    public Ortho2D(int windowWidth, int windowHeight, int sceneWidth, int sceneHeight) {
+        super(windowWidth, windowHeight);
+        this.sceneWidth = 5120;
+        this.sceneHeight = 5120;
+        this.viewportWidth = sceneWidth;
+        this.viewportHeight = sceneHeight;
+        updateProjMatrix(0, 0);
     }
 
+    /**
+     * - fit viewport to window: keep aspect ratio
+     * - fit scene to viewport
+     * - scale factor scene
+     */
+
+
     @Override
-    public void updateProjMatrix(int width, int height) {
-          projMatrix.setOrtho2D(0, width, height, 0);
+    public void updateProjMatrix(int framebufferWidth, int framebufferHeight) {
+        // Bottom up.
+//        projMatrix.setOrtho2D(sceneWidth, 0, 0, sceneHeight);
+        projMatrix.setOrtho2D(0, viewportWidth, viewportHeight, 0);
+        // Top down.
     }
 
 }

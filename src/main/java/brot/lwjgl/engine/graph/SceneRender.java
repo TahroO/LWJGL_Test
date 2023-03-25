@@ -82,7 +82,7 @@ public class SceneRender {
             glBindVertexArray(spriteMesh.getVaoId());
             uniformsMap.setUniform("spriteSheetSize", spriteSheet.getSize());
             for (Sprite sprite : spriteSheetEntry.getValue()) {
-                uniformsMap.setUniform("spriteIndex", sprite.hasAnimation() ? sprite.getAnimationFrame(time) : sprite.getSpriteIndex());
+                uniformsMap.setUniform("spriteIndex", sprite.getSpriteIndex(time));
                 for (Entity entity : sprite.getEntities()) {
                     uniformsMap.setUniform("flipSprite", entity.getOrientation());
                     uniformsMap.setUniform("modelMatrix", entity.getModelMatrix());

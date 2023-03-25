@@ -18,7 +18,7 @@ public class Sprite extends Model {
     public static final String ID_FORMAT = "gid-%s";
     protected SpriteSheet spriteSheet;
     protected Mesh mesh;
-    protected float spriteIndex;
+    protected int spriteIndex;
     protected AnimationFrame[] animationFrames;
     protected int[] animationDurations;
     protected long totalAnimationDuration;
@@ -76,11 +76,21 @@ public class Sprite extends Model {
     }
 
     /**
-     * Gets the sprites (start) index on sprite sheet.
+     * Gets the sprite's index.
      *
+     * @param time
      * @return Sprite index.
      */
-    public float getSpriteIndex() {
+    public int getSpriteIndex(long time) {
+        if (hasAnimation && totalAnimationDuration > 0) {
+            long modTime = time % totalAnimationDuration + 1000;
+            for (int i = animationDurations.length - 1; i >= 0; i--) {
+                if (modTime >= animationDurations[i]) {
+                    return animationFrames[i].spriteIndex;
+                }
+            }
+        }
+
         return spriteIndex;
     }
 
@@ -91,15 +101,8 @@ public class Sprite extends Model {
      * @return Animation frame sprite index delta.
      */
     // TODO scale animation duration in entity.
+    // TODO merge into getSpriteIndex().
     public float getAnimationFrame(long time) {
-        if (totalAnimationDuration > 0) {
-            long modTime = time % totalAnimationDuration + 1000;
-            for (int i = animationDurations.length - 1; i >= 0; i--) {
-                if (modTime >= animationDurations[i]) {
-                    return animationFrames[i].spriteIndex;
-                }
-            }
-        }
         return spriteIndex;
     }
 
