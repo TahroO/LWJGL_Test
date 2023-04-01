@@ -1,6 +1,9 @@
 package brot.lwjgl.engine.tiled;
 
+import brot.lwjgl.engine.graph.Color;
+import brot.lwjgl.engine.tiled.xml.ColorAdapter;
 import jakarta.xml.bind.annotation.*;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.util.List;
 
@@ -30,7 +33,8 @@ public class TiledMap {
      * since 0.15 in the form #AARRGGBB. Defaults to fully transparent.)
      */
     @XmlAttribute
-    public String backgroundcolor;
+    @XmlJavaTypeAdapter(ColorAdapter.class)
+    public Color backgroundcolor;
 
     @XmlAttribute
     private String name;

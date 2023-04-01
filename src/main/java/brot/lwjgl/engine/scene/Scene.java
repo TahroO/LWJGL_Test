@@ -1,6 +1,6 @@
 package brot.lwjgl.engine.scene;
 
-import brot.lwjgl.engine.scene.layers.SceneLayer;
+import brot.lwjgl.engine.scene.layer.SceneLayer;
 import brot.lwjgl.engine.scene.projection.Ortho2D;
 import brot.lwjgl.engine.scene.projection.Projection;
 
@@ -83,9 +83,15 @@ public class Scene {
     }
 
     public void resize(int windowWidth, int windowHeight) {
-        viewportWidth = windowWidth;
-        viewportHeight = windowHeight;
-        projection.updateProjMatrix(windowWidth, windowHeight);
+//        float v = (float) windowWidth / (float) windowHeight;
+//        if (v * aspectRatio >= 1f) {
+//            viewportWidth = Math.round(windowWidth / v * aspectRatio);
+//            viewportHeight = windowHeight;
+//        } else {
+//            viewportWidth = windowWidth;
+//            viewportHeight = Math.round(windowHeight / v * aspectRatio);
+//        }
+//        projection.updateProjMatrix(windowWidth, windowHeight);
     }
 
 }

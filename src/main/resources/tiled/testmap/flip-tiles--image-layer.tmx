@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="6" nextobjectid="1">
+<map version="1.10" tiledversion="1.10.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" backgroundcolor="#002c7f" nextlayerid="6" nextobjectid="1">
  <tileset firstgid="1" source="test-texture.tsx"/>
  <tileset firstgid="17" source="rgb.tsx"/>
  <tileset firstgid="21" source="mossy-tiles-32.tsx"/>

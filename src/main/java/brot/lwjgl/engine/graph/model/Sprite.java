@@ -2,11 +2,12 @@ package brot.lwjgl.engine.graph.model;
 
 import brot.lwjgl.engine.graph.mesh.Mesh;
 import brot.lwjgl.engine.graph.texture.SpriteSheet;
-import brot.lwjgl.engine.scene.Entity;
-import brot.lwjgl.engine.scene.layers.SceneLayer;
+import brot.lwjgl.engine.physics.CollisionDetector;
+import brot.lwjgl.engine.physics.CollisionSolver;
+import brot.lwjgl.engine.physics.PhysicsEntity;
+import brot.lwjgl.engine.scene.entity.Entity;
+import brot.lwjgl.engine.scene.layer.SceneLayer;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -83,7 +84,7 @@ public class Sprite extends Model {
      */
     public int getSpriteIndex(long time) {
         if (hasAnimation && totalAnimationDuration > 0) {
-            long modTime = time % totalAnimationDuration + 1000;
+            long modTime = time % totalAnimationDuration;
             for (int i = animationDurations.length - 1; i >= 0; i--) {
                 if (modTime >= animationDurations[i]) {
                     return animationFrames[i].spriteIndex;
@@ -114,9 +115,10 @@ public class Sprite extends Model {
     public void setAnimationFrames(AnimationFrame[] animationFrames) {
         int totalDuration = 0;
         if (animationFrames != null && animationFrames.length > 0) {
-            int[] durationsSeries = new int[animationFrames.length];
-            for (int i = 0; i < animationFrames.length; i++) {
-                totalDuration += animationFrames[i].duration;
+            int[] durationsSeries = new int[animationFrames.length + 1];
+            durationsSeries[0] = 0;
+            for (int i = 1; i < animationFrames.length + 1; i++) {
+                totalDuration += animationFrames[i - 1].duration;
                 durationsSeries[i] = totalDuration;
             }
             this.animationFrames = animationFrames;
@@ -155,45 +157,50 @@ public class Sprite extends Model {
     public record AnimationFrame(int spriteIndex, int duration) {
     }
 
-    public record CollisionObject(float x, float y, float width, float height) {
+//    public record CollisionObject(float x, float y, float width, float height) {
+    public record CollisionObject(Vector2f offset, Vector2f size) {
         public static float POS_FIX = .0001f;
 
         /**
          * Gets the absolute position of a collision object on screen.
          */
-        private Vector2f getAbsolutePosition(CollisionObject co, Entity entity) {
-            Vector3f entityPosition = entity.getPosition();
-            float x;
-            if (entity.getOrientation().x < 0) {
-                Vector2f spriteSize = entity.sprite.getSpriteSheet().getSpriteSize();
-                x = entityPosition.x + spriteSize.x - (co.x + co.width);
-            } else {
-                x = entityPosition.x + co.x;
-            }
-            float y = entityPosition.y + co.y;
-            return new Vector2f(x, y);
+//        private Vector2f getAbsolutePosition(CollisionObject co, Entity entity) {
+//            Vector2f entityPosition = entity.getPosition();
+//            float x;
+//            if (entity.getOrientation().x < 0) {
+//                Vector2f spriteSize = entity.sprite.getSpriteSheet().getSpriteSize();
+//                x = entityPosition.x + spriteSize.x - (co.x + co.width);
+//            } else {
+//                x = entityPosition.x + co.x;
+//            }
+//            float y = entityPosition.y + co.y;
+//            return new Vector2f(x, y);
+//        }
+
+        public PhysicsEntity getPhysicsEntity(Entity entity) {
+            float ex = entity.getOrientation().x > 0
+                    ? entity.getPosition().x + offset.x
+                    : entity.getPosition().x + entity.sprite.getSpriteSheet().getSpriteSize().x - offset.x - size.x;
+            return new PhysicsEntity(
+                    entity,
+                    ex,
+                    entity.getPosition().y + offset.y,
+                    size.x,
+                    size.y
+            );
         }
 
         public SceneLayer.CollisionResultTest checkCollision(Entity layerEntity, Entity otherEntity) {
-//            if (layerEntity == otherEntity) {
-//                return null;
-//            }
-//            for (CollisionObject otherCo : otherEntity.sprite.collisionObjects) {
-//                // Get absolute positions of collision objects.
-//                Vector2f r1 = getAbsolutePosition(this, layerEntity);
-//                Vector2f r2 = getAbsolutePosition(otherCo, otherEntity);
-//
-//                if (
-//                        r1.x + width >= r2.x &&             // r1 right edge past r2 left
-//                                r1.x <= r2.x + otherCo.width &&     // r1 left edge past r2 right
-//                                r1.y + otherCo.height >= r2.y &&    // r1 top edge past r2 bottom
-//                                r1.y <= r2.y + otherCo.height       // r1 bottom edge past r2 top
-//                ) {
-//                    float deltaX = r1.x < r2.x ? r1.x + width - r2.x + POS_FIX : r1.x - r2.x - otherCo.width - POS_FIX;
-//                    float deltaY = 0; //r1.y - r2.y - otherCo.height - POS_FIX;
-//                    return new SceneLayer.CollisionResultTest(layerEntity, r1, this, otherEntity, r2, otherCo, new Vector2f(deltaX, deltaY));
-//                }
-//            }
+            if (layerEntity == otherEntity) {
+                return null;
+            }
+            for (CollisionObject otherCo : otherEntity.sprite.collisionObjects) {
+                PhysicsEntity otherPe = otherCo.getPhysicsEntity(otherEntity);
+                PhysicsEntity layerPe = this.getPhysicsEntity(layerEntity);
+                if (CollisionDetector.getInstance().collideRect(layerPe, otherPe)) {
+                    return CollisionSolver.resolveElastic(otherPe, layerPe);
+                }
+            }
             return null;
         }
     }

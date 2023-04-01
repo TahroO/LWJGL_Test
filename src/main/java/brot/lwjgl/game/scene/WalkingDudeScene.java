@@ -1,7 +1,7 @@
 package brot.lwjgl.game.scene;
 
 import brot.lwjgl.engine.scene.Camera;
-import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.scene.entity.Entity;
 import brot.lwjgl.engine.scene.Scene;
 
 public class WalkingDudeScene {

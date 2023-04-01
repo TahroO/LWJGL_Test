@@ -1,6 +1,6 @@
 package brot.lwjgl.engine.graph.model;
 
-import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.scene.entity.Entity;
 
 import java.util.*;
 

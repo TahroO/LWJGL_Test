@@ -3,11 +3,9 @@ package brot.lwjgl.engine.graph;
 import brot.lwjgl.engine.graph.mesh.Mesh;
 import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.graph.texture.SpriteSheet;
-import brot.lwjgl.engine.scene.Entity;
-import brot.lwjgl.engine.scene.layers.SceneLayer;
+import brot.lwjgl.engine.scene.entity.Entity;
+import brot.lwjgl.engine.scene.layer.SceneLayer;
 import brot.lwjgl.engine.scene.Scene;
-import brot.lwjgl.engine.tiled.TiledLayer;
-import org.joml.Vector2f;
 
 import java.util.*;
 
@@ -84,6 +82,9 @@ public class SceneRender {
             for (Sprite sprite : spriteSheetEntry.getValue()) {
                 uniformsMap.setUniform("spriteIndex", sprite.getSpriteIndex(time));
                 for (Entity entity : sprite.getEntities()) {
+                    if (!entity.getSpriteId().equals(sprite.getId())) {
+                        continue;
+                    }
                     uniformsMap.setUniform("flipSprite", entity.getOrientation());
                     uniformsMap.setUniform("modelMatrix", entity.getModelMatrix());
                     glDrawElements(GL_TRIANGLES, spriteMesh.getNumVertices(), GL_UNSIGNED_INT, 0);

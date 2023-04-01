@@ -2,7 +2,7 @@ package brot.lwjgl.engine.testing;
 
 import brot.lwjgl.engine.graph.ShaderProgram;
 import brot.lwjgl.engine.graph.UniformsMap;
-import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.scene.entity.Entity;
 import brot.lwjgl.engine.scene.Scene;
 import org.joml.Matrix4f;
 

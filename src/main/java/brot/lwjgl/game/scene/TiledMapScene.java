@@ -3,17 +3,12 @@ package brot.lwjgl.game.scene;
 import brot.lwjgl.engine.MouseInput;
 import brot.lwjgl.engine.Window;
 import brot.lwjgl.engine.scene.Camera;
-import brot.lwjgl.engine.scene.Entity;
-import brot.lwjgl.engine.scene.layers.ObjectLayer;
-import brot.lwjgl.engine.scene.layers.SceneLayer;
+import brot.lwjgl.engine.scene.entity.Entity;
 import brot.lwjgl.engine.scene.Scene;
-import brot.lwjgl.engine.scene.layers.TileLayer;
 import brot.lwjgl.engine.tiled.*;
 import brot.lwjgl.engine.util.XmlLoader;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
-
-import java.util.*;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -23,12 +18,18 @@ public class TiledMapScene {
     Entity player;
 
     public void init(Window window, Scene scene) {
-        window.setClearColor(.5f, .5f, .5f);
         XmlLoader.setBasePath("/tiled/testmap/");
 //        TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "flip-tiles--image-layer.tmx");
-        TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "mossy-test.tmx");
+        TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "flip-tiles--image-layer.tmx");
+        if (map.backgroundcolor != null) {
+            window.setClearColor(
+                    map.backgroundcolor.getRed() / 255f,
+                    map.backgroundcolor.getGreen() / 255f,
+                    map.backgroundcolor.getBlue() / 255f
+            );
+        }
         scene.setDimension(map.width * map.tilewidth, map.height * map.tileheight);
-        scene.getCamera().setScale(.5f);
+        scene.getCamera().setScale(1f);
         map.layers.stream()
                 .filter(tiledLayer -> tiledLayer instanceof TiledTileLayer || tiledLayer instanceof TiledObjectLayer || tiledLayer instanceof TiledImageLayer)
                 .forEach(tiledLayer -> tiledLayer.createSceneLayer(map, scene));

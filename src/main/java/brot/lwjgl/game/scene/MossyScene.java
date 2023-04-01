@@ -3,7 +3,7 @@ package brot.lwjgl.game.scene;
 import brot.lwjgl.engine.MouseInput;
 import brot.lwjgl.engine.Window;
 import brot.lwjgl.engine.scene.Camera;
-import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.scene.entity.Entity;
 import brot.lwjgl.engine.scene.Scene;
 import brot.lwjgl.engine.tiled.TiledImageLayer;
 import brot.lwjgl.engine.tiled.TiledMap;
@@ -24,7 +24,7 @@ public class MossyScene {
         XmlLoader.setBasePath("/tiled/Mossy/");
         TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, "mossy.tmx");
         scene.setDimension(map.width * map.tilewidth, map.height * map.tileheight);
-        scene.getCamera().setScale(.1f);
+        scene.getCamera().setScale(.2f);
         map.layers.stream()
                 .filter(tiledLayer -> tiledLayer instanceof TiledTileLayer || tiledLayer instanceof TiledObjectLayer || tiledLayer instanceof TiledImageLayer)
                 .forEach(tiledLayer -> tiledLayer.createSceneLayer(map, scene));

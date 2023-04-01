@@ -29,7 +29,7 @@ public class Render {
         int targetHeight = scene.getViewportHeight();
         int marginX = (window.getWidth() - targetWidth) / 2;
         int marginY = (window.getHeight() - targetHeight) / 2;
-        glViewport(0, 0, window.getWidth(), window.getHeight());
+        glViewport(marginX, marginY, targetWidth, targetHeight);
 
         sceneRender.render(scene);
     }

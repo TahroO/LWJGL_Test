@@ -1,0 +1,119 @@
+#cookie-law-info-bar {
+	border: 0;
+	font-size: 10pt;
+	margin: 0 auto;
+	padding: 5px 0;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+	z-index: 9999;
+}
+#cookie-law-info-again {
+	font-size: 10pt;
+	margin: 0;
+	padding: 2px 10px;
+	text-align: center;
+	z-index: 9999;
+	cursor: pointer;
+}
+#cookie-law-info-bar span {
+	vertical-align: middle;
+}
+/** Buttons (http://papermashup.com/demos/css-buttons) */
+.cli-plugin-button, .cli-plugin-button:visited {
+	background: #222 url('/web/20191209011157im_/https://wildbunny.co.uk/wp-content/plugins/cookie-law-info/images/overlay.png') repeat-x;
+	display: inline-block;
+	padding: 5px 10px 6px;
+	color: #fff;
+	text-decoration: none;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+	border-bottom: 1px solid rgba(0,0,0,0.25);
+	position: relative;
+	cursor: pointer;
+	margin: auto 10px;
+}
+.cli-plugin-button:hover {
+	background-color: #111;
+	color: #fff;
+}
+.cli-plugin-button:active {
+	top: 1px;
+}
+.small.cli-plugin-button, .small.cli-plugin-button:visited {
+	font-size: 11px;
+}
+.cli-plugin-button, .cli-plugin-button:visited,
+	.medium.cli-plugin-button, .medium.cli-plugin-button:visited {
+	font-size: 13px;
+	font-weight: bold;
+	line-height: 1;
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+}
+.large.cli-plugin-button, .large.cli-plugin-button:visited {
+	font-size: 14px;
+	padding: 8px 14px 9px;
+}
+.super.cli-plugin-button, .super.cli-plugin-button:visited {
+	font-size: 34px;
+	padding: 8px 14px 9px;
+}
+.pink.cli-plugin-button, .magenta.cli-plugin-button:visited {
+	background-color: #e22092;
+}
+.pink.cli-plugin-button:hover {
+	background-color: #c81e82;
+}
+.green.cli-plugin-button, .green.cli-plugin-button:visited {
+	background-color: #91bd09;
+}
+.green.cli-plugin-button:hover {
+	background-color: #749a02;
+}
+.red.cli-plugin-button, .red.cli-plugin-button:visited {
+	background-color: #e62727;
+}
+.red.cli-plugin-button:hover {
+	background-color: #cf2525;
+}
+.orange.cli-plugin-button, .orange.cli-plugin-button:visited {
+	background-color: #ff5c00;
+}
+.orange.cli-plugin-button:hover {
+	background-color: #d45500;
+}
+.blue.cli-plugin-button, .blue.cli-plugin-button:visited {
+	background-color: #2981e4;
+}
+.blue.cli-plugin-button:hover {
+	background-color: #2575cf;
+}
+.yellow.cli-plugin-button, .yellow.cli-plugin-button:visited {
+	background-color: #ffb515;
+}
+.yellow.cli-plugin-button:hover {
+	background-color: #fc9200;
+}
+/*
+     FILE ARCHIVED ON 01:11:57 Dec 09, 2019 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 10:45:43 Mar 28, 2023.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 82.875
+  exclusion.robots: 0.128
+  exclusion.robots.policy: 0.115
+  cdx.remote: 0.085
+  esindex: 0.011
+  LoadShardBlock: 58.166 (3)
+  PetaboxLoader3.datanode: 64.171 (4)
+  load_resource: 77.404
+  PetaboxLoader3.resolve: 38.587
+*/

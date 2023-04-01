@@ -2,8 +2,11 @@ package brot.lwjgl.engine.graph.texture;
 
 import brot.lwjgl.engine.graph.mesh.Mesh;
 import brot.lwjgl.engine.graph.mesh.Quad;
+import brot.lwjgl.engine.graph.model.Sprite;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
+
+import java.util.Map;
 
 /**
  * Defines a sprite sheet texture.
@@ -15,6 +18,7 @@ public class SpriteSheet extends Texture {
     protected final Vector2i size;
     protected Mesh mesh;
     protected Vector2f spriteSize;
+    protected Map<String, Sprite> sprites;
 
     /**
      * Creates a new SpriteAtlas object.

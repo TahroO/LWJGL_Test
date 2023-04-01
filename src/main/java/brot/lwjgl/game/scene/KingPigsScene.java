@@ -1,17 +1,17 @@
 package brot.lwjgl.game.scene;
 
 import brot.lwjgl.engine.Window;
-import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.graph.model.Sprite;
+import brot.lwjgl.engine.scene.entity.Entity;
+import brot.lwjgl.engine.scene.entity.GameObject;
 import brot.lwjgl.engine.scene.Scene;
-import brot.lwjgl.engine.scene.layers.SceneLayer;
+import brot.lwjgl.engine.scene.layer.SceneLayer;
 import brot.lwjgl.engine.tiled.*;
 import brot.lwjgl.engine.util.XmlLoader;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 import java.util.stream.Collectors;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -19,9 +19,12 @@ import static org.lwjgl.glfw.GLFW.*;
 public class KingPigsScene {
     private static final float DIR_UP_OR_LEFT = -1f;
     private static final float DIR_DOWN_OR_RIGHT = 1f;
-    public static final float MOVE_SPEED = 2f;
-    Entity player;
+    public static final float PLAYER_VELOCITY = 150f;
+    GameObject player;
+    Sprite runSprite;
+    Sprite idleSprite;
     Vector2f direction;
+    public Vector2f step = new Vector2f();
 
     boolean upPressed, leftPressed, rightPressed, downPressed;
 
@@ -37,7 +40,18 @@ public class KingPigsScene {
                 .filter(tiledLayer -> tiledLayer instanceof TiledTileLayer || tiledLayer instanceof TiledObjectLayer || tiledLayer instanceof TiledImageLayer)
                 .flatMap(tiledLayer -> tiledLayer.createSceneLayer(map, scene).entrySet().stream())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        player = namedEntities.get("king");
+        player = (GameObject) namedEntities.get("king");
+        SceneLayer playerLayer = scene.getLayers().get(3);
+        // Idle state.
+        idleSprite = playerLayer.getSprite(player.getSpriteId());
+        player.addState(new GameObject.State("idle", idleSprite));
+        player.switchState("idle");
+        // Run state.
+        TiledTileSet tileset = XmlLoader.loadTileSet("king-run-78x58.tsx");
+        runSprite = tileset.getSprite(1000, 1000);
+        runSprite.addEntity(player);
+        playerLayer.addSprite(runSprite);
+        player.addState(new GameObject.State("run", runSprite));
     }
 
     public void keyEvent(int key, int action) {
@@ -65,7 +79,6 @@ public class KingPigsScene {
         }
         if (key == GLFW_KEY_W) {
             if (action == GLFW_PRESS && !upPressed) {
-                direction.y = DIR_UP_OR_LEFT;
                 upPressed = true;
             } else if (action == GLFW_RELEASE) {
                 direction.y = downPressed ? DIR_DOWN_OR_RIGHT : 0;
@@ -74,7 +87,6 @@ public class KingPigsScene {
         }
         if (key == GLFW_KEY_S) {
             if (action == GLFW_PRESS && !downPressed) {
-                direction.y = DIR_DOWN_OR_RIGHT;
                 downPressed = true;
             } else if (action == GLFW_RELEASE) {
                 direction.y = upPressed ? DIR_UP_OR_LEFT : 0;
@@ -86,18 +98,55 @@ public class KingPigsScene {
     protected void updatePlayerDir() {
         if (direction.x > 0 || direction.x < 0) {
             player.getOrientation().x = direction.x;
+            player.switchState("run");
+            player.sprite = runSprite;
+        } else {
+            player.switchState("idle");
+            player.sprite = idleSprite;
         }
     }
 
     public void input(Window window, Scene scene, long diffTimeMillis) {
-        player.updateModelMatrix();
 
     }
 
     public void update(Scene scene, long diffTimeMillis) {
-        Vector3f pos = player.getPosition();
-        pos.x += direction.x * MOVE_SPEED;
+        Vector2f pos = player.getPosition();
+        float dx = direction.x * PLAYER_VELOCITY * diffTimeMillis / 1000f;
+        float dy = direction.y * PLAYER_VELOCITY * diffTimeMillis / 1000f;
+        pos.x += dx;
+        pos.y += dy;
+        step.x = dx;
+        step.y = dy;
         player.updateModelMatrix();
+        scene.getLayers().stream()
+                .map(layer -> layer.getCollisions(player, diffTimeMillis))
+                .filter(results -> !results.isEmpty())
+                .forEach(this::resolveCollision);
+    }
+
+    protected void resolveCollision(Map<Entity, List<SceneLayer.CollisionResultTest>> results) {
+        results.forEach((player, value) -> {
+            var dx = value.stream()
+                    .mapToDouble(result -> result.playerRes().x)
+                    .filter(delta -> delta > 0 && step.x < 0 || delta < 0 && step.x > 0)
+                    .distinct()
+                    .findFirst();
+            var dy = value.stream()
+                    .mapToDouble(result -> result.playerRes().y)
+                    .filter(delta -> delta > 0 && step.y < 0 || delta < 0 && step.y > 0)
+                    .distinct()
+                    .findFirst();
+            var x = (float) dx.orElse(0d);
+            var y = (float) dy.orElse(0d);
+            if (Math.abs(x) > Math.abs(y)) {
+                player.getPosition().x += x;
+            } else {
+                player.getPosition().y += y;
+            }
+//            player.addPosition((float) dx.orElse(0d), (float) dy.orElse(0d));
+            player.updateModelMatrix();
+        });
     }
 
 }

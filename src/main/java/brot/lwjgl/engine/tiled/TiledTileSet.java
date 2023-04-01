@@ -4,6 +4,7 @@ import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.graph.texture.SpriteSheet;
 import brot.lwjgl.engine.util.XmlLoader;
 import jakarta.xml.bind.annotation.*;
+import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +71,7 @@ public class TiledTileSet {
         if (tile != null && tile.hasCollisionData()) {
             List<TiledObject> objects = tile.getCollisionData().objects;
             for (TiledObject object : objects) {
-                sprite.addCollisionObject(new Sprite.CollisionObject(object.x, object.y, object.width, object.height));
+                sprite.addCollisionObject(new Sprite.CollisionObject(new Vector2f(object.x, object.y), new Vector2f(object.width, object.height)));
             }
         }
         return sprite;

@@ -4,7 +4,7 @@ import brot.lwjgl.engine.AppLogic;
 import brot.lwjgl.engine.Engine;
 import brot.lwjgl.engine.Window;
 import brot.lwjgl.engine.graph.Render;
-import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.scene.entity.Entity;
 import brot.lwjgl.engine.scene.Scene;
 import brot.lwjgl.engine.testing.TestScenes;
 

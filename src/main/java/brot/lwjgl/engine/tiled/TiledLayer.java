@@ -1,19 +1,16 @@
 package brot.lwjgl.engine.tiled;
 
 import brot.lwjgl.engine.graph.model.Sprite;
-import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.scene.entity.Entity;
 import brot.lwjgl.engine.scene.Scene;
-import brot.lwjgl.engine.scene.layers.SceneLayer;
+import brot.lwjgl.engine.scene.layer.SceneLayer;
 import brot.lwjgl.engine.tiled.xml.BooleanIntegerAdapter;
 import brot.lwjgl.engine.util.XmlLoader;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.joml.Vector2f;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -50,7 +47,7 @@ public abstract class TiledLayer {
     @XmlAttribute
     protected Integer offsety;
 
-    abstract public List<Entity> getEntities(TiledMap map);
+    abstract public List<Entity> getEntities(TiledMap map, Map<String, Sprite> sprites);
 
     abstract public Stream<Integer> getGids();
 
@@ -66,8 +63,8 @@ public abstract class TiledLayer {
         return gids.toList();
     }
 
-    public List<Sprite> getSprites(TiledMap map) {
-        List<Sprite> sprites = new ArrayList<>();
+    public Map<String, Sprite> getSprites(TiledMap map) {
+        Map<String, Sprite> sprites = new HashMap<>();
         List<Integer> gids = getUniqueGids(true);
         for (TiledTileSetRef ref : map.tilesetRefs.stream().sorted(Comparator.comparingInt(tileSetRef -> -tileSetRef.firstgid)).toList()) {
             if (gids == null) {
@@ -77,7 +74,8 @@ public abstract class TiledLayer {
             Map<Boolean, List<Integer>> groupedGids = gids.stream().collect(Collectors.groupingBy(gid -> gid >= ref.firstgid));
             if (groupedGids.containsKey(true)) {
                 groupedGids.get(true).forEach(gid -> {
-                    sprites.add(tileset.getSprite(gid, ref.firstgid));
+                    Sprite sprite = tileset.getSprite(gid, ref.firstgid);
+                    sprites.put(sprite.getId(), sprite);
                 });
             }
             gids = groupedGids.get(false);
@@ -97,8 +95,9 @@ public abstract class TiledLayer {
         SceneLayer layer = getSceneLayerInstance(map);
         layer.setVisible(visible == null || visible);
         layer.setParallaxFactor(getParallaxFactor());
-        getSprites(map).forEach(layer::addSprite);
-        List<Entity> entities = getEntities(map);
+        Map<String, Sprite> sprites = getSprites(map);
+        sprites.values().forEach(layer::addSprite);
+        List<Entity> entities = getEntities(map, sprites);
         entities.forEach(layer::addEntity);
         scene.addLayer(layer);
         return entities.stream()

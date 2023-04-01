@@ -20,8 +20,8 @@ public class Main implements AppLogic {
     public static void main(String[] args) {
         Main main = new Main();
         Window.WindowOptions windowOptions = new Window.WindowOptions();
-        windowOptions.width = 1280;
-        windowOptions.height = 960;
+        windowOptions.width = 640;
+        windowOptions.height = 640;
         Engine gameEng = new Engine("chapter-02", windowOptions, main);
         gameEng.start();
     }

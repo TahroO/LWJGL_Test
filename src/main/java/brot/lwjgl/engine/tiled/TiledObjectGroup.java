@@ -1,12 +1,14 @@
 package brot.lwjgl.engine.tiled;
 
-import brot.lwjgl.engine.scene.Entity;
-import brot.lwjgl.engine.scene.layers.SceneLayer;
+import brot.lwjgl.engine.graph.model.Sprite;
+import brot.lwjgl.engine.scene.entity.Entity;
+import brot.lwjgl.engine.scene.layer.SceneLayer;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class TiledObjectGroup extends TiledLayer {
@@ -17,7 +19,7 @@ public class TiledObjectGroup extends TiledLayer {
     protected String color;
 
     @Override
-    public List<Entity> getEntities(TiledMap map) {
+    public List<Entity> getEntities(TiledMap map, Map<String, Sprite> sprites) {
         return null;
     }
 

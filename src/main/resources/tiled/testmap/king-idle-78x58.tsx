@@ -3,10 +3,10 @@
  <image source="01-King Human/Idle (78x58).png" width="858" height="58"/>
  <tile id="0">
   <properties>
-   <property name="enum0" propertytype="Enum0" value="Enum0_1"/>
+   <property name="enum0" value="Enum0_1"/>
   </properties>
   <objectgroup draworder="index" id="2">
-   <object id="1" type="collision" x="20.5" y="18" width="22.25" height="26"/>
+   <object id="1" type="collision" x="20.5" y="18" width="35.75" height="26"/>
   </objectgroup>
   <animation>
    <frame tileid="0" duration="100"/>

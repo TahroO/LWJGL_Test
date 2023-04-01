@@ -1,0 +1,51 @@
+var _____WB$wombat$assign$function_____ = function(name) {return (self._wb_wombat && self._wb_wombat.local_init && self._wb_wombat.local_init(name)) || self[name]; };
+if (!self.__WB_pmw) { self.__WB_pmw = function(obj) { this.__WB_source = obj; return this; } }
+{
+  let window = _____WB$wombat$assign$function_____("window");
+  let self = _____WB$wombat$assign$function_____("self");
+  let document = _____WB$wombat$assign$function_____("document");
+  let location = _____WB$wombat$assign$function_____("location");
+  let top = _____WB$wombat$assign$function_____("top");
+  let parent = _____WB$wombat$assign$function_____("parent");
+  let frames = _____WB$wombat$assign$function_____("frames");
+  let opener = _____WB$wombat$assign$function_____("opener");
+
+(function(_ds){var window=this;var bZ=function(){return(0,_ds.V)('<div class="devsite-snackbar-snack" type="loading" role="alert"><div class="devsite-snackbar-inner"><div class="devsite-snackbar-message">Loading</div><div class="devsite-snackbar-action"><devsite-spinner single-color="#ffffff"></devsite-spinner></div></div></div>')},cZ=function(){return(0,_ds.V)('<div class="devsite-snackbar-snack" type="signin-state-changed" role="alert"><div class="devsite-snackbar-inner"><div class="devsite-snackbar-message">Your signed in state has changed.</div><button class="devsite-snackbar-action devsite-snackbar-action--reload">Reload</button><button class="devsite-snackbar-action devsite-snackbar-action--dismiss">OK</button></div></div>')},
+dZ=function(){return(0,_ds.V)('<div class="devsite-snackbar-snack" type="refresh" role="alert"><div class="devsite-snackbar-inner"><div class="devsite-snackbar-message">A new version is available</div><button class="devsite-snackbar-action">Refresh</button></div></div>')},eZ=function(){return(0,_ds.V)('<div class="devsite-snackbar-snack" type="error" role="alert"><div class="devsite-snackbar-inner"><div class="devsite-snackbar-message">Something went wrong. Please try again.</div><button class="devsite-snackbar-action">Retry</button></div></div>')},
+fZ=function(){return(0,_ds.V)('<div class="devsite-snackbar-snack" type="copied-to-clipboard" role="alert"><div class="devsite-snackbar-inner"><div class="devsite-snackbar-message">Copied to clipboard</div></div></div>')},gZ=function(a){a=a||{};a=a.xi;a='<div class="devsite-snackbar-snack" type="cookie-notification" role="alert"><div class="devsite-snackbar-inner"><div class="devsite-snackbar-message">Google uses cookies to deliver its services, to personalize ads, and to analyze traffic. You can adjust your privacy controls anytime in your <a href="//web.archive.org/web/20220227162135/https://myaccount.google.com/intro/data-and-personalization">Google settings</a>.</div><a href="'+
+((a?_ds.X(_ds.Y(a)):"//web.archive.org/web/20220227162135/https://policies.google.com/technologies/cookies")+'" class="devsite-snackbar-link button">');return(0,_ds.V)(a+'More details</a><button class="devsite-snackbar-action">OK</button></div></div>')},hZ=function(a){a=a||{};a=a.xi;a='<div class="devsite-snackbar-snack" type="cookie-notification" role="alert"><div class="devsite-snackbar-inner"><div class="devsite-snackbar-message">This site uses cookies from Google to deliver its services and to analyze traffic.</div><a href="'+((a?_ds.X(_ds.Y(a)):
+"//web.archive.org/web/20220227162135/https://policies.google.com/technologies/cookies")+'" class="devsite-snackbar-link button">');return(0,_ds.V)(a+'More details</a><button class="devsite-snackbar-action">OK</button></div></div>')},iZ=function(){return(0,_ds.V)('<div class="devsite-snackbar-snack" type="support-attachment-error" role="alert"><div class="devsite-snackbar-inner"><div class="devsite-snackbar-message">Unsupported file type.</div><button class="devsite-snackbar-action">OK</button></div></div>')},jZ=function(a){var b=a.message,
+c=a.link,d=a.Qm;a='<div class="devsite-snackbar-snack" type="'+_ds.X(a.Co)+'" role="alert"><div class="devsite-snackbar-inner"><div class="devsite-snackbar-message">'+_ds.W(b)+'</div><button class="devsite-snackbar-action">';a=a+'No, thanks</button><a href="'+(_ds.X(_ds.Y(c))+'" class="devsite-snackbar-link button" target="_blank">');a=d?a+_ds.W(d):a+"OK";return(0,_ds.V)(a+"</a></div></div>")},kZ=function(a){var b=a.Ui,c=a.link,d=a.dc,e=a.zo;a='<div class="devsite-snackbar-snack" type="custom" role="alert"><div class="devsite-snackbar-inner"><div class="devsite-snackbar-message">'+
+_ds.W(a.message)+"</div>";e&&(a+='<button class="devsite-snackbar-action">OK</button>');a+=(_ds.LC(c)&&_ds.LC(b)?'<a href="'+_ds.X(_ds.Y(c))+'"'+(d?' target="_blank"':"")+' class="devsite-snackbar-link button">'+_ds.W(b)+"</a>":"")+"</div></div>";return(0,_ds.V)(a)};var nZ=function(a,b,c=null,d=!1){b&&(_ds.Af(b,_ds.kf,()=>{_ds.Vh(b);a.v=null;if(c)lZ(a,c,d);else{const e=a.h.length?a.h.shift():null;null!==e&&mZ(a,e)}}),b.removeAttribute("show"))},oZ=function(a,b,c=!1){a.appendChild(b);window.requestAnimationFrame(()=>{lZ(a,b,c)})},pZ=function(a){nZ(a,a.querySelector('*[type^="cookie-notification"]'))},qZ=function(a){nZ(a,a.querySelector('*[type^="support-attachment-error"]'))},rZ=function(a){nZ(a,a.querySelector('*[type^="signin-state-changed"]'))},mZ=function(a,
+b){switch(b){case "loading":a.showLoading();break;case "refresh":sZ(a);break;case "error":tZ(a);break;case "copied-to-clipboard":var c=_ds.R(fZ);oZ(a,c,!0);break;case "cookie-notification":uZ(a);break;case "support-attachment-error":vZ(a);break;case "signin-state-changed":wZ(a)}if(null===b||void 0===b?0:b.startsWith("notification-")){c=a.getAttribute(`${b}-message`);const d=a.getAttribute(`${b}-link`),e=a.getAttribute(`${b}-link-txt`);xZ(a,b,c,d,e,a.hasAttribute(`${b}-store-key`))}},sZ=function(a){const b=
+_ds.R(dZ);_ds.Bf(b.querySelector(".devsite-snackbar-action"),"click",()=>{_ds.Oh().location.reload()});oZ(a,b)},tZ=function(a){const b=_ds.R(eZ);_ds.Bf(b.querySelector(".devsite-snackbar-action"),"click",()=>{_ds.Oh().location.reload()});oZ(a,b)},uZ=function(a){if(a.j.get("devsite-eu-cookie")){var b=a.h.length?a.h.shift():null;null!==b&&mZ(a,b)}else{b=hZ;if(a.hasAttribute("data-cookie-notice"))switch(Number(a.getAttribute("data-cookie-notice"))){case 2:b=gZ;break;default:b=hZ}if(a.hasAttribute("data-cookie-policy")){const c=
+a.getAttribute("data-cookie-policy");b=_ds.R(b,{xi:c})}else b=_ds.R(b);_ds.Af(b.querySelector(".devsite-snackbar-action"),"click",()=>{a.j.set("devsite-eu-cookie","1");pZ(a)});oZ(a,b)}},vZ=function(a){const b=_ds.R(iZ);oZ(a,b);_ds.Af(b.querySelector(".devsite-snackbar-action"),"click",()=>{qZ(a)})},wZ=function(a){rZ(a);const b=_ds.R(cZ);oZ(a,b,!1);_ds.Bf(b.querySelector(".devsite-snackbar-action--reload"),"click",async()=>{await (await _ds.A()).reload();rZ(a)});_ds.Bf(b.querySelector(".devsite-snackbar-action--dismiss"),
+"click",async()=>{await (await _ds.A()).reload();rZ(a)})},lZ=function(a,b,c=!1){window.clearTimeout(a.D);a.v?nZ(a,a.v,b,c):(a.v=b,window.requestAnimationFrame(()=>{b.setAttribute("show","")}),c&&(a.D=window.setTimeout(()=>{a.removeAttribute("type");nZ(a,b)},5E3)))},xZ=function(a,b,c,d,e,f){if(c&&d){const g="devsite-notification"+d;if(!f||!a.j.get(g)){b=_ds.R(jZ,{Co:b,message:c,link:d,Qm:e});oZ(a,b);const h=new _ds.J(b);h.listen(b,"click",k=>{k.stopPropagation();if(k.target.classList.contains("devsite-snackbar-link")||
+k.target.classList.contains("devsite-snackbar-action"))f&&a.j.set(g,"1"),a.C(),_ds.K(h)})}}},yZ=class extends _ds.H{constructor(){super();this.h=[];this.D=-1;this.v=null;this.eventHandler=new _ds.J(this);this.j=new _ds.im}static get observedAttributes(){return["type"]}connectedCallback(){this.eventHandler.listen(document.body,"devsite-show-custom-snackbar-msg",this.F);this.eventHandler.listen(document.body,"devsite-show-notification-snackbar-msg",this.H);this.eventHandler.listen(document.body,"devsite-hide-notification-snackbar-msg",
+this.C)}disconnectedCallback(){_ds.K(this.eventHandler)}F(a){this.setAttribute("type","custom");a=a.X;if(a=null===a||void 0===a?void 0:a.detail){var b=!!a.showClose,c=!0;a.href&&(c=(new URL(a.href)).origin!==document.location.origin);var d=_ds.R(kZ,{message:a.msg,Ui:a.linkText,link:a.href,dc:c,zo:b});b&&_ds.Af(d.querySelector(".devsite-snackbar-action"),"click",()=>{nZ(this,d)});oZ(this,d,!b)}}attributeChangedCallback(a,b,c){if("type"===a){switch(b){case "loading":this.hideLoading();break;case "refresh":nZ(this,
+this.querySelector('*[type^="refresh"]'));break;case "error":nZ(this,this.querySelector('*[type^="error"]'));break;case "copied-to-clipboard":nZ(this,this.querySelector('*[type^="copied-to-clipboard"]'));break;case "cookie-notification":pZ(this);break;case "support-attachment-error":qZ(this);break;case "signin-state-changed":rZ(this);break;case "custom":nZ(this,this.querySelector('*[type^="custom"]'))}null!=b&&b.startsWith("notification-")&&this.C();if(c){if(null===c||void 0===c?0:c.includes(","))this.h=
+null===c||void 0===c?void 0:c.split(","),c=`${this.h.shift()}`;mZ(this,c)}}}showLoading(){if(!this.querySelector('*[type^="loading"]')){var a=_ds.R(bZ);oZ(this,a)}}hideLoading(){nZ(this,this.querySelector('*[type^="loading"]'))}H(a){a=a.X;(a=null===a||void 0===a?void 0:a.detail)&&xZ(this,"notification-custom",a.msg,a.href,a.Ui,!0)}C(){nZ(this,this.querySelector('*[type^="notification"]'))}};yZ.prototype.attributeChangedCallback=yZ.prototype.attributeChangedCallback;
+yZ.prototype.disconnectedCallback=yZ.prototype.disconnectedCallback;yZ.prototype.connectedCallback=yZ.prototype.connectedCallback;try{window.customElements.define("devsite-snackbar",yZ)}catch(a){console.warn("Unrecognized DevSite custom element - DevsiteSnackBar",a)};})(_ds_www);
+
+
+}
+/*
+     FILE ARCHIVED ON 16:21:35 Feb 27, 2022 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 10:46:10 Mar 28, 2023.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 100.216
+  exclusion.robots: 0.08
+  exclusion.robots.policy: 0.07
+  cdx.remote: 0.056
+  esindex: 0.008
+  LoadShardBlock: 47.143 (3)
+  PetaboxLoader3.datanode: 136.877 (5)
+  load_resource: 317.542 (2)
+  PetaboxLoader3.resolve: 213.588 (2)
+*/

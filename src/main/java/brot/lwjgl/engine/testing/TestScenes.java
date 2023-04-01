@@ -5,9 +5,9 @@ import brot.lwjgl.engine.Window;
 import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.graph.texture.SpriteSheet;
 import brot.lwjgl.engine.scene.Camera;
-import brot.lwjgl.engine.scene.Entity;
+import brot.lwjgl.engine.scene.entity.Entity;
 import brot.lwjgl.engine.scene.Scene;
-import brot.lwjgl.engine.scene.layers.SceneLayer;
+import brot.lwjgl.engine.scene.layer.SceneLayer;
 import org.joml.Math;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -68,7 +68,7 @@ public class TestScenes {
         scene.addLayer(l);
         l.addSprite(sprite);
 
-        Entity e = new Entity("test-1", "test-1");
+        Entity e = new Entity("test-1", sprite);
         e.flipH();
         e.flipV();
         e.flipD();

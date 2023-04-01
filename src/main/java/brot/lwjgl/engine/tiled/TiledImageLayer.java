@@ -4,9 +4,9 @@ import brot.lwjgl.engine.graph.mesh.Mesh;
 import brot.lwjgl.engine.graph.mesh.Quad;
 import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.graph.texture.SpriteSheet;
-import brot.lwjgl.engine.scene.Entity;
-import brot.lwjgl.engine.scene.layers.ImageLayer;
-import brot.lwjgl.engine.scene.layers.SceneLayer;
+import brot.lwjgl.engine.scene.entity.Entity;
+import brot.lwjgl.engine.scene.layer.ImageLayer;
+import brot.lwjgl.engine.scene.layer.SceneLayer;
 import brot.lwjgl.engine.tiled.xml.BooleanIntegerAdapter;
 import brot.lwjgl.engine.util.XmlLoader;
 import jakarta.xml.bind.annotation.XmlAttribute;
@@ -14,6 +14,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 public class TiledImageLayer extends TiledLayer {
@@ -33,14 +34,15 @@ public class TiledImageLayer extends TiledLayer {
     private Boolean repeaty;
 
     @Override
-    public List<Sprite> getSprites(TiledMap map) {
+    public Map<String, Sprite> getSprites(TiledMap map) {
         float mapWidth = map.width * map.tilewidth;
         float mapHeight = map.height * map.tileheight;
         float meshWidth = repeatx == null || !repeatx ? image.width : mapWidth;
         float meshHeight = repeaty == null || !repeaty ? image.height : mapHeight;
         Mesh quad = new Quad(meshWidth, meshHeight, SpriteSheet.getTextureCoordinates(image.width / meshWidth, image.height / meshHeight));
         SpriteSheet spriteSheet = new SpriteSheet(XmlLoader.getBasePath() + image.source, quad, 1, 1);
-        return List.of(new Sprite(getSpriteId(), spriteSheet, 0));
+        Sprite sprite = new Sprite(getSpriteId(), spriteSheet, 0);
+        return Map.of(sprite.getId(), sprite);
     }
 
     @Override
@@ -49,8 +51,8 @@ public class TiledImageLayer extends TiledLayer {
     }
 
     @Override
-    public List<Entity> getEntities(TiledMap map) {
-        return List.of(new Entity(Entity.ID_FORMAT.formatted(this.id, 1), getSpriteId()));
+    public List<Entity> getEntities(TiledMap map, Map<String, Sprite> sprites) {
+        return List.of(new Entity(Entity.ID_FORMAT.formatted(this.id, 1), sprites.get(getSpriteId())));
     }
 
     @Override

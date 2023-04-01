@@ -31,6 +31,9 @@ dependencies {
     implementation("org.joml:joml:1.10.5")
     implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.0")
     implementation("com.sun.xml.bind:jaxb-impl:4.0.2")
+    implementation("com.google.guava:guava:31.1-jre")
+    implementation("org.dyn4j:dyn4j:5.0.1")
+
     runtimeOnly("org.lwjgl", "lwjgl", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-assimp", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-bgfx", classifier = lwjglNatives)
