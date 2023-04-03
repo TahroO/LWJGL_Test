@@ -7,22 +7,22 @@ public class PhysicsEntity {
     Type type;
     CollisionSolver.Method collision;
     // Position.
-    float x;
-    float y;
+    double x;
+    double y;
     // Velocity.
     float vx;
     float vy;
     // Acceleration.
     float ax;
     float ay;
-    float width;
-    float height;
-    float halfWidth;
-    float halfHeight;
+    double width;
+    double height;
+    double halfWidth;
+    double halfHeight;
 
     public Entity target;
 
-    public PhysicsEntity(Entity target, float x, float y, float width, float height) {
+    public PhysicsEntity(Entity target, double x, double y, double width, double height) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -38,27 +38,27 @@ public class PhysicsEntity {
         this.halfHeight = height / 2f;
     }
 
-    public float getTop() {
+    public double getTop() {
         return y;
     }
 
-    public float getBottom() {
+    public double getBottom() {
         return y + height;
     }
 
-    public float getLeft() {
+    public double getLeft() {
         return x;
     }
 
-    public float getRight() {
+    public double getRight() {
         return x + width;
     }
 
-    public float getMidX() {
+    public double getMidX() {
         return x + halfHeight;
     }
 
-    public float getMidY() {
+    public double getMidY() {
         return y + halfWidth;
     }
 

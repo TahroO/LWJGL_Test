@@ -2,10 +2,13 @@ package brot.lwjgl.engine.scene.layer;
 
 import brot.lwjgl.engine.graph.model.Sprite;
 import brot.lwjgl.engine.graph.texture.SpriteSheet;
+import brot.lwjgl.engine.scene.Constants;
 import brot.lwjgl.engine.scene.entity.Entity;
 import brot.lwjgl.engine.scene.Scene;
+import brot.lwjgl.engine.scene.entity.GameObject;
+import brot.lwjgl.game.scene.collision.Vector;
+import org.joml.Vector2d;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
 
 import java.util.*;
 
@@ -20,6 +23,7 @@ public class SceneLayer {
     protected static int instanceCouter;
     protected String id;
     protected List<Entity> entities;
+    protected Map<String, Entity> entityMap;
     protected int weight;
     protected boolean visible;
     protected Vector2f parallaxFactor;
@@ -40,6 +44,7 @@ public class SceneLayer {
         sprites = new HashMap<>();
         visible = true;
         parallaxFactor = new Vector2f(1f, 1f);
+        entityMap = new HashMap<>();
     }
 
     /**
@@ -115,6 +120,7 @@ public class SceneLayer {
         }
         sprite.addEntity(entity);
         entities.add(entity);
+        entityMap.put(entity.getId(), entity);
 
         // Map collision objects to entity.
         if (sprite.hasCollisionData()) {
@@ -127,25 +133,14 @@ public class SceneLayer {
         }
     }
 
-    //    public record CollisionResultTest(Entity e1, Vector2f p1, Sprite.CollisionObject c1, Entity e2, Vector2f p2, Sprite.CollisionObject c2, Vector2f delta) {}
-    public record CollisionResultTest(Entity player, Vector4f playerRes, Entity other) {
+    public Entity getEntity(String id) {
+        return entityMap.get(id);
     }
 
-    public Map<Entity, List<CollisionResultTest>> getCollisions(Entity otherEntity, long dt) {
-        Map<Entity, List<CollisionResultTest>> collisions = new HashMap<>();
-        List<CollisionResultTest> c = new ArrayList<>();
-        for (Map.Entry<Sprite.CollisionObject, List<Entity>> co : collisionObjects.entrySet()) {
-            for (Entity layerEntity : co.getValue()) {
-                CollisionResultTest r = co.getKey().checkCollision(layerEntity, otherEntity);
-                if (r != null) {
-                    c.add(r);
-                }
-            }
-        }
-        if (!c.isEmpty()) {
-            collisions.put(otherEntity, c);
-        }
-        return collisions;
+    public void checkCollisions(GameObject gameObject, double dt) {
+    }
+
+    protected void doActionToTilesWithinAabb(GameObject gameObject, Vector2d min, Vector2d max, double dt) {
     }
 
     /**

@@ -49,4 +49,7 @@ public class TiledMap {
     })
     public List<TiledLayer> layers;
 
+    @XmlElement(name = "properties")
+    public List<TiledProperty> properties;
+
 }

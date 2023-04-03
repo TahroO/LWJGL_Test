@@ -7,6 +7,7 @@ import brot.lwjgl.engine.physics.CollisionSolver;
 import brot.lwjgl.engine.physics.PhysicsEntity;
 import brot.lwjgl.engine.scene.entity.Entity;
 import brot.lwjgl.engine.scene.layer.SceneLayer;
+import org.joml.Vector2d;
 import org.joml.Vector2f;
 
 import java.util.Collection;
@@ -158,7 +159,7 @@ public class Sprite extends Model {
     }
 
 //    public record CollisionObject(float x, float y, float width, float height) {
-    public record CollisionObject(Vector2f offset, Vector2f size) {
+    public record CollisionObject(Vector2d offset, Vector2d size) {
         public static float POS_FIX = .0001f;
 
         /**
@@ -178,7 +179,7 @@ public class Sprite extends Model {
 //        }
 
         public PhysicsEntity getPhysicsEntity(Entity entity) {
-            float ex = entity.getOrientation().x > 0
+            double ex = entity.getOrientation().x > 0
                     ? entity.getPosition().x + offset.x
                     : entity.getPosition().x + entity.sprite.getSpriteSheet().getSpriteSize().x - offset.x - size.x;
             return new PhysicsEntity(
@@ -190,19 +191,19 @@ public class Sprite extends Model {
             );
         }
 
-        public SceneLayer.CollisionResultTest checkCollision(Entity layerEntity, Entity otherEntity) {
-            if (layerEntity == otherEntity) {
-                return null;
-            }
-            for (CollisionObject otherCo : otherEntity.sprite.collisionObjects) {
-                PhysicsEntity otherPe = otherCo.getPhysicsEntity(otherEntity);
-                PhysicsEntity layerPe = this.getPhysicsEntity(layerEntity);
-                if (CollisionDetector.getInstance().collideRect(layerPe, otherPe)) {
-                    return CollisionSolver.resolveElastic(otherPe, layerPe);
-                }
-            }
-            return null;
-        }
+//        public SceneLayer.CollisionResultTest checkCollision(Entity layerEntity, Entity otherEntity) {
+//            if (layerEntity == otherEntity) {
+//                return null;
+//            }
+//            for (CollisionObject otherCo : otherEntity.sprite.collisionObjects) {
+//                PhysicsEntity otherPe = otherCo.getPhysicsEntity(otherEntity);
+//                PhysicsEntity layerPe = this.getPhysicsEntity(layerEntity);
+//                if (CollisionDetector.getInstance().collideRect(layerPe, otherPe)) {
+//                    return CollisionSolver.resolveElastic(otherPe, layerPe);
+//                }
+//            }
+//            return null;
+//        }
     }
 
 }

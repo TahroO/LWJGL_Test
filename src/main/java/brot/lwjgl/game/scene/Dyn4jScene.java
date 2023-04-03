@@ -96,8 +96,8 @@ public class Dyn4jScene {
 
     }
 
-    private Vector2 toWorldCoorinates(float x, float y, float width, float height) {
-        float vpHeight = 640;
+    private Vector2 toWorldCoorinates(double x, double y, double width, double height) {
+        double vpHeight = 640;
         Vector2 v = new Vector2();
         // convert the screen space point to world space
         v.x = (x + width * 0.5) / scale;

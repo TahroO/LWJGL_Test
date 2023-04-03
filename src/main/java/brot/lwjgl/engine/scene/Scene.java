@@ -66,6 +66,10 @@ public class Scene {
         layers.put(layer.getId(), layer);
     }
 
+    public SceneLayer getLayer(String id) {
+        return layers.get(id);
+    }
+
     public List<SceneLayer> getLayers() {
         return layers
                 .values()

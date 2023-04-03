@@ -3,9 +3,12 @@ package brot.lwjgl.game;
 import brot.lwjgl.engine.AppLogic;
 import brot.lwjgl.engine.Engine;
 import brot.lwjgl.engine.Window;
+import brot.lwjgl.engine.control.Keyboard;
 import brot.lwjgl.engine.graph.Render;
 import brot.lwjgl.engine.scene.Scene;
 import brot.lwjgl.game.scene.CollisionScene;
+
+import java.security.Key;
 
 /**
  * TODO
@@ -17,6 +20,7 @@ import brot.lwjgl.game.scene.CollisionScene;
  */
 public class CollisionMain implements AppLogic {
     private CollisionScene tiledMapScene;
+    private Keyboard keyboard = new Keyboard();
 
     public static void main(String[] args) {
         CollisionMain main = new CollisionMain();
@@ -52,6 +56,7 @@ public class CollisionMain implements AppLogic {
 
     @Override
     public void keyEvent(int key, int action) {
+        keyboard.keyEvent(key, action);
         tiledMapScene.keyEvent(key, action);
     }
 

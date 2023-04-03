@@ -7,6 +7,8 @@ import brot.lwjgl.engine.scene.layer.SceneLayer;
 import brot.lwjgl.engine.tiled.xml.BooleanIntegerAdapter;
 import brot.lwjgl.engine.util.XmlLoader;
 import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlElements;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.joml.Vector2f;
 
@@ -47,6 +49,11 @@ public abstract class TiledLayer {
     @XmlAttribute
     protected Integer offsety;
 
+//    @XmlElement(name = "properties", type = TiledProperty.class)
+
+    @XmlElement
+    protected TiledProperties properties;
+
     abstract public List<Entity> getEntities(TiledMap map, Map<String, Sprite> sprites);
 
     abstract public Stream<Integer> getGids();
@@ -65,6 +72,9 @@ public abstract class TiledLayer {
 
     public Map<String, Sprite> getSprites(TiledMap map) {
         Map<String, Sprite> sprites = new HashMap<>();
+        if (map.tilesetRefs == null) {
+            return sprites;
+        }
         List<Integer> gids = getUniqueGids(true);
         for (TiledTileSetRef ref : map.tilesetRefs.stream().sorted(Comparator.comparingInt(tileSetRef -> -tileSetRef.firstgid)).toList()) {
             if (gids == null) {

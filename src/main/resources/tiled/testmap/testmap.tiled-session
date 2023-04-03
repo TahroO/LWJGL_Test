@@ -9,15 +9,23 @@
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "collisions-2.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 295.5,
+                "y": 186.5
+            }
+        },
         "collisions.tmx": {
             "expandedObjectLayers": [
                 2
             ],
             "scale": 1,
-            "selectedLayer": 1,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 294,
-                "y": 354.5
+                "x": 285.5,
+                "y": 347.5
             }
         },
         "colors-large.tsx": {
@@ -32,16 +40,16 @@
             "scale": 0.75,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 318.66666666666663,
-                "y": 316.6666666666667
+                "x": 320.6666666666667,
+                "y": 319.33333333333337
             }
         },
         "flip-tiles--image-layer.tmx": {
             "scale": 0.75,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 477.33333333333326,
-                "y": 318
+                "x": 479.33333333333326,
+                "y": 319.33333333333337
             }
         },
         "king-idle-78x58.tsx": {
@@ -57,6 +65,9 @@
             }
         },
         "mossy-tiles-32.tsx": {
+            "scaleInDock": 1
+        },
+        "player-2x1.tsx": {
             "scaleInDock": 1
         },
         "rgb.tsx": {
@@ -90,13 +101,13 @@
             "scaleInEditor": 1.5
         }
     },
-    "frame.defaultDuration": 50,
-    "last.imagePath": "/home/steffen/prog/java/lwjgl-test-2/src/main/resources/tiled/testmap",
-    "map.height": 20,
+    "frame.defaultDuration": 70,
+    "last.imagePath": "/home/steffen/prog/java/lwjgl-test-2/src/main/resources/tiled/testmap/characters",
+    "map.height": 25,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 32,
     "map.tileWidth": 32,
-    "map.width": 20,
+    "map.width": 100,
     "openFiles": [
         "test-texture.tsx",
         "flip-tiles--image-layer.tmx",
@@ -111,23 +122,24 @@
         "colors-large.tsx"
     ],
     "project": "testmap.tiled-project",
+    "property.type": "Class0",
     "recentFiles": [
         "collisions.tmx",
-        "test-player.tsx",
         "test-texture.tsx",
         "flip-tiles--image-layer.tmx",
         "king-idle-78x58.tsx",
-        "colors.tsx",
-        "spriteatlas.tsx",
-        "test-texture-32x64.tsx",
-        "dyn4j-test.tmx",
-        "tileset.tsx",
         "rgb.tsx",
-        "colors-large.tsx"
+        "tileset.tsx",
+        "dyn4j-test.tmx",
+        "test-texture-32x64.tsx",
+        "spriteatlas.tsx",
+        "colors.tsx",
+        "colors-large.tsx",
+        "collisions-2.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
     "tileset.tileSize": {
-        "height": 32,
-        "width": 64
+        "height": 512,
+        "width": 512
     }
 }

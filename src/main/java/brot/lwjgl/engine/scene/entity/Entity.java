@@ -25,7 +25,7 @@ public class Entity {
 
     // TESTING
     public Sprite sprite;
-    protected final Vector2f position;
+    protected final Vector2d position;
     protected final Matrix3f mm;
 
     /**
@@ -44,7 +44,7 @@ public class Entity {
         orientation = new Vector3f(1f, 1f, 1f);
         eulerAngleBuffer = new Vector3f();
         scale = 1;
-        position = new Vector2f();
+        position = new Vector2d();
         mm = new Matrix3f();
     }
 
@@ -107,7 +107,7 @@ public class Entity {
      *
      * @return Entity position vector.
      */
-    public Vector2f getPosition() {
+    public Vector2d getPosition() {
         return position;
     }
 
@@ -118,7 +118,7 @@ public class Entity {
      * @param y New y position.
      * @return This entity object.
      */
-    public Entity setPosition(float x, float y) {
+    public Entity setPosition(double x, double y) {
         position.set(x, y);
         return this;
     }
@@ -214,7 +214,7 @@ public class Entity {
      */
     public void updateModelMatrix() {
         modelMatrix.translationRotateScale(
-                position.x(), position.y(), 0f,
+                (float) position.x(), (float) position.y(), 0f,
                 rotation.x(), rotation.y(), rotation.z(), rotation.w(),
                 scale, scale, scale);
     }

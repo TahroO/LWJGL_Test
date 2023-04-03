@@ -1,6 +1,8 @@
 package brot.lwjgl.engine.util;
 
-import brot.lwjgl.engine.tiled.TiledTileSet;
+import brot.lwjgl.engine.scene.Scene;
+import brot.lwjgl.engine.scene.entity.Entity;
+import brot.lwjgl.engine.tiled.*;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
@@ -10,6 +12,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class XmlLoader {
     private static String basePath;
@@ -30,6 +33,20 @@ public class XmlLoader {
 
     public static String getBasePath() {
         return basePath;
+    }
+
+    /**
+     * Creates a scene from a tmx file.
+     *
+     * @param resourceName Name of tmx resource file.
+     */
+    public static Map<String, Entity> loadScene(Scene scene, String resourceName) {
+        TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, resourceName);
+        scene.setDimension(map.width * map.tilewidth, map.height * map.tileheight);
+        return map.layers.stream()
+                .filter(tiledLayer -> tiledLayer instanceof TiledTileLayer || tiledLayer instanceof TiledObjectLayer || tiledLayer instanceof TiledImageLayer)
+                .flatMap(tiledLayer -> tiledLayer.createSceneLayer(map, scene).entrySet().stream())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public static <T> T loadTiledXml(Class<T> cls, String resourceName) {

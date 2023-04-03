@@ -8,6 +8,7 @@ import brot.lwjgl.engine.scene.Scene;
 import brot.lwjgl.engine.scene.layer.SceneLayer;
 import brot.lwjgl.engine.tiled.*;
 import brot.lwjgl.engine.util.XmlLoader;
+import org.joml.Vector2d;
 import org.joml.Vector2f;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class KingPigsScene {
     Sprite runSprite;
     Sprite idleSprite;
     Vector2f direction;
-    public Vector2f step = new Vector2f();
+    public Vector2d step = new Vector2d();
 
     boolean upPressed, leftPressed, rightPressed, downPressed;
 
@@ -111,42 +112,42 @@ public class KingPigsScene {
     }
 
     public void update(Scene scene, long diffTimeMillis) {
-        Vector2f pos = player.getPosition();
-        float dx = direction.x * PLAYER_VELOCITY * diffTimeMillis / 1000f;
-        float dy = direction.y * PLAYER_VELOCITY * diffTimeMillis / 1000f;
+        Vector2d pos = player.getPosition();
+        double dx = direction.x * PLAYER_VELOCITY * diffTimeMillis / 1000d;
+        double dy = direction.y * PLAYER_VELOCITY * diffTimeMillis / 1000d;
         pos.x += dx;
         pos.y += dy;
         step.x = dx;
         step.y = dy;
         player.updateModelMatrix();
-        scene.getLayers().stream()
-                .map(layer -> layer.getCollisions(player, diffTimeMillis))
-                .filter(results -> !results.isEmpty())
-                .forEach(this::resolveCollision);
+//        scene.getLayers().stream()
+//                .map(layer -> layer.getCollisions(player, diffTimeMillis))
+//                .filter(results -> !results.isEmpty())
+//                .forEach(this::resolveCollision);
     }
 
-    protected void resolveCollision(Map<Entity, List<SceneLayer.CollisionResultTest>> results) {
-        results.forEach((player, value) -> {
-            var dx = value.stream()
-                    .mapToDouble(result -> result.playerRes().x)
-                    .filter(delta -> delta > 0 && step.x < 0 || delta < 0 && step.x > 0)
-                    .distinct()
-                    .findFirst();
-            var dy = value.stream()
-                    .mapToDouble(result -> result.playerRes().y)
-                    .filter(delta -> delta > 0 && step.y < 0 || delta < 0 && step.y > 0)
-                    .distinct()
-                    .findFirst();
-            var x = (float) dx.orElse(0d);
-            var y = (float) dy.orElse(0d);
-            if (Math.abs(x) > Math.abs(y)) {
-                player.getPosition().x += x;
-            } else {
-                player.getPosition().y += y;
-            }
-//            player.addPosition((float) dx.orElse(0d), (float) dy.orElse(0d));
-            player.updateModelMatrix();
-        });
-    }
+//    protected void resolveCollision(Map<Entity, List<SceneLayer.CollisionResultTest>> results) {
+//        results.forEach((player, value) -> {
+//            var dx = value.stream()
+//                    .mapToDouble(result -> result.playerRes().x)
+//                    .filter(delta -> delta > 0 && step.x < 0 || delta < 0 && step.x > 0)
+//                    .distinct()
+//                    .findFirst();
+//            var dy = value.stream()
+//                    .mapToDouble(result -> result.playerRes().y)
+//                    .filter(delta -> delta > 0 && step.y < 0 || delta < 0 && step.y > 0)
+//                    .distinct()
+//                    .findFirst();
+//            var x = (float) dx.orElse(0d);
+//            var y = (float) dy.orElse(0d);
+//            if (Math.abs(x) > Math.abs(y)) {
+//                player.getPosition().x += x;
+//            } else {
+//                player.getPosition().y += y;
+//            }
+////            player.addPosition((float) dx.orElse(0d), (float) dy.orElse(0d));
+//            player.updateModelMatrix();
+//        });
+//    }
 
 }

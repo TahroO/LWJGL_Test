@@ -1,9 +1,10 @@
 package brot.lwjgl.engine.scene.entity;
 
+import org.joml.Vector2d;
 import org.joml.Vector2f;
 
 public interface AABB {
-    Vector2f getCenter();
+    Vector2d getCenter();
 
-    Vector2f getHalfExtents();
+    Vector2d getHalfExtents();
 }

@@ -3,7 +3,7 @@
  <image source="test-player.png" width="192" height="128"/>
  <tile id="0">
   <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="0" width="32" height="64"/>
+   <object id="7" x="0" y="0" width="32" height="64"/>
   </objectgroup>
  </tile>
 </tileset>

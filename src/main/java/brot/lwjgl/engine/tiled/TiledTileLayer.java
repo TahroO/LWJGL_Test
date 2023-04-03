@@ -5,6 +5,7 @@ import brot.lwjgl.engine.scene.entity.Entity;
 import brot.lwjgl.engine.scene.layer.SceneLayer;
 import brot.lwjgl.engine.scene.layer.TileLayer;
 import jakarta.xml.bind.annotation.XmlElement;
+import org.joml.Vector2i;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -65,7 +66,7 @@ public class TiledTileLayer extends TiledLayer {
 
     @Override
     protected SceneLayer getSceneLayerInstance(TiledMap map) {
-        return new TileLayer(SceneLayer.ID_FORMAT.formatted(id));
+        return new TileLayer(SceneLayer.ID_FORMAT.formatted(id), new Vector2i(map.width, map.height));
     }
 
 }

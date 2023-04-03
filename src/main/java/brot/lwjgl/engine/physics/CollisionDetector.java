@@ -4,15 +4,15 @@ public class CollisionDetector {
     private static CollisionDetector instance = new CollisionDetector();
 
     public boolean collideRect(PhysicsEntity collider, PhysicsEntity collidee) {
-        float l1 = collider.getLeft();
-        float r1 = collider.getRight();
-        float t1 = collider.getTop();
-        float b1 = collider.getBottom();
+        double l1 = collider.getLeft();
+        double r1 = collider.getRight();
+        double t1 = collider.getTop();
+        double b1 = collider.getBottom();
 
-        float l2 = collidee.getLeft();
-        float r2 = collidee.getRight();
-        float t2 = collidee.getTop();
-        float b2 = collidee.getBottom();
+        double l2 = collidee.getLeft();
+        double r2 = collidee.getRight();
+        double t2 = collidee.getTop();
+        double b2 = collidee.getBottom();
 
         // If any of the edges are beyond any of the others,
         // then we know that the box cannot be colliding.
