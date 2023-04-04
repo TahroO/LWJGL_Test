@@ -7,8 +7,11 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,7 +31,7 @@ public class XmlLoader {
 
     public static void setBasePath(String basePath) {
         XmlLoader.basePath = basePath.endsWith("/") ? basePath : basePath + "/";
-        basePathFormat = basePath + "%s";
+        basePathFormat = XmlLoader.basePath + "%s";
     }
 
     public static String getBasePath() {
@@ -49,13 +52,28 @@ public class XmlLoader {
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
+    public static Map<String, Entity> loadSceneFullPath(Scene scene, String resourceName) {
+        Path resourcePath = new File(resourceName).toPath();
+        setBasePath("/" + resourcePath.subpath(0, resourcePath.getNameCount() - 1));
+        String tmxFile = resourcePath.getFileName().toString();
+        TiledMap map = XmlLoader.loadTiledXml(TiledMap.class, tmxFile);
+        scene.setDimension(map.width * map.tilewidth, map.height * map.tileheight);
+        return map.layers.stream()
+                .filter(tiledLayer -> tiledLayer instanceof TiledTileLayer || tiledLayer instanceof TiledObjectLayer || tiledLayer instanceof TiledImageLayer)
+                .flatMap(tiledLayer -> tiledLayer.createSceneLayer(map, scene).entrySet().stream())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
     public static <T> T loadTiledXml(Class<T> cls, String resourceName) {
-        return XmlLoader.load(cls, basePathFormat.formatted(resourceName));
+        return XmlLoader.load(cls, Paths.get(basePathFormat.formatted(resourceName)).normalize().toString());
     }
 
     public static TiledTileSet loadTileSet(String resourceName) {
         if (!tileSetCache.containsKey(resourceName)) {
-            tileSetCache.put(resourceName, loadTiledXml(TiledTileSet.class, resourceName));
+            TiledTileSet tileSet = loadTiledXml(TiledTileSet.class, resourceName);
+            Path tsxPath = Paths.get(basePathFormat.formatted(resourceName)).normalize();
+            tileSet.setBasePath("/" + tsxPath.subpath(0, tsxPath.getNameCount() - 1) + "/");
+            tileSetCache.put(resourceName, tileSet);
         }
         return tileSetCache.get(resourceName);
     }

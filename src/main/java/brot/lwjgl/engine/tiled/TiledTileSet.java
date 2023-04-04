@@ -44,6 +44,8 @@ public class TiledTileSet {
 
     protected SpriteSheet spriteSheet;
 
+    protected String basePath;
+
     @XmlTransient
     public Map<Integer, TiledTile> tilesMap;
 
@@ -54,9 +56,13 @@ public class TiledTileSet {
         return tilesMap;
     }
 
+    public void setBasePath(String basePath) {
+        this.basePath = basePath;
+    }
+
     public Sprite getSprite(int gid, int firstgid) {
         if (spriteSheet == null) {
-            spriteSheet = new SpriteSheet(XmlLoader.getBasePath() + image.source, columns, tilecount / columns);
+            spriteSheet = new SpriteSheet(basePath + image.source, columns, tilecount / columns);
         }
         TiledTile tile = getTiles().get(gid - firstgid);
         Sprite.AnimationFrame[] animationFrames = null;

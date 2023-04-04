@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class GameObject extends Entity implements AABB {
     Map<String, State> states;
-    int currentState;
+    State currentState;
     public Vector2d velocity;
     protected Vector2d halfExtents;
     protected Vector2d centerPoint;
@@ -45,6 +45,11 @@ public class GameObject extends Entity implements AABB {
         State newState = states.get(id);
         sprite = newState.sprite;
         spriteId = sprite.getId();
+        currentState = newState;
+    }
+
+    public State getCurrentState() {
+        return currentState;
     }
 
     public void setOnGround(boolean onGround) {

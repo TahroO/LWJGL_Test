@@ -68,6 +68,11 @@ public class Camera {
         recalculate();
     }
 
+    public void setPositionX(float x) {
+        position.set(x, position.y, 0);
+        recalculate();
+    }
+
     public void setScale(float scale) {
         this.scale = scale;
     }

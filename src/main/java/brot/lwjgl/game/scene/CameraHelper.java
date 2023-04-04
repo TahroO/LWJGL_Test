@@ -11,7 +11,7 @@ import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_KEY_D;
 
 public class CameraHelper {
-    public static final double MOVEMENT_SPEED = .2;
+    public static final double MOVEMENT_SPEED = .25;
     private static final float MOUSE_SENSITIVITY = 40f;
 
     public static void moveCameraWithKeys(Window window, Scene scene, long diffTimeMillis) {
